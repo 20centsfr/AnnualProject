@@ -40,10 +40,10 @@ function getIp(){
 
 if (isset($_SESSION['idUser'])) {
   $idUser = $_SESSION['idUser'];
-  var_dump($idUser);
 } else {
   echo "Session variable idUser is not set";
 }
+
 
 ?>
 
@@ -89,10 +89,10 @@ if (isset($_SESSION['idUser'])) {
                 <p class="fs-0">Duree : <?php echo $content['dureeActivite']; ?> minutes</p>
                 <p class="fs-0">Lieu : <?php echo $content['localActivite']; ?></p>
                 <p class="fs-0"><?php echo $content['tarifActivite']; ?> € </p>
-                <input type="hidden" name="idUser" value="<?php echo $idUser; ?>" >
-                <input type="hidden" name="idActivite_<?php echo $content['idActivite']; ?>" value="<?php echo $content['idActivite']; ?>" >
-                <button> <a href="activite.php" type="submit" class="btn btn-success">Plus d'info</a></button>
-
+                <form method="GET" action="activite.php">
+                  <input type="hidden" name="Activite" value="<?php echo $content['idActivite']; ?>" >
+                  <button type="submit" class="btn btn-success">Plus d'info</button>
+                </form>
               </div>
             <?php } ?>
           </div>

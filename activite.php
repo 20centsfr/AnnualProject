@@ -46,6 +46,19 @@ if (isset($_SESSION['idUser'])) {
 
 
 
+
+if(isset($_GET['Activite'])){
+  $idActivite = intval(htmlspecialchars($_GET['Activite']));
+    if(!is_int($idActivite))
+      header('location:activites.php');
+}
+
+  $select = $db->query('SELECT * FROM activite WHERE idActivite = "' . $idActivite . '"');   
+  $content = $select->fetch(PDO::FETCH_ASSOC);
+
+  if($content == false)
+    header('location:activites.php');
+
 ?>
 
   <body>
@@ -57,9 +70,6 @@ if (isset($_SESSION['idUser'])) {
     <div class="bg-holder bg-size" style="background-image:url(assets/img/illustration/2.png);background-position:right top;background-size:800px;"></div>
         <div class="container">
           <div class="grid-container">
-            <?php 
-              $select = $db->query("SELECT * FROM activite");   
-              $content = $select->fetch(PDO::FETCH_ASSOC); ?>
             <h1 class="mt-3 lh-base"><?php echo $content['nomActivite']; ?></h1>
                 <p class="fs-0">Nombre de places : <?php echo $content['nbPlacesActivite']; ?></p>
                 <p class="fs-0">Duree : <?php echo $content['dureeActivite']; ?> minutes</p>
