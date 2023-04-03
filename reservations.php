@@ -4,8 +4,7 @@
 <?php 
 
 include('includes/header.php');
-include('includes/db.php');
-session_start();
+include('includes/userInfo.php');
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
@@ -53,13 +52,6 @@ function theadFill($order, $value, $disp) {
         echo '<th><a href="?order=' . $value . '">' . $disp . '</a></th>';
 }
 
-if (isset($_SESSION['idUser'])) {
-    $idUser = $_SESSION['idUser'];
-    var_dump($idUser);
-} else {
-    echo "Session variable idUser is not set";
-}
-
 ?>
 
   <body>
@@ -70,6 +62,7 @@ if (isset($_SESSION['idUser'])) {
             <div class="row col-12">
                 <br><br><br><br><br><br>
                 <h1>Mes devis</h1><br><br>
+                <?php include('includes/message.php') ?>
                 <div class="overflow-auto">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <form action="annulerDevis.php" method="post">
@@ -86,15 +79,26 @@ if (isset($_SESSION['idUser'])) {
 
                             <?php
                             
-                                $req = $db->query("SELECT * FROM devis WHERE idUser=(SELECT idUser FROM user WHERE email='" . $_SESSION['email'] . "')");
+                                $req = $db->query("SELECT * FROM devis WHERE idUser='" . $idUser . "'");
 
                                 $req->execute() ;
                                 while ($devis = $req->fetch()) {
                                     echo '<tr>';
                                     echo '<td>' . $devis['prix'] . '</td>';
                                     echo '<td>' . $devis['date'] . '</td>';
-                                    echo '<td>' .'<input type="hidden" name="idUser" value="'.$idUser.'" >'.' <button type="submit"   class="btn btn-primary" value="'.$devis['idDevis'].'" name="idDevis" class="btn btn-danger">Supprimer</button>';
-                                    echo '<td>' .'<input type="hidden" name="idUser" value="'.$idUser.'" >'.' <button type="submit"   class="btn btn-primary" value="'.$devis['idDevis'].'" name="idDevis" class="btn btn-danger">Réserver</button>';
+                                    echo '<td>';
+                                    echo '<form action="annulerDevis.php" method="post" style="display: inline-block;">';
+                                    echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
+                                    echo '<button type="submit" class="btn btn-danger" name="idDevis" value="'.$devis['idDevis'].'">Supprimer</button>';
+                                    echo '</form>';
+                                    echo '</td>';
+                                    echo '<td>';
+                                    echo '<form action="reserverDevis.php" method="post" style="display: inline-block;">';
+                                    echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
+                                    echo '<button type="submit" class="btn btn-success" name="idDevis" value="'.$devis['idDevis'].'">Réserver</button>';
+                                    echo '</form>';
+                                    echo '</td>';
+                                    echo '</tr>';
                                 }
                                 ?>
                         </form>
@@ -122,7 +126,7 @@ if (isset($_SESSION['idUser'])) {
                             </thead>
 
                             <?php
-                            $req = $db->query('SELECT * FROM reserve, activite where idUser=(SELECT idUser from user where email = "' . $_SESSION['email'] . '") and reserve.idActivite = activite.idActivite');
+                            $req = $db->query('SELECT * FROM reserve, activite where idUser = ' . $idUser . ' AND reserve.idActivite = activite.idActivite');
 
                             $req->execute() ;
                             while ($activite = $req->fetch()) {
@@ -156,7 +160,7 @@ if (isset($_SESSION['idUser'])) {
                             </thead>
 
                             <?php
-                            $req = $db->query('SELECT * FROM participe, event where idUser=(SELECT idUser from user where email = "' . $_SESSION['email'] . '") and participe.idEvent = event.idEvent');
+                            $req = $db->query('SELECT * FROM participe, event where idUser = ' . $idUser . ' AND participe.idEvent = event.idEvent');
 
                             $req->execute() ;
                             while ($event = $req->fetch()) {

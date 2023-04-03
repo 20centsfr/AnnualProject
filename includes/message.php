@@ -2,7 +2,7 @@
     <?php 
     if(isset($_GET['message']) && !empty($_GET['message'])){
         $error = htmlspecialchars($_GET['message']);
-        if($error == 'Compte créé avec succès' || $error == 'Informations modifiées avec succès'){
+        if($error == 'Compte créé avec succès' || $error == 'Informations modifiées avec succès' || $error == 'Devis supprimé'){
         echo '<div class="alert alert-success" role="alert">' . $error . '</div>';
         }
         else{

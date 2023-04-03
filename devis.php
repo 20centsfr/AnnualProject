@@ -3,9 +3,7 @@
     
 <?php 
 include('includes/header.php');
-include('includes/db.php');
-
-session_start();
+include('includes/userInfo.php');
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
@@ -37,13 +35,6 @@ function getIp(){
       'ip' => $ip
   ]);
   
-
-if (isset($_SESSION['idUser'])) {
-    $idUser = $_SESSION['idUser'];
-    var_dump($idUser);
-} else {
-    echo "Session variable idUser is not set";
-}
 
 }
 
