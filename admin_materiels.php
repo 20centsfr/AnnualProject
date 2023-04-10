@@ -1,5 +1,4 @@
-
-<?php //test
+<?php 
 
 include 'includes/db.php';
 include 'includes/header_admin.php';
@@ -13,9 +12,9 @@ error_reporting(E_ALL);
 if (isset($_GET['order'])) {
     $order = $_GET['order'];
 } else {
-    $order = "idEvent";
+    $order = "idMateriel"; 
 }
-$select = $db->query("SELECT * FROM event ORDER by $order");
+$select = $db->query("SELECT * FROM materiel ORDER by $order");
 
 function theadFill($order, $value, $disp) {
     if ($order == $value)
@@ -35,21 +34,21 @@ function theadFill($order, $value, $disp) {
     <main class="main" id="top">
         <section class="background-radial-gradient overflow-hidden">
             <div class="container-fluid">
-                <h1 class="h3 mb-2 text-gray-800">Events</h1>
-                <a href="addEvent.php" class="btn btn-success">Créer events</a><br><br>
+                <h1 class="h3 mb-2 text-gray-800">Matériels</h1>
+                <a href="addMateriel.php" class="btn btn-success">Ajouter materiel</a><br><br>
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <form enctype="multipart/form-data"  method="post" action="gestionEvent.php">
+                                <form enctype="multipart/form-data"  method="post" action="gestionMateriel.php">
                                 <thead>
                                 <tr>
                                     <?php
                                     theadFill($order, 'ID', 'ID');
-                                    theadFill($order, 'Nom', 'Nom');
-                                    theadFill($order, 'Description', 'Description');
+                                    theadFill($order, 'Nom', 'Numero');
                                     theadFill($order, 'Nombre de places', 'Nombre de places');
-                                    theadFill($order, 'Date', 'Date');
+                                    theadFill($order, 'types', 'Type');
+
                                     ?>
                                     <th></th>
                                     <th></th>
@@ -58,16 +57,15 @@ function theadFill($order, $value, $disp) {
 
                                 <tbody>
                                 <?php
-                                $select = $db->query("SELECT * FROM event");
+                                $select = $db->query("SELECT * FROM materiel");
                                 while ($content = $select->fetch()) {
                                     echo '<tr>';
-                                    echo '<td>' . $content['idEvent'] . '</td>';
-                                    echo '<td>' . $content['nomEvent'] . '</td>';
-                                    echo '<td>' . $content['descriptionEvent'] . '</td>';
-                                    echo '<td>' . $content['nbPlacesEvent'] . '</td>';
-                                    echo '<td>' . $content['dateEvent'] . '</td>';
-                                    echo '<td> <button type="submit" value="'.$content['idEvent'].'" name="Supprimer" class="btn btn-danger">Supp</button></td>';
-                                    echo '<td> <button type="submit" value="'.$content['idEvent'].'" name="Modifier" class="btn btn-success">Modifier</button></td>';
+                                    echo '<td>' . $content['idMateriel'] . '</td>';
+                                    echo '<td>' . $content['nomMateriel'] . '</td>';
+                                    echo '<td>' . $content['quantiteMateriel'] . '</td>';
+                                    echo '<td>' . $content['typeMateriel'] . '</td>';
+                                    echo '<td> <button type="submit" value="'.$content['idMateriel'].'" name="Supprimer" class="btn btn-danger">Supprimer</button></td>';
+                                    echo '<td> <button type="submit" value="'.$content['idMateriel'].'" name="Modifier" class="btn btn-success">Modifier</button></td>';
                                     echo '</tr>';
                                 }
                                 ?>

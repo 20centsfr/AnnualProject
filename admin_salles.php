@@ -1,5 +1,4 @@
-
-<?php //test
+<?php 
 
 include 'includes/db.php';
 include 'includes/header_admin.php';
@@ -13,9 +12,9 @@ error_reporting(E_ALL);
 if (isset($_GET['order'])) {
     $order = $_GET['order'];
 } else {
-    $order = "idEvent";
+    $order = "idSalle";
 }
-$select = $db->query("SELECT * FROM event ORDER by $order");
+$select = $db->query("SELECT * FROM salle ORDER by $order");
 
 function theadFill($order, $value, $disp) {
     if ($order == $value)
@@ -35,21 +34,20 @@ function theadFill($order, $value, $disp) {
     <main class="main" id="top">
         <section class="background-radial-gradient overflow-hidden">
             <div class="container-fluid">
-                <h1 class="h3 mb-2 text-gray-800">Events</h1>
-                <a href="addEvent.php" class="btn btn-success">Créer events</a><br><br>
+                <h1 class="h3 mb-2 text-gray-800">Salles</h1>
+                <a href="addSalle.php" class="btn btn-success">Ajouter salle</a><br><br>
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <form enctype="multipart/form-data"  method="post" action="gestionEvent.php">
+                                <form enctype="multipart/form-data"  method="post" action="gestionSalles.php">
                                 <thead>
                                 <tr>
                                     <?php
                                     theadFill($order, 'ID', 'ID');
-                                    theadFill($order, 'Nom', 'Nom');
-                                    theadFill($order, 'Description', 'Description');
+                                    theadFill($order, 'Nom', 'Numero');
+                                    theadFill($order, 'dispoSalle', 'Disponibilité');
                                     theadFill($order, 'Nombre de places', 'Nombre de places');
-                                    theadFill($order, 'Date', 'Date');
                                     ?>
                                     <th></th>
                                     <th></th>
@@ -58,16 +56,15 @@ function theadFill($order, $value, $disp) {
 
                                 <tbody>
                                 <?php
-                                $select = $db->query("SELECT * FROM event");
+                                $select = $db->query("SELECT * FROM salle");
                                 while ($content = $select->fetch()) {
                                     echo '<tr>';
-                                    echo '<td>' . $content['idEvent'] . '</td>';
-                                    echo '<td>' . $content['nomEvent'] . '</td>';
-                                    echo '<td>' . $content['descriptionEvent'] . '</td>';
-                                    echo '<td>' . $content['nbPlacesEvent'] . '</td>';
-                                    echo '<td>' . $content['dateEvent'] . '</td>';
-                                    echo '<td> <button type="submit" value="'.$content['idEvent'].'" name="Supprimer" class="btn btn-danger">Supp</button></td>';
-                                    echo '<td> <button type="submit" value="'.$content['idEvent'].'" name="Modifier" class="btn btn-success">Modifier</button></td>';
+                                    echo '<td>' . $content['idSalle'] . '</td>';
+                                    echo '<td>' . $content['numSalle'] . '</td>';
+                                    echo '<td>' . $content['dispoSalle'] . '</td>';
+                                    echo '<td>' . $content['nbPlaceSalle'] . '</td>';
+                                    echo '<td> <button type="submit" value="'.$content['idSalle'].'" name="Supprimer" class="btn btn-danger">Supprimer</button></td>';
+                                    echo '<td> <button type="submit" value="'.$content['idSalle'].'" name="Modifier" class="btn btn-success">Modifier</button></td>';
                                     echo '</tr>';
                                 }
                                 ?>

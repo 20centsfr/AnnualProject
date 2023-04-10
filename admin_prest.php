@@ -39,6 +39,7 @@ function theadFill($order, $value, $disp)
                             theadFill($order, 'nom', 'Nom');
                             theadFill($order, 'email', 'Email');
                             theadFill($order, 'service', 'Service');
+                            theadFill($order, 'prix', 'Prix du service');
                             theadFill($order, 'secteur', 'Secteur');
                             theadFill($order, 'supprimer', 'Supprimer');
                             ?>
@@ -54,6 +55,7 @@ function theadFill($order, $value, $disp)
                             echo '<td>'.$content['nomPrestataire'].'</td>';
                             echo '<td>'.$content['emailPrestataire'].'</td>';
                             echo '<td>'.$content['service'] .'</td>';
+                            echo '<td>'.$content['prixService'] .'</td>';
                             echo '<td>'.$content['secteurActivite'].'</td>';
                             echo '<td> <button type="submit" value="'.$content['idPrestataire'].'" name="Supprimer" class="btn btn-danger">Supprimer</button></td>';
                             echo '</tr>';
