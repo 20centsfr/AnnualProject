@@ -10,15 +10,17 @@ error_reporting(E_ALL);
 $nomPrestataire = $_POST['nomPrestataire'];
 $emailPrestataire = $_POST['emailPrestataire'];
 $service = $_POST['service'];
+$prixService = $_POST['prixService'];
 $secteurActivite = $_POST['secteurActivite'];
 
 
-$q = "INSERT INTO prestataire (nomPrestataire, emailPrestataire, service, secteurActivite) VALUES (:nomPrestataire, :emailPrestataire, :service, :secteurActivite)";
+$q = "INSERT INTO prestataire (nomPrestataire, emailPrestataire, service, prixService, secteurActivite) VALUES (:nomPrestataire, :emailPrestataire, :service, :prixService, :secteurActivite)";
 $req = $db->prepare($q);
 $req->execute([
     'nomPrestataire' => $nomPrestataire,
     'emailPrestataire' => $emailPrestataire,
     'service' => $service,
+    'prixService' => $prixService,
     'secteurActivite' => $secteurActivite
 ]);
 

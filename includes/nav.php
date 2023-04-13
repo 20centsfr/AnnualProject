@@ -17,18 +17,18 @@
                 } 
                 
 
-              } ?>
-                  
-            </ul>
-            <?php 
-              if(isset($_SESSION['email'])){
-                echo '<a class="btn btn-primary" href="deconnexion.php" role="button">Deconnexion</a>';
-              } else {
-                echo '<a class="btn btn-primary" href="connexion.php" role="button">Connexion</a>';
-              }
-              ?>
-            
-          </div>
-        </div>
-      </nav>
+          } ?>
+              
+        </ul>
+        <?php 
+          if(isset($_SESSION['email'])){
+            echo '<a class="btn btn-primary" href="deconnexion.php" role="button">Deconnexion</a>';
+          } else {
+            echo '<a class="btn btn-primary" href="connexion.php" role="button">Connexion</a>';
+          }
+          ?>
+        
+      </div>
+    </div>
+  </nav>
 

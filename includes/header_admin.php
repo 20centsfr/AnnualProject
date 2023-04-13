@@ -40,6 +40,11 @@
                 <span>Utilisateurs</span></a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="admin_messages.php">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Messages</span></a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="admin_event.php">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Evenements</span></a>

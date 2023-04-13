@@ -98,13 +98,10 @@ error_reporting(E_ALL);
                         <label class="form-label">Lieu</label>
                     </div>
                     <div class="form-outline mb-4">
-                        <input type="date" name="dateEvent" id="dateEvent" class="form-control" required/>
+                        <input type="date" name="dateEvent" id="dateEvent" class="form-control" required min="<?php echo date('Y-m-d'); ?>"/>
                         <label class="form-label">Date</label>
                     </div>
-                    <div class="form-outline mb-4">
-                        <input type="time" name="heureEvent" id="heureEvent" class="form-control" required/>
-                        <label class="form-label">Heure</label>
-                    </div>
+
                     <button type="submit" class="btn btn-primary btn-block mb-4">Créer</button>
                     </form>
                 </div>

@@ -51,7 +51,6 @@ function theadFill($order, $value, $disp) {
                                     theadFill($order, 'Description', 'Description');
                                     theadFill($order, 'Nombre de places', 'Nombre de places');
                                     theadFill($order, 'Date', 'Date');
-                                    theadFill($order, 'Heure', 'Heure');
                                     ?>
                                     <th></th>
                                     <th></th>
@@ -68,7 +67,6 @@ function theadFill($order, $value, $disp) {
                                     echo '<td>' . $content['descriptionEvent'] . '</td>';
                                     echo '<td>' . $content['nbPlacesEvent'] . '</td>';
                                     echo '<td>' . $content['dateEvent'] . '</td>';
-                                    echo '<td>' . $content['heureEvent'] . '</td>';
                                     echo '<td> <button type="submit" value="'.$content['idEvent'].'" name="Supprimer" class="btn btn-danger">Supp</button></td>';
                                     echo '<td> <button type="submit" value="'.$content['idEvent'].'" name="Modifier" class="btn btn-success">Modifier</button></td>';
                                     echo '</tr>';

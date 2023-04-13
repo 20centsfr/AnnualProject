@@ -7,15 +7,19 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
+session_start();
+include('includes/db.php'); 
+
 $nomEvent = $_POST['nomEvent'];
 $descriptionEvent = $_POST['descriptionEvent'];
 $nbPlacesEvent = $_POST['nbPlacesEvent'];
 $lieuEvent = $_POST['lieuEvent'];
-$heureEvent = $_POST['heureEvent'];
 $dateEvent = $_POST['dateEvent'];
+$nbPointsEvent = $_POST['nbPointsEvent'];
 
 
-$q = "INSERT INTO event (nomEvent, descriptionEvent, nbPlacesEvent, nbPointsEvent, dateEvent, heureEvent, lieuEvent) VALUES (:nomEvent, :descriptionEvent, :nbPlacesEvent, :nbPointsEvent, :dateEvent, :heureEvent, :lieuEvent)";
+
+$q = "INSERT INTO event (nomEvent, descriptionEvent, nbPlacesEvent, nbPointsEvent, dateEvent, lieuEvent) VALUES (:nomEvent, :descriptionEvent, :nbPlacesEvent, :nbPointsEvent, :dateEvent, :lieuEvent)";
 $req = $db->prepare($q);
 $req->execute([
     'nomEvent' => $nomEvent,
@@ -23,7 +27,6 @@ $req->execute([
     'nbPlacesEvent' => $nbPlacesEvent,
     'nbPointsEvent' => $nbPointsEvent,
     'dateEvent' => $dateEvent,
-    'heureEvent' => $heureEvent,
     'lieuEvent' => $lieuEvent
 ]);
 

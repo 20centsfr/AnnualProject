@@ -94,7 +94,7 @@ function theadFill($order, $value, $disp) {
                                     echo '</form>';
                                     echo '</td>';
                                     echo '<td>';
-                                    echo '<form action="reserverDevis.php" method="post" style="display: inline-block;">';
+                                    echo '<form action="reserverDevis.php" method="GET" style="display: inline-block;">';
                                     echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
                                     echo '<button type="submit" class="btn btn-success" name="idDevis" value="'.$devis['idDevis'].'">Réserver</button>';
                                     echo '</form>';
@@ -112,10 +112,10 @@ function theadFill($order, $value, $disp) {
         <section class="container">
             <div class="row col-12">
                 <br><br><br><br><br><br>
-                <h1>Mes activités</h1><br><br>
+                <h1>Mes reservations</h1><br><br>
                 <div class="overflow-auto">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <form action="annuler.php" method="post">
+                        <form action="annuler.php" method="POST">
                             <thead>
                             <tr>
                                 <?php
@@ -126,7 +126,7 @@ function theadFill($order, $value, $disp) {
                             </tr>
                             </thead>
 
-                            <?php
+                            <?php /*
                             $req = $db->query('SELECT * FROM reserve, activite where idUser = ' . $idUser . ' AND reserve.idActivite = activite.idActivite');
 
                             $req->execute() ;
@@ -135,7 +135,7 @@ function theadFill($order, $value, $disp) {
                                 echo '<td>' . $activite['nomActivite'] . '</td>';
                                 echo '<td>' .'<input type="hidden" name="idUser" value="'.$idUser.'" >'.' <button type="submit"   class="btn btn-primary" value="'.$activite['idActivite'].'" name="idActivite" class="btn btn-danger">Annuler</button></form></td>';
                                 echo '</tr>';
-                            }
+                            } */
                             ?>
                         </form>
                         </tbody>
@@ -149,13 +149,15 @@ function theadFill($order, $value, $disp) {
                 <h1>Mes events</h1><br><br>
                 <div class="overflow-auto">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <form action="quitterEvent.php" method="post">
+                        <form action="quitterEvent.php" method="POST">
                             <thead>
                             <tr>
                                 <?php
                                 theadFill($order, 'nomEvent', 'Nom de l\'event');
-                                theadFill($order, 'dateEvent', 'Date de l\'event');
-                                theadFill($order, 'heureEvent', 'Heure de l\'event');
+                                theadFill($order, 'descriptionEvent', 'Description');
+                                theadFill($order, 'dateEvent', 'Date');
+                                theadFill($order, 'lieuEvent', 'Lieu');
+
                                 ?>
                             </tr>
                             </thead>
@@ -167,9 +169,10 @@ function theadFill($order, $value, $disp) {
                             while ($event = $req->fetch()) {
                                 echo '<tr>';
                                 echo '<td>' . $event['nomEvent'] . '</td>';
+                                echo '<td>' . $event['descriptionEvent'] . '</td>';
                                 echo '<td>' . $event['dateEvent'] . '</td>';
-                                echo '<td>' . $event['heureEvent'] . '</td>';
-                                echo '<td>' .'<input type="hidden" name="idUser" value="'.$idUser.'" >'.' <button type="submit"   class="btn btn-primary" value="'.$event['idEvent'].'" name="idEvent" class="btn btn-danger">Annuler</button></form></td>';
+                                echo '<td>' . $event['lieuEvent'] . '</td>';
+                                echo '<td>' .'<input type="hidden" name="idUser" value="'.$idUser.'" >'.' <button type="submit"   class="btn btn-primary" value="'.$event['idEvent'].'" name="idEvent" class="btn btn-danger">Quitter</button></form></td>';
                                 echo '</tr>';
                             }
                             ?>

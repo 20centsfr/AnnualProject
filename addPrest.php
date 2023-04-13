@@ -90,6 +90,10 @@ error_reporting(E_ALL);
                         <label class="form-label">Service</label>
                     </div>
                     <div class="form-outline mb-4">
+                        <input type="text" name="prixService" id="prixService" class="form-control" required/>
+                        <label class="form-label">Prix du service</label>
+                    </div>
+                    <div class="form-outline mb-4">
                         <input type="text" name="secteurActivite" id="secteurActivite" class="form-control" required/>
                         <label class="form-label">Secteur d'activité</label>
                     </div>
