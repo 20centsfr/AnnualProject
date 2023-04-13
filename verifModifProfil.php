@@ -8,7 +8,7 @@ session_start();
         !isset($_POST['nom']) || empty($_POST['nom']) ||
         !isset($_POST['prenom']) || empty($_POST['prenom']) ||
         !isset($_POST['entreprise']) || empty($_POST['entreprise'])  ) {
-        header('location:modifProfile.php?message=Veuillez remplir tous les champs.');
+        header('location:modifProfile.php?message=Veuillez remplir tous les champs.&type=danger');
         exit;
     }
 
@@ -30,10 +30,10 @@ if($email == $actualEmail){
     ]);
 
     if ($req) {
-        header('location:modifProfile.php?message=Informations modifiées avec succès');
+        header('location:modifProfile.php?message=Informations modifiées avec succès&type=success');
         exit;
     } else {
-        header('location:modifProfile.php?message=Erreur.');
+        header('location:modifProfile.php?message=Erreur.&type=danger');
     }
 }
 

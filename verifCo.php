@@ -10,7 +10,7 @@ include('includes/db.php');
 	}
  
 	if(empty($_POST['email']) || empty($_POST['mdp'])){
-		header('location: connexion.php?message=Vous devez remplir les 2 champs');  
+		header('location: connexion.php?message=Vous devez remplir les 2 champs&type=danger');  
 		exit;
 	}
 
@@ -29,7 +29,7 @@ include('includes/db.php');
 	$results = $req->fetchAll(); 
 
 	if(count($results) == 0){
-		header('location: connexion.php?message=Identifiants incorrects'); 
+		header('location: connexion.php?message=Identifiants incorrects&type=danger'); 
 		exit;
 	}
 

@@ -2,14 +2,15 @@
 
 include 'includes/db.php';
 include ('includes/gestionDroits.php');
-session_start();
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
+var_dump($_POST);
+
 if (isset($_POST['Supprimer'])) {
-    $idActivite = ($_POST['Supprimer']);
+    $idActivite = ($_POST['idActivite']);
     $q = "DELETE FROM activite WHERE idActivite='$idActivite' ";
     $req = $db->prepare($q);
     $req->execute();
@@ -23,35 +24,43 @@ if (isset($_POST['Supprimer'])) {
 
 if (isset($_POST['Modifier'])) {
 
-    if(!isset($_POST['nomActivite']) || empty($_POST['nomActivite']) ||
-        !isset($_POST['nbPlacesActivite']) || empty($_POST['nbPlacesActivite']) ||
-        !isset($_POST['descriptionActivite']) || empty($_POST['descriptionActivite']) ||
-        !isset($_POST['tarifActivite']) || empty($_POST['tarifActivite'])) {
+    if(!isset($_POST['nom']) || empty($_POST['nom']) ||
+        !isset($_POST['places']) || empty($_POST['places']) ||
+        !isset($_POST['description']) || empty($_POST['description']) ||
+        !isset($_POST['prix']) || empty($_POST['prix']) ||
+        !isset($_POST['local']) || empty($_POST['local']) ||
+        !isset($_POST['duree']) || empty($_POST['duree'])) {
         header('location:admin_activites.php?message=Veuillez remplir tous les champs.');
         exit;
     }
+    
+    $nomActivite = htmlspecialchars($_POST['nom']);
+    $nbPlacesActivite = htmlspecialchars($_POST['places']);
+    $descriptionActivite = htmlspecialchars($_POST['description']);
+    $tarifActivite = htmlspecialchars($_POST['prix']);
+    $localActivite = htmlspecialchars($_POST['local']);
+    $dureeActivite = htmlspecialchars($_POST['duree']);
+    $idActivite = htmlspecialchars($_POST['Modifier']);
 
 
-    $nbPlacesActivite = htmlspecialchars($_POST['nbPlacesActivite']);
-    $nomActivite = htmlspecialchars($_POST['nomActivite']);
-    $descriptionActivite = htmlspecialchars($_POST['descriptionActivite']);
-    $tarifActivite = $_POST['tarifActivite'];
-    $idActivite = ($_POST['Modifier']);
-
-
-    $q = "UPDATE activite SET nomActivite=:nomActivite, nbPlacesActivite =:nbPlacesActivite,descriptionActivite=:descriptionActivite, tarifActivite=:tarifActivite, dates=:dates, heures=:heures WHERE idActivite='$idActivite' ";
+    $q = "UPDATE activite SET nomActivite=:nomActivite, nbPlacesActivite =:nbPlacesActivite, descriptionActivite=:descriptionActivite, tarifActivite=:tarifActivite, localActivite=:localActivite, dureeActivite=:dureeActivite  WHERE idActivite='$idActivite' ";
     $req = $db->prepare($q);
     $req->execute([
         'nomActivite' => $nomActivite,
         'nbPlacesActivite' => $nbPlacesActivite,
         'descriptionActivite' => $descriptionActivite,
-        'tarifActivite' => $tarifActivite
+        'tarifActivite' => $tarifActivite,
+        'localActivite' => $localActivite,
+        'dureeActivite' => $dureeActivite
     ]);
 
+
+    var_dump($req);
+
     if ($req) {
-        header('location: admin_activites.php?message=Activité modifiée');
+        header('location: admin_activites.php?message=Activité modifiée&type=success');
         exit;
     } else {
-        header('location:admin_activites.php?message=Erreur.');
+        header('location:admin_activites.php?message=Erreur.&type=danger');
     }
 }

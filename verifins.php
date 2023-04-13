@@ -11,22 +11,22 @@ if(isset($_POST['email']) && !empty($_POST['email'])){
 }
 
 if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
-	header('location: inscription.php?message=Email invalide.');
+	header('location: inscription.php?message=Email invalide.&type=danger');
 	exit;
 }
 
 if(empty($_POST['prenom']) || empty($_POST['nom']) || empty($_POST['email']) || empty($_POST['entreprise']) || empty($_POST['mdp']) || empty($_POST['mdp2'])){
-	header('location: inscription.php?message=Vous devez remplir tous les champs.');
+	header('location: inscription.php?message=Vous devez remplir tous les champs.&type=danger');
 	exit;
 }
 
 if(strlen($_POST['mdp']) < 8){
-	header('location: inscription.php?message=Le mot de passe doit faire au moins 8 caractères.');
+	header('location: inscription.php?message=Le mot de passe doit faire au moins 8 caractères.&type=danger');
 	exit;
 }
 
 if($_POST['mdp'] != $_POST['mdp2']){
-	header('location: inscription.php?message=Veuillez saisir un mot de passe identique pour les 2 champs.');
+	header('location: inscription.php?message=Veuillez saisir un mot de passe identique pour les 2 champs.&type=danger');
 	exit;
 }
 
@@ -39,7 +39,7 @@ $req->execute([$_POST['email']]);
 $results = $req->fetchAll(); 
 
 if(count($results) != 0){
-	header('location: inscription.php?message=Cet email est déjà utilisé.');
+	header('location: inscription.php?message=Cet email est déjà utilisé.&type=danger');
 	exit;
 }
 
@@ -56,7 +56,7 @@ $result = $req->execute([
 
 
 if($result){
-	header('location: connexion.php?message=Compte créé avec succès');
+	header('location: connexion.php?message=Compte créé avec succès&type=success');
 	exit;
 } else {
 	header('location: inscription.php?message=Erreur lors de l\'inscription.');

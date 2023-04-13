@@ -3,7 +3,6 @@
 include 'includes/db.php';
 include 'includes/header_admin.php';
 include ('includes/gestionDroits.php');
-session_start();
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
@@ -41,7 +40,6 @@ function theadFill($order, $value, $disp) {
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <form enctype="multipart/form-data"  method="post" action="gestionActivite.php">
                                 <thead>
                                 <tr>
                                     <?php
@@ -70,12 +68,21 @@ function theadFill($order, $value, $disp) {
                                     echo '<td>' . $content['tarifActivite'] . '</td>';
                                     echo '<td>' . $content['localActivite'] . '</td>';
                                     echo '<td>' . $content['dureeActivite'] . '</td>';
-                                    echo '<td> <button type="submit" value="'.$content['idActivite'].'" name="Supprimer" class="btn btn-danger">Supprimer</button></td>';
-                                    echo '<td> <button type="submit" value="'.$content['idActivite'].'" name="Modifier" class="btn btn-success">Modifier</button></td>';
+                                    echo '<td>';
+                                    echo '<form action="gestionActivite.php" method="post">';
+                                    echo '<input type="hidden" name="idActivite" value="'.$content['idActivite'].'">';
+                                    echo '<button type="submit" name="Supprimer" class="btn btn-danger">Supprimer</button>';
+                                    echo '</form>';
+                                    echo '</td>';
+                                    echo '<td>';
+                                    echo '<form action="modifActivite.php" method="post">';
+                                    echo '<input type="hidden" name="idActivite" value="'.$content['idActivite'].'">';
+                                    echo '<button type="submit" class="btn btn-success">Modifier</button>';
+                                    echo '</form>';
+                                    echo '</td>';
                                     echo '</tr>';
                                 }
                                 ?>
-                                </form>
                                 </tbody>
                             </table>
                         </div>
