@@ -1,16 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+    
 <?php 
-include 'includes/db.php';
-session_start();
+include('includes/header.php');
+include('includes/userInfo.php');
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
+
+function getIp(){
+  if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
+      $ip = $_SERVER['HTTP_CLIENT_IP'];
+  } elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+      $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+  } else {
+      $ip = $_SERVER['REMOTE_ADDR'];
+  }
+  return $ip;
+}
+  if(isset($_SESSION['email'])){
+
+  $ip=getIp();
+  $date=Date('Y-m-d');
+  $heure=Date("H:i:s");
+  $page="Contact";
+
+  $q = "INSERT INTO logs (page, date, heure, ip) VALUES (:page, :date, :heure, :ip)";
+  $req = $db->prepare($q);
+  $reponse = $req->execute([
+      'page'=>$page,
+      'date' => $date,
+      'heure'=>$heure,
+      'ip' => $ip
+  ]);
+  
+}
+
 ?>
-
-<!DOCTYPE html>
-<html lang="en-US" dir="ltr">
-
-<?php include('includes/header.php') ?>
 
   <body>
     <main class="main" id="top">
@@ -65,8 +92,8 @@ error_reporting(E_ALL);
             <div class="row gx-lg-5 align-items-center mb-5">
             <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
                 <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-                NOUVEL <br />
-                <span style="color: hsl(218, 81%, 75%)">&EVENEMENT</span>
+                CONTACTEZ <br />
+                <span style="color: hsl(218, 81%, 75%)">&NOUS</span>
                 </h1>
             </div>
 
@@ -75,33 +102,17 @@ error_reporting(E_ALL);
                 <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
                 <div class="card bg-glass">
                 <div class="card-body px-4 py-5 px-md-5">
-                    <form action="verificationAddEvent.php" method="POST">
+                    <form action="verifContact.php" method="POST">
                     <div class="form-outline mb-4">
-                        <input type="text" name="nomEvent" id="nomEvent" class="form-control" required/>
-                        <label class="form-label">Nom de l'event</label>
+                        <input type="email" name="email" id="email" class="form-control" />
+                        <label class="form-label">Adresse mail</label>
                     </div>
                     <div class="form-outline mb-4">
-                        <input type="text" name="descriptionEvent" id="descriptionEvent" class="form-control" required/>
-                        <label class="form-label">Description</label>
+                        <input type="text" name="message" id="message" class="form-control" />
+                        <label class="form-label">Message</label>
                     </div>
-                    <div class="form-outline mb-4">
-                        <input type="text" name="nbPlacesEvent" id="nbPlacesEvent" class="form-control" required/>
-                        <label class="form-label">Nombre de places</label>
-                    </div>
-                    <div class="form-outline mb-4">
-                        <input type="text" name="nbPointsEvent" id="nbPointsEvent" class="form-control" required/>
-                        <label class="form-label">Points</label>
-                    </div>
-                    <div class="form-outline mb-4">
-                        <input type="text" name="lieuEvent" id="lieuEvent" class="form-control" required/>
-                        <label class="form-label">Lieu</label>
-                    </div>
-                    <div class="form-outline mb-4">
-                        <input type="date" name="dateEvent" id="dateEvent" class="form-control" required min="<?php echo date('Y-m-d'); ?>"/>
-                        <label class="form-label">Date</label>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-block mb-4">Créer</button>
+                    <? include 'includes/message.php' ?>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Envoyer message</button>
                     </form>
                 </div>
                 </div>
@@ -109,9 +120,7 @@ error_reporting(E_ALL);
             </div>
         </div>
         </section>
-        <footer>
-            <?php include('includes/footer.php') ?>
-        </footer>
     </main>
   </body>
+
 </html>

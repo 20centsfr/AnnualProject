@@ -110,12 +110,56 @@ error_reporting(E_ALL);
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            Reservations</div>
+                                            Salles</div>
                                         <?php
 
-                                        $select = $db->query("SELECT count(idReservation) as idReservation  FROM reservation");
+                                        $select = $db->query("SELECT count(idSalle) as idSalle  FROM salle");
                                         $content = $select->fetch();
-                                        echo'<div class="h5 mb-0 font-weight-bold text-gray-800">' .$content['idReservation'].'</div>';
+                                        echo'<div class="h5 mb-0 font-weight-bold text-gray-800">' .$content['idSalle'].'</div>';
+                                        ?>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Matériel</div>
+                                        <?php
+
+                                        $select = $db->query("SELECT count(idMateriel) as idMateriel  FROM materiel");
+                                        $content = $select->fetch();
+                                        echo'<div class="h5 mb-0 font-weight-bold text-gray-800">' .$content['idMateriel'].'</div>';
+                                        ?>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Prestataires</div>
+                                        <?php
+
+                                        $select = $db->query("SELECT count(idPrestataire) as idPrestataire  FROM prestataire");
+                                        $content = $select->fetch();
+                                        echo'<div class="h5 mb-0 font-weight-bold text-gray-800">' .$content['idPrestataire'].'</div>';
                                         ?>
                                     </div>
                                     <div class="col-auto">
@@ -149,30 +193,7 @@ error_reporting(E_ALL);
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-warning shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            Nombre de connexions total</div>
-                                        <?php
-
-                                        $select = $db->query("SELECT count(idLogs) as idLogs FROM logs ");
-                                        $content = $select->fetch();
-                                        echo'<div class="h5 mb-0 font-weight-bold text-gray-800">' .$content['idLogs'].'</div>';
-                                        ?>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-        </div>
+                </div>
                         </div>
                     </div>
                 </div>

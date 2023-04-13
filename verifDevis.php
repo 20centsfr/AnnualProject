@@ -20,7 +20,7 @@ foreach ($activites as $idActivite) {
 	$select = $db->prepare("SELECT tarifActivite FROM activite WHERE idActivite = :idActivite");
 	$select->execute(["idActivite" => $idActivite]);
 	$row = $select->fetch();
-	$prix += $row["tarifActivite"];
+	$prix += $row["tarifActivite"] * $nbParticipants;
 }
 
 
@@ -31,7 +31,62 @@ foreach ($activites as $idActivite) {
 	echo "- " . $row["nomActivite"] . " (" . $row["tarifActivite"] . "€)<br>";
 }
 
-echo "Prix total : " . $prix . "€";
+//mat
+
+$nomMateriel = $_POST["nomMateriel"];
+$prixMateriel = $_POST["prixMateriel"];
+$materiels = $_POST["materiels"];
+
+if (empty($materiels)) {
+	echo "Veuillez sélectionner au moins un materiel.";
+} else {
+ 	$prixMat = 0; }
+
+foreach ($materiels as $idMateriel) {
+	$select = $db->prepare("SELECT prixMateriel FROM materiel WHERE idMateriel = :idMateriel");
+	$select->execute(["idMateriel" => $idMateriel]);
+	$row = $select->fetch();
+	$prixMat += $row["prixMateriel"] * $nbParticipants;
+}
+
+
+foreach ($materiels as $idMateriel) {
+	$select = $db->prepare("SELECT nomMateriel, prixMateriel FROM materiel WHERE idMateriel = :idMateriel");
+	$select->execute(["idMateriel" => $idMateriel]);
+	$row = $select->fetch();
+	echo "- " . $row["nomMateriel"] . " (" . $row["prixMateriel"] . "€)<br>";
+}
+
+//prest
+
+$nomPrestataire = $_POST["nomPrestataire"];
+$service = $_POST["service"];
+$prixService = $_POST["prixService"];
+$prestataires = $_POST["prestataires"];
+
+if (empty($prestataires)) {
+	echo "Veuillez sélectionner au moins une activité.";
+} else {
+ 	$prixPrest = 0; }
+
+foreach ($prestataires as $idPrestataire) {
+	$select = $db->prepare("SELECT prixService FROM prestataire WHERE idPrestataire = :idPrestataire");
+	$select->execute(["idPrestataire" => $idPrestataire]);
+	$row = $select->fetch();
+	$prixPrest += $row["prixService"] * $nbParticipants;
+}
+
+
+foreach ($prestataires as $idPrestataire) {
+	$select = $db->prepare("SELECT nomPrestataire, prixService FROM prestataire WHERE idPrestataire = :idPrestataire");
+	$select->execute(["idPrestataire" => $idPrestataire]);
+	$row = $select->fetch();
+	echo "- " . $row["nomPrestataire"] . " (" . $row["prixService"] . "€)<br>";
+}
+
+
+
+echo "Prix total : " . $prix + $prixMat + $prixPrest . "€";
 
 $idUser = $_SESSION['idUser'];
 
@@ -42,7 +97,10 @@ $reponse = $req->execute([
     'nbParticipants' => $nbParticipants,
     'date' => $date,
     'prix' => $prix,
-    'idUser' => $idUser
+    'idUser' => $idUser /*,
+	'idActivite' => $idActivite,
+	'idPrestataire' => $idPrestataire,
+	'idMateriel' => $idMateriel */
 ]);
 
 if ($reponse) {
@@ -56,4 +114,3 @@ if ($reponse) {
 }
 
 ?>
-
