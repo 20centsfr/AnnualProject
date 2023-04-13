@@ -1,6 +1,7 @@
 <?php //test
 
 require('includes/db.php');
+include ('includes/connected.php');
 $idUser = $_POST['idUser'];
 $idActivite = $_POST['idActivite'];
 

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('includes/db.php');
+include ('includes/connected.php');
 
 $q = "SELECT idUser FROM participe WHERE idEvent = :idEvent";
 $req = $db->prepare($q);

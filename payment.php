@@ -5,6 +5,7 @@
 
 include 'includes/db.php';
 include 'includes/header.php';
+include ('includes/connected.php');
 
 session_start();
 

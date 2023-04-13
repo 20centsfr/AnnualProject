@@ -3,6 +3,7 @@
 
 include 'includes/db.php';
 include 'includes/header_admin.php';
+include ('includes/gestionDroits.php');
 session_start();
 
 ini_set('display_errors', '1');

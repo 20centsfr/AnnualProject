@@ -1,6 +1,8 @@
 <?php //todo
 
 require_once 'includes/db.php';
+include ('includes/connected.php');
+
 
 if(!isset($_POST['nomEvent']) || empty($_POST['nomEvent']) || !isset($_POST['descriptionEvent']) || empty($_POST['descriptionEvent']) ||  !isset($_POST['heureEvent']) || empty($_POST['heureEvent']) || !isset($_POST['dateEvent']) || empty($_POST['dateEvent']) || !isset($_POST['nbPlacesEvent']) || empty($_POST['nbPlacesEvent']) || !isset($_POST['lieuEvent']) || empty($_POST['lieuEvent'])) {
     header('location:addEvent.php?message=Veuillez remplir tous les champs.');

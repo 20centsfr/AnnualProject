@@ -1,6 +1,7 @@
 <?php
 
     include('includes/userInfo.php');
+    include ('includes/connected.php');
 
     if(isset($_POST['idDevis']))
         $idDevis = htmlspecialchars($_POST['idDevis']);

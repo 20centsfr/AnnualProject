@@ -1,6 +1,7 @@
 <?php
 
 require_once 'includes/db.php';
+include ('includes/connected.php');
 
 if(!isset($_POST['nomActivite']) || empty($_POST['nomActivite']) || !isset($_POST['descriptionActivite']) || empty($_POST['descriptionActivite']) || !isset($_POST['nbPlacesActivite']) || empty($_POST['nbPlacesActivite']) || !isset($_POST['typeActivite']) || empty($_POST['typeActivite']) || !isset($_POST['tarifActivite']) || empty($_POST['tarifActivite'])) {
 	header('location:addActivite.php?message=Veuillez remplir tous les champs.');

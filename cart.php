@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <?php include("includes/header.php"); ?>
+        <?php include("includes/header.php"); 
+        include ('includes/connected.php');?>
+        
         <script>
             function changeQuantity(cartItem, action) {
                 const activite = localStorage.getItem("activite");

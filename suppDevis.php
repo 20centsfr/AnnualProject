@@ -1,6 +1,7 @@
 <?php //todo
 
 require('includes/db.php');
+include ('includes/connected.php');
 $idUser=$_POST['idUser'];
 
 

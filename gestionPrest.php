@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('includes/db.php');
+include ('includes/gestionDroits.php');
 
 if (isset($_POST['Supprimer'])) {
     $idPrestataire = ($_POST['Supprimer']);

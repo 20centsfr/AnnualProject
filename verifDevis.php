@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 
 session_start();
 include('includes/db.php'); 
+include ('includes/connected.php');
 
 $date=Date('Y-m-d');
 $nomEntreprise = $_POST["nomEntreprise"];

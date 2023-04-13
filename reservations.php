@@ -5,6 +5,7 @@
 
 include('includes/header.php');
 include('includes/userInfo.php');
+include ('includes/connected.php');
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');

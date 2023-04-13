@@ -1,5 +1,6 @@
-<?php//test
-include 'includes/db.php';
+<?php
+include ('includes/db.php');
+include ('includes/gestionDroits.php');
 session_start();
 
 ini_set('display_errors', '1');

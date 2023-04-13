@@ -1,0 +1,1 @@
+<?php include ('includes/gestionDroits.php'); ?>

@@ -1,4 +1,5 @@
 <?PHP
+include ('includes/gestionDroits.php');
 function sendMessage() {
     $content = array(
         "fr" => 'Merci de votre confiance envers Together&Stronger.'

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
-<?php include('includes/header.php') ?>
+<?php include('includes/header.php');
+include ('includes/connected.php'); ?>
 
   <body>
     <main class="main" id="top">

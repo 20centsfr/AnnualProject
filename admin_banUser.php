@@ -1,5 +1,6 @@
 <?php //todo
 
+include ('includes/gestionDroits.php');
 
 
 $idUser = $_POST['idUser'];

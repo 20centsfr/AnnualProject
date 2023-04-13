@@ -4,6 +4,7 @@
 <?php 
 include('includes/header.php');
 include('includes/db.php');
+include ('includes/connected.php');
 session_start();
 
 ini_set('display_errors', '1');
