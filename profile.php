@@ -1,7 +1,6 @@
 <?php
 include "includes/header.php";
 include "includes/userInfo.php";
-include ('includes/connected.php');
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
@@ -99,6 +98,28 @@ if (isset($_GET['order']))
         </div>
       </section>
 
+
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4 mx-auto">
+                <div class="w-100 h-100 p-5 services-card-shadow rounded-4">
+                <h3 class="text-center display-5 fw-semi-bold">Mes points T&S</h3><br><br>
+                <p class="text-center fs-0 fs-md-1"> Nombre de points TS :</p>
+                <h3 class="text-center display-5 fw-semi-bold"><?php 
+                echo '<p class="mb-0">' . $userInfo['nbPoints'] . '</p>';
+                ?> </h3><br><br>
+                <?php
+                if ($userInfo['nbPoints'] >= 50) {
+                    echo '<a class="btn btn-primary" href="fidelites.php" role="button">Découvrez nos offres spéciales</a>';
+                } else {
+                  echo '<a class="btn btn-primary" href="#" role="button">Gagnez plus de points pour débloquer nos offres spéciales !</a>';
+                }          
+                ?><br><br>            
+                </div>
+              </div>
+            </div>
+          </div>
+
     
       <section class="container">
             <div class="row col-12">
@@ -108,29 +129,25 @@ if (isset($_GET['order']))
                 <div class="overflow-auto">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <br><br><br>
-                        <form action="annuler.php" method="post">
+                        <form action="facture.php" method="post">
                             <thead>
                             <tr>
                                 <?php
-                                theadFill($order, 'numeroFacture', 'Numéro de la facture');
+                                theadFill($order, 'date', 'Date de paiement');
                                 theadFill($order, 'montant', 'Montant');
-                                theadFill($order, 'dateFacture', 'Date');
-                                theadFill($order, 'statusPaiement', 'Status');
                                 theadFill($order, 'telechargement', 'Télécharger');
                                 ?>
                             </tr>
                             </thead>
 
                             <?php
-                            $req = $db->query('SELECT * FROM facture');
+                            $req = $db->query('SELECT * FROM paiement'); //modif paiements client
                             $req->execute() ;
-                            while ($facture = $req->fetch()) {
+                            while ($paiement = $req->fetch()) {
                                 echo '<tr>';
-                                echo '<td>' . $facture['numeroFacture'] . '</td>';
-                                echo '<td>' . $facture['montant'] . '</td>';
-                                echo '<td>' . $facture['dateFacture'] . '</td>';
-                                echo '<td>' . $facture['statusPaiement'] . '</td>';
-                                echo '<td> <button type="submit" value="'.$content['idActivite'].'" name="telecharger" class="btn btn-success">Télécharger</button></td>';
+                                echo '<td>' . $paiement['date'] . '</td>';
+                                echo '<td>' . $paiement['montant'] . '</td>';
+                                echo '<td><form action="facture.php" method="post"><input type="hidden" name="idPaiement" value="'.$paiement['idPaiement'].'"><button type="submit" name="telecharger" class="btn btn-success">Télécharger</button></form></td>';
                                 echo '</tr>';
                             }
                             ?>
@@ -141,8 +158,8 @@ if (isset($_GET['order']))
                 </div>
             </div>
             </div>
-        </section>
       </section>
+
     </main>
     <?php include('includes/footer.php') ?>
   </body>

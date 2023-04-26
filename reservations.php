@@ -5,7 +5,6 @@
 
 include('includes/header.php');
 include('includes/userInfo.php');
-include ('includes/connected.php');
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
@@ -58,20 +57,28 @@ function theadFill($order, $value, $disp) {
   <body>
     <main class="main" id="top">
     <?php include('includes/nav.php') ?>
-
+    <br><br><br><br>
         <section class="container">
+        <?php include('includes/message.php') ?>
+        <br><br>
             <div class="row col-12">
                 <br><br><br><br><br><br>
                 <h1>Mes devis</h1><br><br>
-                <?php include('includes/message.php') ?>
+                <div class="d-flex align-left">
+                    <a class="btn btn-primary" href="devis.php" role="button">Faire un devis</a>
+                </div></div><br><br>
                 <div class="overflow-auto">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <form action="annulerDevis.php" method="post">
+                        <form action="annulerDevis.php" method="POST">
                             <thead>
                             <tr>
                                 <?php
+                                theadFill($order, 'date', 'Date de devis');
                                 theadFill($order, 'prix', 'Prix');
-                                theadFill($order, 'date', 'Date');
+                                theadFill($order, 'prix', 'Nombre de participants');
+                                theadFill($order, 'activite', 'Activités');
+                                theadFill($order, 'prestataire', 'Prestataires');
+                                theadFill($order, 'materiel', 'Matériels');
                                 theadFill($order, 'Supprimer', 'Supprimer');
                                 theadFill($order, 'Réserver', 'Réserver');
                                 ?>
@@ -79,14 +86,26 @@ function theadFill($order, $value, $disp) {
                             </thead>
 
                             <?php
-                            
-                                $req = $db->query("SELECT * FROM devis WHERE idUser='" . $idUser . "'");
 
-                                $req->execute() ;
+                                $req = $db->query("SELECT * FROM devis WHERE idUser='" . $idUser . "'");
                                 while ($devis = $req->fetch()) {
                                     echo '<tr>';
-                                    echo '<td>' . $devis['prix'] . '</td>';
                                     echo '<td>' . $devis['date'] . '</td>';
+                                    echo '<td>' . $devis['prix'] . '</td>';
+                                    echo '<td>' . $devis['nbParticipants'] . '</td>';
+                                    
+                                    $activiteReq = $db->query("SELECT nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $devis['idDevis'] . "'");
+                                    $activite = $activiteReq->fetch();
+                                    echo '<td>' . $activite['nomActivite'] . '</td>';
+                                    
+                                    $prestataireReq = $db->query("SELECT nomPrestataire FROM devisprestataire INNER JOIN prestataire ON devisprestataire.idPrestataire = prestataire.idPrestataire WHERE idDevis='" . $devis['idDevis'] . "'");
+                                    $prestataire = $prestataireReq->fetch();
+                                    echo '<td>' . $prestataire['nomPrestataire'] . '</td>';
+                                    
+                                    $materielReq = $db->query("SELECT nomMateriel FROM devismateriel INNER JOIN materiel ON devismateriel.idMateriel = materiel.idMateriel WHERE idDevis='" . $devis['idDevis'] . "'");
+                                    $materiel = $materielReq->fetch();
+                                    echo '<td>' . $materiel['nomMateriel'] . '</td>';
+
                                     echo '<td>';
                                     echo '<form action="annulerDevis.php" method="post" style="display: inline-block;">';
                                     echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
@@ -94,7 +113,8 @@ function theadFill($order, $value, $disp) {
                                     echo '</form>';
                                     echo '</td>';
                                     echo '<td>';
-                                    echo '<form action="reserverDevis.php" method="GET" style="display: inline-block;">';
+                                    echo '<form action="reserverDevis.php" method="POST" 
+                                    style="display: inline-block;">';
                                     echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
                                     echo '<button type="submit" class="btn btn-success" name="idDevis" value="'.$devis['idDevis'].'">Réserver</button>';
                                     echo '</form>';
@@ -115,28 +135,54 @@ function theadFill($order, $value, $disp) {
                 <h1>Mes reservations</h1><br><br>
                 <div class="overflow-auto">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <form action="annuler.php" method="POST">
+                    <form action="annulerDevis.php" method="POST">
                             <thead>
                             <tr>
                                 <?php
-                                theadFill($order, 'nomActivite', 'Nom de l\'activite');
-                                theadFill($order, 'Annuler', 'Annuler');
-                                
+                                theadFill($order, 'date', 'Date de devis');
+                                theadFill($order, 'prix', 'Prix');
+                                theadFill($order, 'prix', 'Nombre de participants');
+                                theadFill($order, 'activite', 'Activités');
+                                theadFill($order, 'prestataire', 'Prestataires');
+                                theadFill($order, 'materiel', 'Matériels');
+                                theadFill($order, 'Supprimer', 'Supprimer');
+                                theadFill($order, 'Réserver', 'Réserver');
                                 ?>
                             </tr>
                             </thead>
 
-                            <?php /*
-                            $req = $db->query('SELECT * FROM reserve, activite where idUser = ' . $idUser . ' AND reserve.idActivite = activite.idActivite');
+                            <?php
 
-                            $req->execute() ;
-                            while ($activite = $req->fetch()) {
-                                echo '<tr>';
-                                echo '<td>' . $activite['nomActivite'] . '</td>';
-                                echo '<td>' .'<input type="hidden" name="idUser" value="'.$idUser.'" >'.' <button type="submit"   class="btn btn-primary" value="'.$activite['idActivite'].'" name="idActivite" class="btn btn-danger">Annuler</button></form></td>';
-                                echo '</tr>';
-                            } */
-                            ?>
+                                $req = $db->query("SELECT * FROM reservation WHERE idUser='" . $idUser . "'");
+                                while ($reserve = $req->fetch()) {
+                                    echo '<tr>';
+                                    echo '<td>' . $reserve['date'] . '</td>';
+                                    echo '<td>' . $reserve['prix'] . '</td>';
+                                    echo '<td>' . $reserve['nbParticipants'] . '</td>';
+                                    
+                                    $activiteReq = $db->query("SELECT nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $reserve['idDevis'] . "'");
+                                    $activite = $activiteReq->fetch();
+                                    echo '<td>' . $activite['nomActivite'] . '</td>';
+                                    
+                                    $prestataireReq = $db->query("SELECT nomPrestataire FROM devisprestataire INNER JOIN prestataire ON devisprestataire.idPrestataire = prestataire.idPrestataire WHERE idDevis='" . $reserve['idDevis'] . "'");
+                                    $prestataire = $prestataireReq->fetch();
+                                    echo '<td>' . $prestataire['nomPrestataire'] . '</td>';
+                                    
+                                    $materielReq = $db->query("SELECT nomMateriel FROM devismateriel INNER JOIN materiel ON devismateriel.idMateriel = materiel.idMateriel WHERE idDevis='" . $reserve['idDevis'] . "'");
+                                    $materiel = $materielReq->fetch();
+                                    echo '<td>' . $materiel['nomMateriel'] . '</td>';
+
+                                    echo '<td>';
+                                    echo '<form action="annulerDevis.php" method="post" style="display: inline-block;">';
+                                    echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
+                                    echo '<button type="submit" class="btn btn-danger" name="idDevis" value="'.$reserve['idDevis'].'">Supprimer</button>';
+                                    echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
+                                    echo '<button type="submit" class="btn btn-success" name="idDevis" value="'.$reserve['idDevis'].'">Réserver</button>';
+                                    echo '</form>';
+                                    echo '</td>';
+                                    echo '</tr>';
+                                }
+                                ?>
                         </form>
                         </tbody>
                     </table>
@@ -147,32 +193,41 @@ function theadFill($order, $value, $disp) {
             <div class="row col-12">
                 <br><br><br><br><br><br>
                 <h1>Mes events</h1><br><br>
+                <div class="d-flex align-left">
+                    <a class="btn btn-primary" href="events.php" role="button">Liste d'events</a>
+                </div></div><br><br>
                 <div class="overflow-auto">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <form action="quitterEvent.php" method="POST">
                             <thead>
-                            <tr>
-                                <?php
-                                theadFill($order, 'nomEvent', 'Nom de l\'event');
-                                theadFill($order, 'descriptionEvent', 'Description');
-                                theadFill($order, 'dateEvent', 'Date');
-                                theadFill($order, 'lieuEvent', 'Lieu');
-
-                                ?>
-                            </tr>
+                                <tr>
+                                    <?php
+                                    theadFill($order, 'nomEvent', 'Nom de l\'event');
+                                    theadFill($order, 'dateEvent', 'Date');
+                                    theadFill($order, 'lieuEvent', 'Lieu');
+                                    theadFill($order, 'Quitter', 'Quitter');
+                                    theadFill($order, 'presence', 'Signaler presence');
+                                    ?>
+                                </tr>
                             </thead>
-
                             <?php
-                            $req = $db->query('SELECT * FROM participe, event where idUser = ' . $idUser . ' AND participe.idEvent = event.idEvent');
+                            $currentDate = date("Y-m-d");
+                            $req = $db->query("SELECT * FROM participe, event WHERE idUser = $idUser AND participe.idEvent = event.idEvent AND dateEvent >= '$currentDate'");
 
-                            $req->execute() ;
+                            $req->execute();
                             while ($event = $req->fetch()) {
                                 echo '<tr>';
                                 echo '<td>' . $event['nomEvent'] . '</td>';
-                                echo '<td>' . $event['descriptionEvent'] . '</td>';
                                 echo '<td>' . $event['dateEvent'] . '</td>';
                                 echo '<td>' . $event['lieuEvent'] . '</td>';
-                                echo '<td>' .'<input type="hidden" name="idUser" value="'.$idUser.'" >'.' <button type="submit"   class="btn btn-primary" value="'.$event['idEvent'].'" name="idEvent" class="btn btn-danger">Quitter</button></form></td>';
+                                echo '<td>' .'<input type="hidden" name="idUser" value="'.$idUser.'" >'.' <button type="submit"   class="btn btn-danger"  value="'.$event['idEvent'].'" name="idEvent" class="btn btn-danger">Quitter</button></form></td>';
+
+                                if ($currentDate == $event["dateEvent"]) {
+                                    echo "<form action='attendEvent.php' method='POST'>";
+                                    echo "<input type='hidden' name='idEvent' value='" . $event["idEvent"] . "'>";
+                                    echo "<input type='submit' name='attend' value='Signaler ma presence'>";
+                                    echo "</form>";
+                                }
                                 echo '</tr>';
                             }
                             ?>

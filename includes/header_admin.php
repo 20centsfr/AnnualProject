@@ -40,14 +40,24 @@
                 <span>Utilisateurs</span></a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="admin_blacklist.php">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Blacklist</span></a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="admin_messages.php">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Messages</span></a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="admin_reservations.php">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Reservations</span></a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="admin_event.php">
                 <i class="fas fa-fw fa-chart-area"></i>
-                <span>Evenements</span></a>
+                <span>Events</span></a>
         </li>
 
         <li class="nav-item">
@@ -71,9 +81,14 @@
                 <span>Lieux</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="admin_factures.php">
+            <a class="nav-link" href="admin_paiements.php">
                 <i class="fas fa-fw fa-table"></i>
-                <span>Factures</span></a>
+                <span>Paiements</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="admin_fidelite.php">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Offres de fidelité</span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="admin_prest.php">
@@ -114,7 +129,6 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <!-- Dropdown - Messages -->
                         <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                              aria-labelledby="searchDropdown">
                             <form class="form-inline mr-auto w-100 navbar-search">
@@ -132,7 +146,7 @@
                         </div>
                     </li>
 
-                    <div class="topbar-divider d-none d-sm-block"></div>
+                <!--<div class="topbar-divider d-none d-sm-block"></div>
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="index.php" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -144,6 +158,6 @@
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Deconnexion
                             </a>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </nav>

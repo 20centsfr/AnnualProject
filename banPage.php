@@ -1,17 +1,9 @@
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
-<?php include('includes/header.php') 
-
-//TODO
-
-
-?>
 
   <body>
     <main class="main" id="top">
-
-	<?php include('includes/nav.php') ?>
       
 <div class="container">
 
@@ -102,7 +94,7 @@ body {
 </style>
 
 	
-	<small>Pas d'acces</small>
+	<h1>BANNI :p</h1>
 	<div class="circle small"></div>
 	<div class="circle medium"></div>
 	<div class="circle big"></div>
