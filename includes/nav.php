@@ -1,6 +1,6 @@
 <?php 
     require_once 'includes/db.php';
-    include "userInfo.php";?>
+    ?>
     
       <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="light">
         <div class="container"><a class="navbar-brand" href="index.php"><img src="assets/img/icons/logo.png" height="50" alt="logo" /></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -9,6 +9,7 @@
               <li class="nav-item"><a class="nav-link px-3" href="activites.php">Activités</a></li>
               <?php 
               if(isset($_SESSION['email'])){
+                include "userInfo.php";
                 echo '<li class="nav-item"><a class="nav-link px-3" href="reservations.php">Devis et réservations</a></li>';
                 echo '<li class="nav-item"><a class="nav-link px-3" href="planning.php">Planning</a></li>';
                 echo '<li class="nav-item"><a class="nav-link px-3" href="profile.php">Profil</a></li>';

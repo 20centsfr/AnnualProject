@@ -4,12 +4,7 @@
 <?php 
 include('includes/header.php');
 include('includes/userInfo.php');
-include 'includes/db.php';
-session_start();
-
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
+include ('includes/connected.php');
 
 $idDevis = $_POST['idDevis'];
 
