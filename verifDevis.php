@@ -143,10 +143,10 @@ if ($reponse) {
     }
 
 	if ($q) {
-		header('location: reservations.php?message=Succes.&type=success');
+		header('location: reservations.php?message=Devis crée avec succès.&type=success');
 		exit;
 	} else {
-		header('location: devis.php?message=Echec.&type=danger');
+		header('location: devis.php?message=Echec du devis.&type=danger');
 		exit;
 	}
 }
