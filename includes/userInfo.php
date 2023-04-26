@@ -1,4 +1,4 @@
-<?
+<?php
 include 'db.php';
 session_start();
 
@@ -11,3 +11,4 @@ $userId = $q->fetch();
 $idUser = $userId['idUser'];
 
 $role = $userId['admin'];
+?>

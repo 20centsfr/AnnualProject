@@ -3,10 +3,6 @@
 include 'includes/db.php';
 include ('includes/gestionDroits.php');
 
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-
 if (isset($_POST['Supprimer'])) {
     $idActivite = ($_POST['idActivite']);
     $q = "DELETE FROM activite WHERE idActivite='$idActivite' ";
