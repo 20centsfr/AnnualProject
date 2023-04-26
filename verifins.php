@@ -43,7 +43,7 @@ if(count($results) != 0){
 	exit;
 }
 
-$q = 'INSERT INTO user (prenom, nom, entreprise, email, mdp, admin) VALUES (:prenom, :nom, :entreprise, :email, :mdp, :admin)';
+$q = 'INSERT INTO user (prenom, nom, entreprise, email, mdp, admin, banni, message, nbPoints) VALUES (:prenom, :nom, :entreprise, :email, :mdp, :admin, :banni, :message, :nbPoints)';
 $req = $db->prepare($q);
 $result = $req->execute([
 		'prenom' => $_POST['prenom'],
@@ -51,6 +51,10 @@ $result = $req->execute([
 		'entreprise' => $_POST['entreprise'],
 		'email' => $_POST['email'],
 		'mdp' => hash('sha512', $_POST['mdp']),
+		'admin' => 0,
+		'banni' => 0,
+		'message' => 0,
+		'nbPoints' => 0,
 		'admin' => 0
 	]);
 
