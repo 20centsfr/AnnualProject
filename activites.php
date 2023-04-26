@@ -69,7 +69,7 @@ function getIp(){
       <section id="customers">
         <div class="container">
           <h1 class="text-center display-5 fw-semi-bold">Nos activités</h1><br><br>
-          <p class="text-center fs-0 fs-md-1"> Vous êtes à la recherche d’une activité pour votre prochain événement d’entreprise ? Nous vous proposons les meilleures activités pour entreprises à Paris. Team Building, séminaire, soirée d’entreprise ou afterwork : vous trouverez une activité quelle que soit votre recherche. <br>Cherchez parmi des dizaines d’activités et faites votre demande de devis en ligne. Together&Stronger propose des activités insolites, originales ainsi que les grands classiques de l’événement d’entreprise.</p>
+          <p class="text-center fs-0 fs-md-1"> Vous êtes à la recherche d’une activité pour votre prochain événement d’entreprise ? Nous vous proposons les meilleures activités pour entreprises à Paris. Team Building, séminaire, soirée d’entreprise ou afterwork : vous trouverez une activité quelle que soit votre recherche. <br>Cherchez parmi des dizaines d’activités et faites votre demande de devis en ligne. Together&Stronger propose des activités insolites, originales ainsi que les grands classiques de l’événement d’entreprise. blabla</p>
           <br><br><br>
 
           <div class="grid-container">
