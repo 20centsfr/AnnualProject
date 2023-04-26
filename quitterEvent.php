@@ -1,6 +1,11 @@
-<?php //TEST
+<?php 
+include 'includes/db.php';
 session_start();
-require('includes/db.php');
+
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 
 $q = $db->prepare("DELETE FROM participe WHERE idUser = :idUser AND idEvent = :idEvent");
 $q->execute([
@@ -15,4 +20,6 @@ if ($q) {
 	header('location: reservations.php?message=Echec, vous n\'avez pas quitté l\'evenement.&type=danger');
 	exit;
 }
+
+//QUOICOUBAE
 ?>

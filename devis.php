@@ -94,7 +94,7 @@ function getIp(){
                 <form action="verifDevis.php" method="POST">
                     <div class="form-outline mb-4">
                         <label for="activites">Entreprise</label><br>
-                        <input type="text" name="nomEntreprise" id="nomEntreprise" class="form-control"/>
+                        <input type="text" name="nomEntreprise" id="nomEntreprise" class="form-control" value="<?php echo $userInfo['entreprise']; ?>"/>
                     </div>
                     <div class="form-outline mb-4">
                         <label for="activites">Nombre de participants</label><br>

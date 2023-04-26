@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-
-<div class="app-container">
-
+<html lang="en-US" dir="ltr">
 
 <?php
 
+session_start();
 include 'includes/db.php';
 include 'includes/header.php';
-
-session_start();
-
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
@@ -43,6 +39,7 @@ function getIp(){
 ?>
 
 <html>
+<div class="app-container">
 <link href="assets/css/style.css" rel="stylesheet" />
     <body>
     <?php include('includes/nav.php') ?>
@@ -143,7 +140,7 @@ function getIp(){
     </div>
   </div>
 
-  <div class="asso-section">
+  <!--<div class="asso-section">
     <div class="plans-section-header">
       <p>Mes associations</p>
     </div>
@@ -186,7 +183,7 @@ function getIp(){
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   </div>
   </div>
 </section>

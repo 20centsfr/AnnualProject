@@ -7,8 +7,6 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-var_dump($_POST);
-
 if (isset($_POST['Supprimer'])) {
     $idActivite = ($_POST['idActivite']);
     $q = "DELETE FROM activite WHERE idActivite='$idActivite' ";
@@ -55,7 +53,6 @@ if (isset($_POST['Modifier'])) {
     ]);
 
 
-    var_dump($req);
 
     if ($req) {
         header('location: admin_activites.php?message=Activité modifiée&type=success');

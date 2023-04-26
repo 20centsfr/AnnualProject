@@ -105,7 +105,8 @@ function getIp(){
                         </div>
                         <div class="form-outline mb-4">
                             <h4 class="mt-3 lh-base">Prix</h4>
-                            <p class="fs-0"><?php echo $devis['prix'] }?></p>
+                            <p class="fs-0"><?php echo $devis['prix'] }
+                            ?></p>
                         </div>
                         <!-- ACTIVITES CHOISIES -->
                         <div class="d-flex flex-row align-items-center back"><i class="fa fa-long-arrow-left mr-1 mb-1"></i>

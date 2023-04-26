@@ -16,4 +16,19 @@ if (isset($_POST['Supprimer'])) {
     }
 }
 
+if (isset($_POST['Bannir'])) {
+    $idUser = ($_POST['Bannir']);
+    $q = "UPDATE user SET banned = 1 WHERE idUser = :idUser";
+    $req = $db->prepare($q);
+    $req->execute([ 'idUser'=>$idUser ]);
+    
+    if ($req) {
+        header('location: admin_users.php?message=User banni.');
+        exit;
+    } else {
+        header('location:admin_users.php?message=Erreur.');
+    }
+}
+
+
 ?>

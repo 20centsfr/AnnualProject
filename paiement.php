@@ -5,7 +5,6 @@
 
 include 'includes/db.php';
 include 'includes/header.php';
-include ('includes/connected.php');
 
 session_start();
 
@@ -41,20 +40,20 @@ function getIp(){
   }
 ?>
 
-    <link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
   <main>
   <div class="container">
-  <?php include('includes/nav.php') ?>
+  <?php include('includes/nav.php'); ?>
 
   <section class="container">
     <h2 class="my-4 text-center">Insérez vos informations bancaires</h2><br><br>
-    <form action="./charge.php" method="post" id="payment-form">
+    <form action="charge.php" method="post" id="payment-form">
       <div class="form-row">
-        <input type="text" name="prenom" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Prenom">
-        <input type="text" name="nom" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Nom">
+        <input type="text" name="first_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Prenom">
+        <input type="text" name="last_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Nom">
         <input type="email" name="email" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Email">
         <input type="text" name="entreprise" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Entreprise">
         <div id="card-element" class="form-control"></div>

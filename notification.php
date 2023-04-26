@@ -1,15 +1,19 @@
 <?PHP
-include ('includes/gestionDroits.php');
 function sendMessage() {
-    $content = array(
-        "fr" => 'Merci de votre confiance envers Together&Stronger.'
+    $heading = array(
+        "fr" => 'Together&Stronger'
     );
+
+    $content = array(
+        "fr" => 'Merci de votre confiance.'
+    );
+
     $fields = array(
-        //change
-        'app_id' => "ddbf6ee7-3df3-4b1b-86d2-fc350a013cf3",
+        'app_id' => "520b99ae-d13d-4591-b03d-07dc5d11d02b",
         'included_segments' => array('Subscribed Users'),
         'data' => array("foo" => "bar"),
-        'contents' => $content
+        'contents' => $content,
+        'headings' => $heading
     );
     
     $fields = json_encode($fields);

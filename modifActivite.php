@@ -16,7 +16,7 @@ $activite = $select->fetch();
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex flex-row align-items-center back"><i class="fa fa-long-arrow-left mr-1 mb-1"></i>
-                        <a href="admin_dashboard.php" class="link-dark"><h6>Retour aux activités</h6></a>
+                        <a href="admin_activites.php" class="link-dark"><h6>Retour aux activités</h6></a>
                     </div>
                     <h3 class="text-right">Modifier l'activité</h3>
                 </div>
