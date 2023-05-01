@@ -4,10 +4,6 @@ session_start();
 require('fpdf/fpdf.php');
 include 'includes/db.php';
 
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-
 class Invoice extends FPDF {
     function Header() {
 
@@ -22,7 +18,7 @@ class Invoice extends FPDF {
         $this->Cell(30, 10, 'FACTURE', 0, 0, 'C');
         $this->Ln(20);
 
-        $this->Image('assets\img\icons\logo.png', 10, 10, 30);
+        $this->Image('assets/img/icons/logo.png', 10, 10, 30);
     }
 
     function Footer() {
