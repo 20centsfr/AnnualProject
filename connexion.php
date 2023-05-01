@@ -6,7 +6,7 @@
   <body>
     <main class="main" id="top">
       <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" data-navbar-on-scroll="light">
-        <div class="container"><a class="navbar-brand" href="index.php"><img src="assets/img/icons/Logo.png" height="35" alt="logo" /></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button></div>
+        <div class="container"><a class="navbar-brand" href="index.php"><img src="assets/img/icons/logo.png" height="35" alt="logo" /></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button></div>
       </nav>
   
         <section class="background-radial-gradient overflow-hidden">

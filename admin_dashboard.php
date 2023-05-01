@@ -2,17 +2,12 @@
 include 'includes/db.php';
 include 'includes/header_admin.php';
 include ('includes/gestionDroits.php');
-session_start();
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 ?>
 
-<!DOCTYPE html>
-<html lang="en-US" dir="ltr">
-  <body>
-    <main class="main" id="top">
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
@@ -199,9 +194,9 @@ error_reporting(E_ALL);
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
-</div>
-     </main>
+    </main>
 </body>
 </html>

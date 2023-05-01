@@ -3,10 +3,6 @@ include "includes/header.php";
 include "includes/userInfo.php";
 include ('includes/connected.php');
 
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-
 if (isset($_GET['order']))
         $order = $_GET['order'];
     else
@@ -142,8 +138,12 @@ if (isset($_GET['order']))
                             </thead>
 
                             <?php
-                            $req = $db->query('SELECT * FROM paiement'); //modif paiements client
-                            $req->execute() ;
+                            $q = 'SELECT * FROM paiement WHERE email = :email'; //modif paiements client
+                            $req = $db->prepare($q);
+                            $req->execute([
+                              'email' => $userInfo['email']
+                            ]);
+                            
                             while ($paiement = $req->fetch()) {
                                 echo '<tr>';
                                 echo '<td>' . $paiement['date'] . '</td>';
