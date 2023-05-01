@@ -1,12 +1,11 @@
 <?php
 include 'includes/db.php';
 session_start();
-require('includes/db.php');
-include ('includes/connected.php');
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
+
 
 if (isset($_POST['idEvent']) && isset($_POST['idUser'])) {
 	$idEvent = $_POST['idEvent'];
@@ -20,7 +19,7 @@ if (isset($_POST['idEvent']) && isset($_POST['idUser'])) {
 
 	while($resultat = $req->fetch()){
 	  if($resultat['email'] == $_SESSION['email']){
-	  	header('location: activites.php?message=Vous participez déjà à cet event.&type=danger');
+	  	header('location: events.php?message=Vous participez déjà à cet event.&type=danger');
 	  	exit;
 	  }
 	}
@@ -54,14 +53,14 @@ if (isset($_POST['idEvent']) && isset($_POST['idUser'])) {
 	]);
 
 	if ($reponse) {
-		header('location: activites.php?message=Succès.&type=success');
+		header('location: reservations.php?message=Succès.&type=success');
 		exit;
 	} else {
-		header('location: activites.php?message=Echec.&type=danger');
+		header('location: events.php?message=Echec.&type=danger');
 		exit;
 	}
 } else {
-	header('location: activites.php?message=Erreur.&type=danger');
+	header('location: events.php?message=Erreur.&type=danger');
 	exit;
 }
 ?>

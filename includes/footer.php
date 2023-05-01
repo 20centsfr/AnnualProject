@@ -8,15 +8,16 @@
             <div class="col-3 col-sm-4 col-lg-2 mb-3 order-2 order-sm-1">
               <h5 class="lh-lg fw-bold text-light font-sans-serif">Contact</h5>
               <ul class="list-unstyled text-light mb-md-4">
+                <li class="lh-lg"><a class="text-500 footer-link text-light" href="contact.php">Contactez-nous</a></li>
                 <li class="lh-lg"><a class="text-500 footer-link text-light" href="#!">07 68 88 60 93</a></li>
-                <li class="lh-lg"><a class="text-500 footer-link text-light" href="#!">tas@gmail.com</a></li>
+                <li class="lh-lg"><a class="text-500 footer-link text-light" href="gmail.com">tas@gmail.com</a></li>
               </ul>
             </div>
             <div class="col-6 col-sm-4 col-lg-2 mb-3 order-3 order-sm-2">
               <h5 class="lh-lg fw-bold text-light font-sans-serif"> Support</h5>
               <ul class="list-unstyled text-light mb-md-4 mb-lg-0">
                 <li class="lh-lg"><a class="text-500 footer-link text-light" href="#!">Terminal Conditions</a></li>
-                <li class="lh-lg"><a class="text-500 footer-link text-light" href="#!">About Us</a></li>
+                <li class="lh-lg"><a class="text-500 footer-link text-light" href="index.php">À propos</a></li>
               </ul>
             </div>
           </div>

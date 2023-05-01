@@ -5,11 +5,8 @@
 
 include('includes/header.php');
 include('includes/db.php');
+include('banni.php');
 session_start();
-
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
 
 function getIp(){
   if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -154,7 +151,8 @@ function getIp(){
 
               </p>
               <div class="d-flex justify-content-space-between align-item-center my-3 mt-2">
-              </div><button class="btn btn-sm btn-primary my-4 me-1" href="devis.php" role="button">Demander un devis</button>
+              </div>
+              <button onclick="location.href='devis.php'" class="btn btn-sm btn-primary btn-bg-purple my-4 me-1" type="button">Demander un devis</button>
             </div>
             <div class="col-md-6 mb-4"><img class="w-100" src="assets/img/illustration/4.png" alt="..." /></div>
           </div>
@@ -177,12 +175,22 @@ function getIp(){
               </ul>
               </p>
               <div class="d-flex justify-content-center align-item-center my-3 mt-2"> </div>
-              <button class="btn btn-sm btn-primary btn-bg-purple my-4 me-1" href="devis.php" role="button">Demander un devis</button>
+              <button onclick="location.href='contact.php'" class="btn btn-sm btn-primary btn-bg-purple my-4 me-1" type="button">Contactez-nous</button>
+
             </div>
           </div>
         </div>
       </section>
       <?php include('includes/footer.php') ?>
     </main>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" defer></script>
+    <script>
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "520b99ae-d13d-4591-b03d-07dc5d11d02b",
+        });
+      });
+    </script>
   </body>
 </html>
