@@ -6,8 +6,8 @@ error_reporting(E_ALL);
 
 include 'includes/header.php' ;
 include 'includes/nav.php';
-include ('includes/connected.php');
 include "includes/userInfo.php";
+include 'includes/connected.php';
 
 ?>
 
