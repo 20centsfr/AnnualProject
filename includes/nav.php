@@ -10,6 +10,7 @@
               <?php 
               if(isset($_SESSION['email'])){
                 include "userInfo.php";
+                echo '<li class="nav-item"><a class="nav-link px-3" href="events.php">Events</a></li>';
                 echo '<li class="nav-item"><a class="nav-link px-3" href="reservations.php">Devis et réservations</a></li>';
                 echo '<li class="nav-item"><a class="nav-link px-3" href="planning.php">Planning</a></li>';
                 echo '<li class="nav-item"><a class="nav-link px-3" href="profile.php">Profil</a></li>';

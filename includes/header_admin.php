@@ -23,10 +23,17 @@
         </a>
 
         <hr class="sidebar-divider my-0">
+
         <li class="nav-item">
-            <a class="nav-link" href="admin_dashboard.php">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+            <a class="nav-link" href="admin_activites.php">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Activités</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="admin_blacklist.php">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Blacklist</span></a>
         </li>
 
         <li class="nav-item">
@@ -34,26 +41,7 @@
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Connexions</span></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="admin_users.php">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Utilisateurs</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="admin_blacklist.php">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Blacklist</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="admin_messages.php">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Messages</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="admin_reservations.php">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Reservations</span></a>
-        </li>
+
         <li class="nav-item">
             <a class="nav-link" href="admin_event.php">
                 <i class="fas fa-fw fa-chart-area"></i>
@@ -61,30 +49,23 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="admin_activites.php">
+            <a class="nav-link" href="admin_lieux.php">
                 <i class="fas fa-fw fa-table"></i>
-                <span>Activités</span></a>
+                <span>Lieux</span></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="admin_salles.php">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Salles</span></a>
-        </li>
+
         <li class="nav-item">
             <a class="nav-link" href="admin_materiels.php">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Matériels</span></a>
         </li>
+
         <li class="nav-item">
-            <a class="nav-link" href="admin_lieux.php">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Lieux</span></a>
+            <a class="nav-link" href="admin_messages.php">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Messages</span></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="admin_paiements.php">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Paiements</span></a>
-        </li>
+
         <li class="nav-item">
             <a class="nav-link" href="admin_fidelite.php">
                 <i class="fas fa-fw fa-table"></i>
@@ -95,11 +76,37 @@
                 <i class="fas fa-fw fa-table"></i>
                 <span>Prestataires</span></a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="admin_paiements.php">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Paiements</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="admin_reservations.php">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Reservations</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="admin_salles.php">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Salles et lieux</span></a>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link" href="admin_planning.php">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Suivi d'activités</span></a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="admin_users.php">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Utilisateurs</span></a>
+        </li>
+
         <hr class="sidebar-divider d-none d-md-block">
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>

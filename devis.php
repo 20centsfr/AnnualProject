@@ -115,35 +115,6 @@ function getIp(){
                         ?>
                     </div>
 
-                    <div class="form-outline mb-4">
-                        <label for="prestataires">Sélectionnez les prestataires :</label><br>
-                        <?php
-                            $select = $db->query("SELECT * FROM prestataire");
-
-                            if ($select->rowCount() > 0) {
-                                while ($row = $select->fetch()) {
-                                    echo '<input type="checkbox" name="activites[]" value="' . $row["idPrestataire"] . '"> ' . $row["nomPrestataire"] . ' : ' . $row["service"]. ' (' . $row["prixService"] . '€)<br>';
-                                }
-                            } else {
-                                echo "Aucun prestataire n'a été trouvé dans la base de données.";
-                            }
-                        ?>
-                    </div>
-
-                    <div class="form-outline mb-4">
-                        <label for="materiels">Sélectionnez les matériels :</label><br>
-                        <?php
-                            $select = $db->query("SELECT * FROM materiel");
-
-                            if ($select->rowCount() > 0) {
-                                while ($row = $select->fetch()) {
-                                    echo '<input type="checkbox" name="materiels[]" value="' . $row["idMateriel"] . '"> ' . $row["nomMateriel"] . ' (' . $row["prixMateriel"] . '€)<br>';
-                                }
-                            } else {
-                                echo "Aucune activité n'a été trouvée dans la base de données.";
-                            }
-                        ?>
-                    </div>
                         <br>
                         <button type="submit" class="btn btn-primary btn-block mb-4">Obtenir un devis</button>
 

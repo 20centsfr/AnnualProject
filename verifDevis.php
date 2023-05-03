@@ -31,63 +31,7 @@ if (empty($activites)) {
 	}
 }
 
-//materiel
-
-$nomMateriel = $_POST["nomMateriel"];
-$prixMateriel = $_POST["prixMateriel"];
-$materiels = $_POST["materiels"];
-
-if (empty($materiels)) {
-	echo "Veuillez sélectionner au moins un materiel.";
-} else {
- 	$prixMat = 0;
-
-	foreach ($materiels as $idMateriel) {
-		$select = $db->prepare("SELECT prixMateriel FROM materiel WHERE idMateriel = :idMateriel");
-		$select->execute(["idMateriel" => $idMateriel]);
-		$row = $select->fetch();
-		$prixMat += $row["prixMateriel"] * $nbParticipants;
-	}
-
-	foreach ($materiels as $idMateriel) {
-		$select = $db->prepare("SELECT nomMateriel, prixMateriel FROM materiel WHERE idMateriel = :idMateriel");
-		$select->execute(["idMateriel" => $idMateriel]);
-		$row = $select->fetch();
-		echo "- " . $row["nomMateriel"] . " (" . $row["prixMateriel"] . "€)<br>";
-	}
-}
-
-//prestataire
-
-$nomPrestataire = $_POST["nomPrestataire"];
-$service = $_POST["service"];
-$prixService = $_POST["prixService"];
-$prestataires = $_POST["prestataires"];
-
-if (empty($prestataires)) {
-	echo "Veuillez sélectionner au moins un prestataire.";
-} else {
- 	$prixPrest = 0;
-
-	foreach ($prestataires as $idPrestataire) {
-		$select = $db->prepare("SELECT prixService FROM prestataire WHERE idPrestataire = :idPrestataire");
-		$select->execute(["idPrestataire" => $idPrestataire]);
-		$row = $select->fetch();
-		$prixPrest += $row["prixService"] * $nbParticipants;
-}
-
-
-foreach ($prestataires as $idPrestataire) {
-	$select = $db->prepare("SELECT nomPrestataire, prixService FROM prestataire WHERE idPrestataire = :idPrestataire");
-	$select->execute(["idPrestataire" => $idPrestataire]);
-	$row = $select->fetch();
-	echo "- " . $row["nomPrestataire"] . " (" . $row["prixService"] . "€)<br>";
-}
-
-}
-
-
-echo "Prix total : " . $prix + $prixMat + $prixPrest . "€";
+echo "Prix total : " . $prix . "€";
 
 $idUser = $_SESSION['idUser'];
 
@@ -98,10 +42,7 @@ $reponse = $req->execute([
     'nbParticipants' => $nbParticipants,
     'date' => $date,
     'prix' => $prix,
-    'idUser' => $idUser /*,
-	'idActivite' => $idActivite,
-	'idPrestataire' => $idPrestataire,
-	'idMateriel' => $idMateriel */
+    'idUser' => $idUser
 ]);
 
 
@@ -120,27 +61,6 @@ if ($reponse) {
         $db->query($q);
     }
 
-    if (!empty($_POST['prestataires'])) {
-        $prestataires = implode(",", $_POST['prestataires']);
-        $q = 'INSERT INTO devisprestataire (idDevis, idPrestataire) VALUES ';
-        $values = array();
-        foreach ($_POST['prestataires'] as $prestataire) {
-            $values[] = "($lastInsertId, $prestataire)";
-        }
-        $q .= implode(",", $values);
-        $db->query($q);
-    }
-
-    if (!empty($_POST['materiels'])) {
-        $materiels = implode(",", $_POST['materiels']);
-        $q = 'INSERT INTO devismateriel (idDevis, idMateriel) VALUES ';
-        $values = array();
-        foreach ($_POST['materiels'] as $materiel) {
-            $values[] = "($lastInsertId, $materiel)";
-        }
-        $q .= implode(",", $values);
-        $db->query($q);
-    }
 
 	if ($q) {
 		header('location: reservations.php?message=Devis crée avec succès.&type=success');

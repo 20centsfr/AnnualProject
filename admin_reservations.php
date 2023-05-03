@@ -11,7 +11,7 @@ error_reporting(E_ALL);
         if (isset($_GET['order'])){
             $order = $_GET['order'];
         } else {
-            $order = "idReservation"; }
+            $order = "idReserve"; }
 
         $select = $db->query("SELECT * FROM reservation ORDER by $order");
 
@@ -25,23 +25,25 @@ error_reporting(E_ALL);
     ?>
 
             <div class="container-fluid">
-                <h1 class="h3 mb-2 text-gray-800">Utilisateurs</h1>
+                <h1 class="h3 mb-2 text-gray-800">Reservations</h1>
                 <br><br>
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <form enctype="multipart/form-data" method="post" action="gestionUser.php">
+                                <form enctype="multipart/form-data" method="post" action="gestionReserve.php">
                                 <thead>
 
                                 <tr>
                                     <?php
-                                    theadFill($order, 'idReservation', 'ID');
-                                    theadFill($order, 'prenom', 'prenom');
-                                    theadFill($order, 'nom', 'nom');
-                                    theadFill($order, 'email', 'Email');
-                                    theadFill($order, 'entreprise', 'entreprise');
-                                    theadFill($order, 'admin', 'admin');
+                                    theadFill($order, 'idReserve', 'ID');
+                                    theadFill($order, 'entreprise', 'Entreprise');
+                                    theadFill($order, 'nbParticipants', 'Nombre de participants');
+                                    theadFill($order, 'Participants', 'Participants');
+                                    theadFill($order, 'Horaire', 'Horaire');
+                                    theadFill($order, 'Activités', 'Activités');
+                                    theadFill($order, 'prix', 'Prix');
+                                    theadFill($order, 'Date', 'Date');
                                     ?>
                                     <th></th>
                                     <th></th>
@@ -49,18 +51,19 @@ error_reporting(E_ALL);
                                 </thead>
 
                                     <?php
-                                    $select = $db->query("SELECT * FROM user");
+                                    $select = $db->query("SELECT * FROM reservation");
 
                                     while ($content = $select->fetch()) {
                                         echo '<tr>';
-                                        echo '<td>'.$content['idReservation'] .'</td>';
-                                        echo '<td>'.$content['prenom'].'</td>';
-                                        echo '<td>'.$content['nom'].'</td>';
-                                        echo '<td>'.$content['email'] .'</td>';
+                                        echo '<td>'.$content['idReserve'] .'</td>';
                                         echo '<td>'.$content['entreprise'] .'</td>';
-                                        echo '<td>'.$content['admin'].'</td>';
+                                        echo '<td>'.$content['nbParticipants'].'</td>';
+                                        echo '<td>'.$content['nom'].'</td>';
+                                        echo '<td>'.$content['prix'] .'</td>';
+                                        
+                                        echo '<td>'.$content['dateChoisi'].'</td>';
 
-                                        echo '<td> <button type="submit" value="'.$content['idReservation'].'" name="Supprimer" class="btn btn-danger">Supprimer</button></td>';
+                                        echo '<td> <button type="submit" value="'.$content['idReserve'].'" name="Supprimer" class="btn btn-danger">Supprimer</button></td>';
                                         echo '</tr>';
                                     }
                                     ?>

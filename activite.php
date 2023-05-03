@@ -4,8 +4,10 @@
 <?php 
 include('includes/header.php');
 include('includes/db.php');
-session_start();
+include('includes/userInfo.php');
 include ('includes/connected.php');
+session_start();
+
 
 function getIp(){
   if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -36,7 +38,7 @@ function getIp(){
 }
 
 
-
+ 
 
 if(isset($_GET['Activite'])){
   $idActivite = intval(htmlspecialchars($_GET['Activite']));
@@ -53,12 +55,37 @@ if(isset($_GET['Activite'])){
 ?>
 
   <body>
+
+  <style> 
+      .section-a {
+      margin: 2rem 0;
+      }
+
+      .section-a .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 3rem;
+      align-items: center;
+      justify-content: center;
+      }
+
+      .section-a h1 {
+      font-size: 4rem;
+      color: var(--primary-color);
+      }
+
+      .section-a p {
+      margin: 1rem 0;
+      }
+
+  </style>
+
     <main class="main" id="top">
     <?php include('includes/nav.php') ?>
     <br><br><br><br>
 
     <section class="section-a">
-    <div class="bg-holder bg-size" style="background-image:url(assets/img/illustration/2.png);background-position:right top;background-size:800px;"></div>
+      <div class="bg-holder bg-size" style="background-image:url(assets/img/illustration/2.png);background-position:right top;background-size:800px;"></div>
         <div class="container">
           <div class="grid-container">
             <h1 class="mt-3 lh-base"><?php echo $content['nomActivite']; ?></h1>
@@ -68,33 +95,10 @@ if(isset($_GET['Activite'])){
                 <p class="fs-0"><?php echo $content['tarifActivite']; ?> € </p>
                 <p class="fs-0"><?php echo $content['descriptionActivite']; ?></p>
           </div>
-          </div>
-          </div>
-        </section>
-    
+        </div>
+      </div>
+    </section>
 
-        <style> 
-            .section-a {
-            margin: 2rem 0;
-            }
-
-            .section-a .container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-gap: 3rem;
-            align-items: center;
-            justify-content: center;
-            }
-
-            .section-a h1 {
-            font-size: 4rem;
-            color: var(--primary-color);
-            }
-
-            .section-a p {
-            margin: 1rem 0;
-            }
-        </style>
 
     </main>
     <footer> 

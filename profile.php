@@ -138,7 +138,7 @@ if (isset($_GET['order']))
                             </thead>
 
                             <?php
-                            $q = 'SELECT * FROM paiement WHERE email = :email'; //modif paiements client
+                            $q = 'SELECT * FROM paiement WHERE email = :email';
                             $req = $db->prepare($q);
                             $req->execute([
                               'email' => $userInfo['email']

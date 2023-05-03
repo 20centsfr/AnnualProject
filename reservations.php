@@ -54,12 +54,12 @@ function theadFill($order, $value, $disp) {
     <main class="main" id="top">
     <?php include('includes/nav.php') ?>
     <br><br><br><br>
-        <section class="container">
+    <section class="container">
         <?php include('includes/message.php') ?>
         <br><br>
             <div class="row col-12">
                 <br><br><br><br><br><br>
-                <h1>Mes devis</h1><br><br>
+                <h1>Mes devis</h1><br>
                 <div class="d-flex align-left">
                     <a class="btn btn-primary" href="devis.php" role="button">Faire un devis</a>
                 </div></div><br><br>
@@ -73,8 +73,6 @@ function theadFill($order, $value, $disp) {
                                 theadFill($order, 'prix', 'Prix');
                                 theadFill($order, 'prix', 'Nombre de participants');
                                 theadFill($order, 'activite', 'Activités');
-                                theadFill($order, 'prestataire', 'Prestataires');
-                                theadFill($order, 'materiel', 'Matériels');
                                 theadFill($order, 'Supprimer', 'Supprimer');
                                 theadFill($order, 'Réserver', 'Réserver');
                                 ?>
@@ -83,24 +81,20 @@ function theadFill($order, $value, $disp) {
 
                             <?php
 
-                                $req = $db->query("SELECT * FROM devis WHERE idUser='" . $idUser . "'");
+                                $req = $db->query("SELECT * FROM devis WHERE idUser='" . $idUser . "' AND DATEDIFF(NOW(), date) < 14");
                                 while ($devis = $req->fetch()) {
                                     echo '<tr>';
                                     echo '<td>' . $devis['date'] . '</td>';
-                                    echo '<td>' . $devis['prix'] . '</td>';
+                                    echo '<td>' . $devis['prix'] . ' €</td>';
                                     echo '<td>' . $devis['nbParticipants'] . '</td>';
-                                    
-                                    $activiteReq = $db->query("SELECT nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $devis['idDevis'] . "'");
-                                    $activite = $activiteReq->fetch();
-                                    echo '<td>' . $activite['nomActivite'] . '</td>';
-                                    
-                                    $prestataireReq = $db->query("SELECT nomPrestataire FROM devisprestataire INNER JOIN prestataire ON devisprestataire.idPrestataire = prestataire.idPrestataire WHERE idDevis='" . $devis['idDevis'] . "'");
-                                    $prestataire = $prestataireReq->fetch();
-                                    echo '<td>' . $prestataire['nomPrestataire'] . '</td>';
-                                    
-                                    $materielReq = $db->query("SELECT nomMateriel FROM devismateriel INNER JOIN materiel ON devismateriel.idMateriel = materiel.idMateriel WHERE idDevis='" . $devis['idDevis'] . "'");
-                                    $materiel = $materielReq->fetch();
-                                    echo '<td>' . $materiel['nomMateriel'] . '</td>';
+
+                                    $activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $devis['idDevis'] . "'");
+                                    echo '<td>';
+                                    while ($activite = $activiteReq->fetch()) {
+                                        echo $activite['nomActivite'] . '<br>';
+                                        $idActivite = $activite['idActivite'];
+                                        echo '<input type="hidden" name="idActivite[]" value="'.$activite['idActivite'].'" >';
+                                    }
 
                                     echo '<td>';
                                     echo '<form action="annulerDevis.php" method="post" style="display: inline-block;">';
@@ -118,8 +112,9 @@ function theadFill($order, $value, $disp) {
                                     echo '</tr>';
                                 }
                                 ?>
-                        </form>
+                    
                         </tbody>
+                    </form>
                     </table>
                 </div>
             </section>
@@ -128,19 +123,17 @@ function theadFill($order, $value, $disp) {
         <section class="container">
             <div class="row col-12">
                 <br><br><br><br><br><br>
-                <h1>Mes reservations</h1><br><br>
+                <h1>Mes reservations</h1><br>
                 <div class="overflow-auto">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <form action="annulerDevis.php" method="POST">
+                    <form action="annulerReserve.php" method="POST">
                             <thead>
                             <tr>
                                 <?php
-                                theadFill($order, 'date', 'Date de devis');
+                                theadFill($order, 'date de devis', 'Date de devis');
                                 theadFill($order, 'prix', 'Prix');
-                                theadFill($order, 'prix', 'Nombre de participants');
+                                theadFill($order, 'Nombre de participants', 'Nombre de participants');
                                 theadFill($order, 'activite', 'Activités');
-                                theadFill($order, 'prestataire', 'Prestataires');
-                                theadFill($order, 'materiel', 'Matériels');
                                 theadFill($order, 'Supprimer', 'Supprimer');
                                 theadFill($order, 'Réserver', 'Réserver');
                                 ?>
@@ -148,7 +141,7 @@ function theadFill($order, $value, $disp) {
                             </thead>
 
                             <?php
-
+/*
                                 $req = $db->query("SELECT * FROM reservation WHERE idUser='" . $idUser . "'");
                                 while ($reserve = $req->fetch()) {
                                     echo '<tr>';
@@ -159,14 +152,6 @@ function theadFill($order, $value, $disp) {
                                     $activiteReq = $db->query("SELECT nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $reserve['idDevis'] . "'");
                                     $activite = $activiteReq->fetch();
                                     echo '<td>' . $activite['nomActivite'] . '</td>';
-                                    
-                                    $prestataireReq = $db->query("SELECT nomPrestataire FROM devisprestataire INNER JOIN prestataire ON devisprestataire.idPrestataire = prestataire.idPrestataire WHERE idDevis='" . $reserve['idDevis'] . "'");
-                                    $prestataire = $prestataireReq->fetch();
-                                    echo '<td>' . $prestataire['nomPrestataire'] . '</td>';
-                                    
-                                    $materielReq = $db->query("SELECT nomMateriel FROM devismateriel INNER JOIN materiel ON devismateriel.idMateriel = materiel.idMateriel WHERE idDevis='" . $reserve['idDevis'] . "'");
-                                    $materiel = $materielReq->fetch();
-                                    echo '<td>' . $materiel['nomMateriel'] . '</td>';
 
                                     echo '<td>';
                                     echo '<form action="annulerDevis.php" method="post" style="display: inline-block;">';
@@ -177,10 +162,10 @@ function theadFill($order, $value, $disp) {
                                     echo '</form>';
                                     echo '</td>';
                                     echo '</tr>';
-                                }
+                                } */
                                 ?>
-                        </form>
-                        </tbody>
+                            </tbody>
+                            </form>
                     </table>
             </div>
         </section>
@@ -188,7 +173,7 @@ function theadFill($order, $value, $disp) {
         <section class="container">
             <div class="row col-12">
                 <br><br><br><br><br><br>
-                <h1>Mes events</h1><br><br>
+                <h1>Mes events</h1><br>
                 <div class="d-flex align-left">
                     <a class="btn btn-primary" href="events.php" role="button">Liste d'events</a>
                 </div></div><br><br>
@@ -227,11 +212,12 @@ function theadFill($order, $value, $disp) {
                                 echo '</tr>';
                             }
                             ?>
-                        </form>
+                        
                         </tbody>
+                    </form>
                     </table>
             </div>
-        </section>
+    </section>
 
         <?php include('includes/footer.php') ?>
     </main>

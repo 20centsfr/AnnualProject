@@ -23,10 +23,10 @@ $req->execute([
 ]);
 
 if ($req) {
-    header('location: admin_lieux.php?message=Lieu ajouté');
+    header('location: admin_salles.php?message=Lieu ajouté');
     exit;
 } else {
-    header('location:admin_lieux.php?message=Erreur.');
+    header('location:admin_salles.php?message=Erreur.');
 }
 
 ?>
