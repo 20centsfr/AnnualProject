@@ -12,15 +12,7 @@ $dateReservation = date('Y-m-d');
 $idUser = $_POST['idUser'];
 $idDevis = $_POST['idDevis'];
 
-/*
-$activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $devis['idDevis'] . "'");
-    echo '<td>';
-    while ($activite = $activiteReq->fetch()) {
-        $idActivite = $activite['idActivite'];
-        echo '<input type="hidden" name="idActivite[]" value="'.$activite['idActivite'].'" >';
-    }
 
-*/
     $req = $db->query("SELECT * FROM devis WHERE idDevis='" . $idDevis . "'");
     while ($devis = $req->fetch()) {
 
@@ -32,11 +24,10 @@ $activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisact
     }
 }
 
-//$idActivite = $_POST['$idActivite'][0];
 
 
 /*
-
+$idActivite = $_POST['$idActivite'][0];
 
 if (isset($_POST['idDevis'])) {
     $idDevis = $_POST['idDevis'];
