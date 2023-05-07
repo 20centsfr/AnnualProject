@@ -1,23 +1,19 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-
 include('includes/db.php');
 session_start();
 
-$idReservation = $_POST['idReservation'];
+$idReservation = $_POST['idReserve'];
 $idUser = $_POST['idUser'];
-$idDevis = $_POST['idDevis'];
-
-if (isset($_POST['idDevis'])) {
-    $idDevis = $_POST['idDevis'];
-} else {
-    var_dump([$idDevis]);
+$participants = json_decode($_POST['participants'], true);
+foreach ($participants as $participant) {
+    $nom = $participant['nom'];
+    $prenom = $participant['prenom'];
+    $email = $participant['email'];
 }
 
+var_dump($participants);
 
-if (!empty($idParticipant)) {
+/* if (!empty($idParticipant)) {
     $q = "INSERT INTO participants (prenom, nom, email) VALUES (:nom, :prenom, :email)";
     $req = $db->prepare($q);
     $result = $req->execute([
@@ -36,5 +32,5 @@ if (!empty($idParticipant)) {
 } else {
     header('location: participants.php?message=Veuillez remplir tous les champs.');
     exit;
-}
+} */
 ?>

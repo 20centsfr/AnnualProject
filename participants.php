@@ -6,7 +6,8 @@ include('includes/header.php');
 include('includes/userInfo.php');
 include ('includes/connected.php');
 
-$idDevis = $_POST['idDevis'];
+$idReserve = $_POST['idReserve'];
+
 
 function getIp(){
     if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -100,27 +101,43 @@ function getIp(){
                 <div class="card-body px-4 py-5 px-md-5">
                     <form action="verifReserveDevis.php" method="POST">
                         <!--afficher le nombre de champs dont le client a besoin (nbParticipants) -->
+                        <?php
+                            $q = "SELECT nbParticipants FROM reservation WHERE idReserve = ?";
+                            $req = $db->prepare($q);
+                            $req->execute([$idReserve]);
+                            $nbParticipants = $req->fetchColumn();
+                        ?>
 
                         <div class="form-outline mb-4">
-                            <label for="activites">Nombre de participants</label><br>
-                            <p><?php //echo $userInfo['entreprise']; ?></p>
+                            <label for="activites">Nombre de participants : <?php echo $nbParticipants; ?> </label><br>
+                            <p><?php echo $userInfo['entreprise']; ?></p>
                             <?php
-                            $q = $db->query("SELECT nbParticipants FROM devis WHERE idDevis = ?");
-                            $nbParticipants = $q['nbParticipants'];
-                            //$nbParticipants = 10;
+
+                            $participants = array();
+
                             for ($i = 1; $i <= $nbParticipants; $i++) {
+
+
+                                $participant = array(
+                                    'nom' => $_POST['nomParticipant'.$i],
+                                    'prenom' => $_POST['prenomParticipant'.$i],
+                                    'email' => $_POST['emailParticipant'.$i]
+                                );
+                                array_push($participants, $participant);
                                 echo '<label for="participant'.$i.'">Participant '.$i.'</label>';
-                                echo '<input type="text" name="nomParticipant'.$i.'" id="nomParticipant'.$i.'" class="form-control"/>';
-                                echo '<input type="text" name="prenomParticipant'.$i.'" id="prenomParticipant'.$i.'" class="form-control"/>';
-                                echo '<input type="email" name="emailParticipant'.$i.'" id="emailParticipant'.$i.'" class="form-control"/>';
+                                echo '<input type="text" placeholder="Nom" name="nomParticipant'.$i.'" id="nomParticipant'.$i.'" class="form-control"/>';
+                                echo '<input type="text" placeholder="Prénom" name="prenomParticipant'.$i.'" id="prenomParticipant'.$i.'" class="form-control"/>';
+                                echo '<input type="email" placeholder="Email" name="emailParticipant'.$i.'" id="emailParticipant'.$i.'" class="form-control"/>';
                             }
                             ?>
                         </div>
 
                         <br>
 
-                        <?php echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';?>
-                        <?php echo '<input type="hidden" name="idDevis" value="'.$idDevis.'" >';?>
+                        <?php echo '<input type="hidden" name="participants" value="<?php echo json_encode($participants)"';
+                         echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
+                         echo '<input type="hidden" name="idReserve" value="'.$idReserve.'" >';
+                        ?>
 
                         <?php include 'includes/message.php'; ?>
                         <button type="submit" class="btn btn-primary btn-block mb-4">Réserver</button>

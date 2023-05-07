@@ -50,7 +50,12 @@ if (!empty($idHoraire)) {
     
 
     if ($result) {
-        header('location: participants.php?message=Succès&type=success');
+
+        echo "<form id='hidden-form' method='POST' action='participants.php' style='display:none;'>";
+        echo "<input type='hidden' name='idReserve' value='" . $idReserve . "'>";
+        echo "</form>";
+
+        echo "<script>document.getElementById('hidden-form').submit();</script>";
          exit;
      } else {
          header('location: reserverDevis.php?message=Erreur.&type=error');
