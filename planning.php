@@ -53,8 +53,25 @@ function getIp(){
           <p class="time">
           <?php echo $date=Date('Y-m-d');?> </p>
         </div>
- 
+
+
+
         <div class="plan-boxes jsGridView">
+          <?php 
+            $select = $db->query("SELECT * FROM devis");
+            while ($content = $select->fetch()) {
+
+              $activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite");
+              echo '<td>';
+              while ($activite = $activiteReq->fetch()) {
+                  $idActivite = $activite['idActivite'];
+                  /*echo '<input type="hidden" name="idActivite[]" value="'.$activite['idActivite'].'" >';
+              }*/
+              
+
+          ?>
+
+        
           <div class="plan-box-wrapper">
             <div class="plan-box" style="background-color: #e9e7fd;">
               <div class="plan-box-header">
@@ -62,12 +79,16 @@ function getIp(){
             </div>
           </div>
           <div class="plan-box-content-header">
-            <p class="box-content-header">Nintendo</p>
-            <p class="box-content-subheader">14:00</p>
-            <p class="box-content-subheader">Nation II, C01</p>
+            <h4 class="box-content-header"><?php echo $activite['nomActivite']; ?></h4>
+            <p class="box-content-subheader"><?php echo $content['date']; ?></p>
+            <p class="box-content-subheader">horaire</p>
+            <p class="box-content-subheader">salle</p>
+            <p class="box-content-subheader">activites</p>
           </div>
+          <?php } }?>
         </div>
 
+        <!--
         </div>
         <div class="plan-box-wrapper">
             <div class="plan-box" style="background-color: #e9e7fd;">
@@ -140,6 +161,8 @@ function getIp(){
     </div>
   </div>
 
+            -->
+
   <!--<div class="asso-section">
     <div class="plans-section-header">
       <p>Mes associations</p>
@@ -186,6 +209,7 @@ function getIp(){
   </div> -->
   </div>
   </div>
+  <br>
 </section>
 </main>
 </body>

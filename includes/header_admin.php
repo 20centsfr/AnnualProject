@@ -120,8 +120,8 @@
 
                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Chercher..."
-                               aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Chercher..." aria-label="Search" aria-describedby="basic-addon2" id="search" oninput="search()">
+                        <div class="list-group list-group-item-action" id="content">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="button">
                                 <i class="fas fa-search fa-sm"></i>
@@ -129,6 +129,30 @@
                         </div>
                     </div>
                 </form>
+
+                <script>
+                    async function search(){
+                    const input = document.getElementById('search').value;
+                    if(input.length > 2){
+                        const res = await fetch(`search.php?value=${input}`);
+                        const str = await res.text();
+                        const container = document.getElementById('content');
+                        container.innerHTML = str;
+                    } else {
+                        const container = document.getElementById('content');
+                        container.innerHTML = null;
+                    }
+                    }
+                </script>
+
+                <!--<div class="row height d-flex justify-content-center align-items-center">
+            <div class="form">
+              <i class="fa fa-search"></i>
+              <input type="text" class="form-control form-input" placeholder="Chercher une activité" id="searchActivite" oninput="search()">
+              <div class="list-group list-group-item-action" id="content">
+              </div>
+            </div> 
+          </div>-->
 
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown no-arrow d-sm-none">

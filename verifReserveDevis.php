@@ -13,15 +13,16 @@ $idUser = $_POST['idUser'];
 $idDevis = $_POST['idDevis'];
 
 
-    $req = $db->query("SELECT * FROM devis WHERE idDevis='" . $idDevis . "'");
-    while ($devis = $req->fetch()) {
+$req = $db->query("SELECT * FROM devis WHERE idDevis='" . $idDevis . "'");
+while ($devis = $req->fetch()) {
 
-    $activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $devis['idDevis'] . "'");
-    echo '<td>';
-    while ($activite = $activiteReq->fetch()) {
-        $idActivite = $activite['idActivite'];
-        echo '<input type="hidden" name="idActivite[]" value="'.$activite['idActivite'].'" >';
-    }
+$activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $devis['idDevis'] . "'");
+echo '<td>';
+while ($activite = $activiteReq->fetch()) {
+    $idActivite = $activite['idActivite'];
+    echo '<input type="hidden" name="idActivite[]" value="'.$activite['idActivite'].'" >';
+}
+echo '</td>';
 }
 
 
@@ -86,7 +87,7 @@ if (!empty($idSalle) && !empty($idHoraires)) {
         exit;
     }
 } else {
-    header('location: reserverDevis.php?message=Veuillez cocher les cases nécessaires.');
+    header('location: reserverDevis.php?message=Veuillez cocher toutes les cases.');
     exit;
 }
 ?>

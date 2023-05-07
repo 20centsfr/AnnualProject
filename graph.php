@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Graphique</title>
+<?php 
+    include('includes/header.php');
+    include('includes/db.php');
+    session_start();
+    include ('includes/connected.php');
+?>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <canvas id="myChart"></canvas>
+    <canvas id="chart"></canvas>
     <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
+        var ctx = document.getElementById('chart').getContext('2d');
 
         fetch('donnees.php')
             .then(response => response.json())
@@ -19,7 +23,7 @@
                     visites.push(element.visites);
                 });
 
-                var myChart = new Chart(ctx, {
+                var chart = new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: pages,
