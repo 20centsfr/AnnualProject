@@ -6,12 +6,6 @@ include('includes/header.php');
 include('includes/db.php');
 include('includes/userInfo.php');
 
-//session_start();
-
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-
 function getIp(){
   if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
       $ip = $_SERVER['HTTP_CLIENT_IP'];

@@ -77,7 +77,7 @@
                         <input type="password" name="mdp" id="mdp" class="form-control" />
                         <label class="form-label">Mot de passe</label>
                     </div>
-                    <? include 'includes/message.php' ?>
+                    <?php include 'includes/message.php' ?>
                     <button type="submit" class="btn btn-primary btn-block mb-4">Se connecter</button>
                     </form>
                 </div>

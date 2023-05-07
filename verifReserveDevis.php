@@ -1,93 +1,63 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-session_start();
+
 include('includes/db.php');
+session_start();
+include ('includes/connected.php');
 
 $idSalle = $_POST['salles'];
 $idHoraire = $_POST['horaires'][0];
 $dateChoisi = $_POST['dateChoisi'];
 $dateReservation = date('Y-m-d'); 
-$idUser = $_POST['idUser'];
-$idDevis = $_POST['idDevis'];
+$idUser = htmlspecialchars($_POST['idUser']);
+$idDevis = htmlspecialchars($_POST['idDevis']);
 
+$devisReq = $db->prepare("SELECT * FROM devis WHERE idDevis = ?");
+$devisReq->execute([$idDevis]);
+$devis = $devisReq->fetch();
 
-$req = $db->query("SELECT * FROM devis WHERE idDevis='" . $idDevis . "'");
-while ($devis = $req->fetch()) {
-
-$activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $devis['idDevis'] . "'");
-echo '<td>';
+$idActivites = array();
+$activiteReq = $db->prepare("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis = ?");
+$activiteReq->execute([$idDevis]);
 while ($activite = $activiteReq->fetch()) {
-    $idActivite = $activite['idActivite'];
-    echo '<input type="hidden" name="idActivite[]" value="'.$activite['idActivite'].'" >';
-}
-echo '</td>';
+    $idActivites[] = $activite['idActivite'];
 }
 
+var_dump($idActivites);
 
-
-/*
-$idActivite = $_POST['$idActivite'][0];
-
-if (isset($_POST['idDevis'])) {
-    $idDevis = $_POST['idDevis'];
-} else {
-    var_dump([$idDevis]);
-}
-
-*/ 
-
-
-$qq = "SELECT nbParticipants, prix FROM devis WHERE idDevis = ?";
-$stmt = $db->prepare($qq);
-if ($stmt->execute([$idDevis])) {
-    $res = $stmt->fetch(PDO::FETCH_ASSOC);
-    $nbParticipants = $res['nbParticipants'];
-    $prix = $res['prix'];
-}
-
-
-try {
-    $qq = "SELECT nbParticipants, prix FROM devis WHERE idDevis = ?";
-    $stmt = $db->prepare($qq);
-    if ($stmt->execute([$idDevis])) {
-        $res = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($res) {
-            $nbParticipants = $res['nbParticipants'];
-            $prix = $res['prix'];
-        } else {
-            echo "pas trouvey.";
-        }
-    } else {
-        echo "erreur.";
-    }
-} catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
-}
-
-if (!empty($idSalle) && !empty($idHoraires)) {
-    $q = "INSERT INTO reservation (idHoraires, nbParticipants, prix, dateReservation, dateChoisi, idUser, idActivite) VALUES (:idHoraires, :nbParticipants, :prix, :dateReservation, :dateChoisi, :idUser, :idActivite)";
+if (!empty($idHoraire)) {
+    $q = "INSERT INTO reservation (idHoraires, nbParticipants, prix, dateReservation, dateChoisi, idUser) VALUES (:idHoraires, :nbParticipants, :prix, :dateReservation, :dateChoisi, :idUser)";
     $req = $db->prepare($q);
+
     $result = $req->execute([
-        'idHoraires' => $idHoraires,
-        'nbParticipants' => $nbParticipants,
-        'prix' => $prix,
+        'idHoraires' => $idHoraire,
+        'nbParticipants' => $devis['nbParticipants'],
+        'prix' => $devis['prix'],
         'dateReservation' => $dateReservation, 
         'dateChoisi' => $dateChoisi, 
-        'idUser' => $idUser,
-        'idActivite' => $idActivite
+        'idUser' => $idUser
     ]);
 
-    if ($result) {
-        header('location: participants.php?message=Succès');
-        exit;
-    } else {
-        header('location: reserverDevis.php?message=Erreur.');
-        exit;
+    $idReserve = $db->lastInsertId();
+
+    foreach ($idActivites as $idActivite) {
+        $q = "INSERT INTO activiteReserve (idReserve, idActivite) VALUES (:idReserve, :idActivite)";
+        $req = $db->prepare($q);
+        $result = $req->execute([
+            'idReserve' => $idReserve,
+            'idActivite' => $idActivite
+        ]);
     }
-} else {
-    header('location: reserverDevis.php?message=Veuillez cocher toutes les cases.');
-    exit;
-}
+    
+
+    if ($result) {
+        header('location: participants.php?message=Succès&type=success');
+         exit;
+     } else {
+         header('location: reserverDevis.php?message=Erreur.&type=error');
+         exit;
+     }
+ } else {
+     header('location: reserverDevis.php?message=Veuillez cocher toutes les cases.&type=error');
+ }
+
 ?>

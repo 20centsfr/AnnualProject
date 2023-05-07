@@ -5,7 +5,6 @@
 include('includes/header.php');
 include('includes/db.php');
 session_start();
-include ('includes/connected.php');
 
 function getIp(){
   if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
