@@ -163,7 +163,6 @@ function getIp(){
 
                         <?php echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';?>
                         <?php echo '<input type="hidden" name="idDevis" value="'.$idDevis.'" >';?>
-                        <?php echo '<input type="hidden" name="idActivite[]" value="'.$activite['idActivite'].'" >'; ?>
 
                         <?php include 'includes/message.php'; ?>
                         <button type="submit" class="btn btn-primary btn-block mb-4">Réserver</button>
