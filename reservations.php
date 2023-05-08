@@ -130,39 +130,52 @@ function theadFill($order, $value, $disp) {
                             <thead>
                             <tr>
                                 <?php
-                                theadFill($order, 'date de devis', 'Date de devis');
+                                theadFill($order, 'date', 'Date');
                                 theadFill($order, 'prix', 'Prix');
                                 theadFill($order, 'Nombre de participants', 'Nombre de participants');
+                                theadFill($order, 'Participants', 'Participants');
                                 theadFill($order, 'activite', 'Activités');
-                                theadFill($order, 'Supprimer', 'Supprimer');
-                                theadFill($order, 'Réserver', 'Réserver');
+                                theadFill($order, 'Annuler', 'Annuler');
+                                theadFill($order, 'Payer', 'Payer');
                                 ?>
                             </tr>
                             </thead>
 
                             <?php
-/*
+
                                 $req = $db->query("SELECT * FROM reservation WHERE idUser='" . $idUser . "'");
                                 while ($reserve = $req->fetch()) {
                                     echo '<tr>';
-                                    echo '<td>' . $reserve['date'] . '</td>';
+                                    echo '<td>' . $reserve['dateChoisi'] . '</td>';
                                     echo '<td>' . $reserve['prix'] . '</td>';
                                     echo '<td>' . $reserve['nbParticipants'] . '</td>';
+
+                                    echo '<td>' . $reserve['nbParticipants'] . '</td>';
                                     
-                                    $activiteReq = $db->query("SELECT nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $reserve['idDevis'] . "'");
-                                    $activite = $activiteReq->fetch();
-                                    echo '<td>' . $activite['nomActivite'] . '</td>';
+                                    /*$participantsReq = $db->query("SELECT * FROM participants WHERE idReserve='" . $reserve['idReserve'] . "'");
+                                    if ($participantsReq->rowCount() > 0) {
+                                        while ($participant = $participantsReq->fetch()) {
+                                            echo $participant['nom'] . ' ' . $participant['prenom'] . '' . $participant['email'] . '<br>';
+                                        }
+                                    }*/
+                             
+                                    $activiteReq = $db->query("SELECT nomActivite FROM activiteReserve INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite WHERE idReserve='" . $reserve['idReserve'] . "'");
+                                    echo '<td>';
+                                    while ($activite = $activiteReq->fetch()) {
+                                        echo $activite['nomActivite'] . '<br>';
+                                        $idActivite = $activite['idActivite'];
+                                    }
+
 
                                     echo '<td>';
-                                    echo '<form action="annulerDevis.php" method="post" style="display: inline-block;">';
+                                    echo '<form action="annulerReserve.php" method="post" style="display: inline-block;">';
                                     echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
-                                    echo '<button type="submit" class="btn btn-danger" name="idDevis" value="'.$reserve['idDevis'].'">Supprimer</button>';
-                                    echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
-                                    echo '<button type="submit" class="btn btn-success" name="idDevis" value="'.$reserve['idDevis'].'">Réserver</button>';
+                                    echo '<input type="hidden" name="idUser" value="'.$reserve['prix'].'" >';
+                                    echo '<button type="submit" class="btn btn-danger" name="idReserve" value="'.$reserve['idReserve'].'">Annuler</button>';
                                     echo '</form>';
                                     echo '</td>';
                                     echo '</tr>';
-                                } */
+                                } 
                                 ?>
                             </tbody>
                             </form>

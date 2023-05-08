@@ -54,38 +54,36 @@ function getIp(){
           <?php echo $date=Date('Y-m-d');?> </p>
         </div>
 
-
-
         <div class="plan-boxes jsGridView">
-          <?php 
-            $select = $db->query("SELECT * FROM devis");
-            while ($content = $select->fetch()) {
+            <?php 
+                $q = "SELECT activite.nomActivite, reservation.dateChoisi, horaires.heureDebut, salle.numSalle
+                        FROM reservation 
+                        INNER JOIN horaires ON reservation.idHoraire = horaires.idHoraire
+                        INNER JOIN salle ON reservation.idSalle = salle.idSalle
+                      
+                        INNER JOIN activiteReserve ON reservation.idReserve = activiteactivite.idReserve
+                        INNER JOIN activite ON activitereserve.idActivite = activite.idActivite";
 
-              $activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite");
-              echo '<td>';
-              while ($activite = $activiteReq->fetch()) {
-                  $idActivite = $activite['idActivite'];
-                  /*echo '<input type="hidden" name="idActivite[]" value="'.$activite['idActivite'].'" >';
-              }*/
-              
-
-          ?>
-
-        
-          <div class="plan-box-wrapper">
-            <div class="plan-box" style="background-color: #e9e7fd;">
-              <div class="plan-box-header">
-                <div class="more-wrapper">
+                        //INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite
+                        //INNER JOIN devisactivites ON reservation.idDevis = devisactivites.idDevis
+                $res = $db->query($q);
+                while ($row = $res->fetch()) {
+            ?>
+            <div class="plan-box-wrapper">
+                <div class="plan-box" style="background-color: #e9e7fd;">
+                    <div class="plan-box-header">
+                        <div class="more-wrapper">
+                        </div>
+                    </div>
+                    <div class="plan-box-content-header">
+                        <h4 class="box-content-header"><?php echo $row['nomActivite']; ?></h4>
+                        <p class="box-content-subheader"><?php echo $row['dateChoisi']; ?></p>
+                        <p class="box-content-subheader"><?php echo $row['heureDebut']; ?></p>
+                        <p class="box-content-subheader"><?php echo $row['numSalle']; ?></p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="plan-box-content-header">
-            <h4 class="box-content-header"><?php echo $activite['nomActivite']; ?></h4>
-            <p class="box-content-subheader"><?php echo $content['date']; ?></p>
-            <p class="box-content-subheader">horaire</p>
-            <p class="box-content-subheader">salle</p>
-            <p class="box-content-subheader">activites</p>
-          </div>
-          <?php } }?>
+            <?php } ?>
         </div>
 
         <!--
@@ -161,9 +159,7 @@ function getIp(){
     </div>
   </div>
 
-            -->
-
-  <!--<div class="asso-section">
+  <div class="asso-section">
     <div class="plans-section-header">
       <p>Mes associations</p>
     </div>

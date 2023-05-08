@@ -100,7 +100,6 @@ function getIp(){
                 <div class="card bg-glass">
                 <div class="card-body px-4 py-5 px-md-5">
                     <form action="verifReserveDevis.php" method="POST">
-                        <!--afficher le nombre de champs dont le client a besoin (nbParticipants) -->
                         <?php
                             $q = "SELECT nbParticipants FROM reservation WHERE idReserve = ?";
                             $req = $db->prepare($q);
