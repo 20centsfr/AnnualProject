@@ -150,14 +150,14 @@ function theadFill($order, $value, $disp) {
                                     echo '<td>' . $reserve['prix'] . '</td>';
                                     echo '<td>' . $reserve['nbParticipants'] . '</td>';
 
-                                    echo '<td>' . $reserve['nbParticipants'] . '</td>';
+                                    //echo '<td>' . $reserve['nbParticipants'] . '</td>';
                                     
-                                    /*$participantsReq = $db->query("SELECT * FROM participants WHERE idReserve='" . $reserve['idReserve'] . "'");
+                                    $participantsReq = $db->query("SELECT * FROM participants WHERE idReserve='" . $reserve['idReserve'] . "'");
                                     if ($participantsReq->rowCount() > 0) {
                                         while ($participant = $participantsReq->fetch()) {
-                                            echo $participant['nom'] . ' ' . $participant['prenom'] . '' . $participant['email'] . '<br>';
+                                            echo $participant['nom'] . ' ' . $participant['prenom'] . ' (' . $participant['email'] . ')<br>';
                                         }
-                                    }*/
+                                    }
                              
                                     $activiteReq = $db->query("SELECT nomActivite FROM activiteReserve INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite WHERE idReserve='" . $reserve['idReserve'] . "'");
                                     echo '<td>';
@@ -183,54 +183,54 @@ function theadFill($order, $value, $disp) {
             </div>
         </section>
 
+        <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 20px;
+            }
+
+            .grid-container .col-md-6 {
+            height: 400px;
+            min-height: 400px;
+            max-height: 500px;
+            width: 100%;
+            }
+
+        </style>
+
         <section class="container">
-            <div class="row col-12">
-                <br><br><br><br><br><br>
-                <h1>Mes events</h1><br>
-                <div class="d-flex align-left">
-                    <a class="btn btn-primary" href="events.php" role="button">Liste d'events</a>
-                </div></div><br><br>
-                <div class="overflow-auto">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <form action="quitterEvent.php" method="POST">
-                            <thead>
-                                <tr>
-                                    <?php
-                                    theadFill($order, 'nomEvent', 'Nom de l\'event');
-                                    theadFill($order, 'dateEvent', 'Date');
-                                    theadFill($order, 'lieuEvent', 'Lieu');
-                                    theadFill($order, 'Quitter', 'Quitter');
-                                    theadFill($order, 'presence', 'Signaler presence');
-                                    ?>
-                                </tr>
-                            </thead>
-                            <?php
-                            $currentDate = date("Y-m-d");
-                            $req = $db->query("SELECT * FROM participe, event WHERE idUser = $idUser AND participe.idEvent = event.idEvent AND dateEvent >= '$currentDate'");
-
-                            $req->execute();
-                            while ($event = $req->fetch()) {
-                                echo '<tr>';
-                                echo '<td>' . $event['nomEvent'] . '</td>';
-                                echo '<td>' . $event['dateEvent'] . '</td>';
-                                echo '<td>' . $event['lieuEvent'] . '</td>';
-                                echo '<td>' .'<input type="hidden" name="idUser" value="'.$idUser.'" >'.' <button type="submit"   class="btn btn-danger"  value="'.$event['idEvent'].'" name="idEvent" class="btn btn-danger">Quitter</button></form></td>';
-
-                                if ($currentDate == $event["dateEvent"]) {
-                                    echo "<form action='attendEvent.php' method='POST'>";
-                                    echo "<input type='hidden' name='idEvent' value='" . $event["idEvent"] . "'>";
-                                    echo "<input type='submit' name='attend' value='Signaler ma presence'>";
-                                    echo "</form>";
-                                }
-                                echo '</tr>';
-                            }
-                            ?>
-                        
-                        </tbody>
-                    </form>
-                    </table>
+        <div class="row">
+        <h1>Mes reservations</h1><br>
+        <?php $req = $db->query("SELECT * FROM reservation WHERE idUser='" . $idUser . "'");
+        while ($reserve = $req->fetch()) {
+            ?>
+            <div class="col-md-4">
+            <div id="tab-1" class="tab-pane fade show p-0 active">
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="bg-light rounded">
+                            <div class="border-bottom p-4 mb-4">
+                                <h4 class="text-primary-gradient mb-1">Reservation</h4>
+                                <span><?php echo '<td>' . $reserve['dateChoisi'] . '</td>'; ?></span>
+                            </div>
+                            <div class="p-4 pt-0">
+                                <h1 class="mb-3">
+                                    <small class="align-top" style="font-size: 22px; line-height: 45px;">€</small><?php echo '<td>' . $reserve['prix'] . '</td>'; ?>
+                                </h1>
+                                <div class="d-flex justify-content-between mb-3"><span>Nombre de participants : <?php echo '<td>' . $reserve['nbParticipants'] . '</td>'; ?></span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                                <form method="GET" action="reservation.php">
+                                    <input type="hidden" name="Reserve" value="<?php echo $reserve['idReserve']; ?>" >
+                                    <button type="submit" class="btn btn-success">Plus d'information</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-    </section>
+            </div>
+            <?php } ?>
+        </section>
 
         <?php include('includes/footer.php') ?>
     </main>

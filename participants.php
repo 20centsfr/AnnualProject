@@ -130,7 +130,7 @@ function getIp(){
                     ?>
 
                     <?php include 'includes/message.php'; ?>
-                    <button type="submit" class="btn btn-primary btn-block mb-4">Réserver</button>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Continuer</button>
                 </form>
 
                 </div>

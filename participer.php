@@ -30,20 +30,6 @@ if (isset($_POST['idEvent']) && isset($_POST['idUser'])) {
 		'idEvent' => $idEvent
 	]);
 
-	/*
-	$resultat = $req->fetch();
-	$q = "SELECT COUNT(idUser) AS nb FROM participe WHERE idEvent = :idEvent";
-	$req2 = $db->prepare($q);
-	$req2->execute([
-		'idEvent' => $_POST['idEvent']
-	]);
-
-	$resultat2 = $req2->fetch();
-	if($resultat2['nb'] == $resultat['nbPlacesEvent']){
-		header('location: activites.php?message=Cet event est complet.&type=danger');
-		exit;
-	} 
-	*/
 
 	$q = "INSERT INTO participe (idEvent, idUser) VALUES (:idEvent, :idUser)";
 	$req = $db->prepare($q);
@@ -53,7 +39,7 @@ if (isset($_POST['idEvent']) && isset($_POST['idUser'])) {
 	]);
 
 	if ($reponse) {
-		header('location: reservations.php?message=Succès.&type=success');
+		header('location: events.php?message=Succès.&type=success');
 		exit;
 	} else {
 		header('location: events.php?message=Echec.&type=danger');

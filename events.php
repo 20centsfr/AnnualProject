@@ -34,6 +34,13 @@ function getIp(){
   
 }
 
+function theadFill($order, $value, $disp) {
+  if ($order == $value)
+      echo '<th><a href="?order=' . $value . ' DESC">' . $disp . '</a></th>';
+  else
+      echo '<th><a href="?order=' . $value . '">' . $disp . '</a></th>';
+}
+
 ?>
 
   <body>
@@ -96,6 +103,53 @@ function getIp(){
 
           </div>
         </section>
+
+        
+        <section class="container">
+              <div class="row col-12">
+                  <br><br><br><br><br><br>
+                  <h1>Mes events</h1><br>
+                  <div class="overflow-auto">
+                      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                          <form action="quitterEvent.php" method="POST">
+                              <thead>
+                                  <tr>
+                                      <?php
+                                      theadFill($order, 'nomEvent', 'Nom de l\'event');
+                                      theadFill($order, 'dateEvent', 'Date');
+                                      theadFill($order, 'lieuEvent', 'Lieu');
+                                      theadFill($order, 'Quitter', 'Quitter');
+                                      theadFill($order, 'presence', 'Signaler presence');
+                                      ?>
+                                  </tr>
+                              </thead>
+                              <?php
+                              $currentDate = date("Y-m-d");
+                              $req = $db->query("SELECT * FROM participe, event WHERE idUser = $idUser AND participe.idEvent = event.idEvent AND dateEvent >= '$currentDate'");
+
+                              $req->execute();
+                              while ($event = $req->fetch()) {
+                                  echo '<tr>';
+                                  echo '<td>' . $event['nomEvent'] . '</td>';
+                                  echo '<td>' . $event['dateEvent'] . '</td>';
+                                  echo '<td>' . $event['lieuEvent'] . '</td>';
+                                  echo '<td>' .'<input type="hidden" name="idUser" value="'.$idUser.'" >'.' <button type="submit"   class="btn btn-danger"  value="'.$event['idEvent'].'" name="idEvent" class="btn btn-danger">Quitter</button></form></td>';
+
+                                  if ($currentDate == $event["dateEvent"]) {
+                                      echo "<form action='attendEvent.php' method='POST'>";
+                                      echo "<input type='hidden' name='idEvent' value='" . $event["idEvent"] . "'>";
+                                      echo "<input type='submit' name='attend' value='Signaler ma presence'>";
+                                      echo "</form>";
+                                  }
+                                  echo '</tr>';
+                              }
+                              ?>
+                          
+                          </tbody>
+                      </form>
+                      </table>
+              </div>
+      </section>
       <footer> 
         <?php include('includes/footer.php') ?>
       </footer>

@@ -63,7 +63,7 @@ function getIp(){
                       
                         INNER JOIN activiteReserve ON reservation.idReserve = activiteactivite.idReserve
                         INNER JOIN activite ON activitereserve.idActivite = activite.idActivite";
-
+ 
                         //INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite
                         //INNER JOIN devisactivites ON reservation.idDevis = devisactivites.idDevis
                 $res = $db->query($q);

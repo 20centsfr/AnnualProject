@@ -14,12 +14,11 @@ $q->execute([
 ]);
 
 if ($q) {
-	header('location: reservations.php?message=Vous avez quitté l\'evenement.&type=success');
+	header('location: events.php?message=Vous avez quitté l\'evenement.&type=success');
 	exit;
 }else{
-	header('location: reservations.php?message=Echec, vous n\'avez pas quitté l\'evenement.&type=danger');
+	header('location: events.php?message=Echec, vous n\'avez pas quitté l\'evenement.&type=danger');
 	exit;
 }
 
-//QUOICOUBAE
 ?>
