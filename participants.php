@@ -99,48 +99,40 @@ function getIp(){
                 <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
                 <div class="card bg-glass">
                 <div class="card-body px-4 py-5 px-md-5">
-                    <form action="verifReserveDevis.php" method="POST">
+                <form action="verifParticipants.php" method="POST">
+                    <?php
+                    $q = "SELECT nbParticipants FROM reservation WHERE idReserve = ?";
+                    $req = $db->prepare($q);
+                    $req->execute([$idReserve]);
+                    $nbParticipants = $req->fetchColumn();
+                    ?>
+
+                    <div class="form-outline mb-4">
+                        <label for="activites">Nombre de participants : <?php echo $nbParticipants; ?> </label><br>
+                        <p><?php echo $userInfo['entreprise']; ?></p>
                         <?php
-                            $q = "SELECT nbParticipants FROM reservation WHERE idReserve = ?";
-                            $req = $db->prepare($q);
-                            $req->execute([$idReserve]);
-                            $nbParticipants = $req->fetchColumn();
+                        for ($i = 1; $i <= $nbParticipants; $i++) {
+                            echo '<label for="participant'.$i.'">Participant '.$i.'</label>';
+                            echo '<input type="text" placeholder="Nom" name="nomParticipant[]" id="nomParticipant'.$i.'" class="form-control"/>';
+                            echo '<input type="text" placeholder="Prénom" name="prenomParticipant[]" id="prenomParticipant'.$i.'" class="form-control"/>';
+                            echo '<input type="email" placeholder="Email" name="emailParticipant[]" id="emailParticipant'.$i.'" class="form-control"/>';
+                            echo '<input type="hidden" name="nbParticipants" value="'.$nbParticipants.'" >';
+                        }
                         ?>
+                    </div>
 
-                        <div class="form-outline mb-4">
-                            <label for="activites">Nombre de participants : <?php echo $nbParticipants; ?> </label><br>
-                            <p><?php echo $userInfo['entreprise']; ?></p>
-                            <?php
+                    <br>
 
-                            $participants = array();
+                    <?php
+                    echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
+                    echo '<input type="hidden" name="idReserve" value="'.$idReserve.'" >';
 
-                            for ($i = 1; $i <= $nbParticipants; $i++) {
+                    ?>
 
+                    <?php include 'includes/message.php'; ?>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Réserver</button>
+                </form>
 
-                                $participant = array(
-                                    'nom' => $_POST['nomParticipant'.$i],
-                                    'prenom' => $_POST['prenomParticipant'.$i],
-                                    'email' => $_POST['emailParticipant'.$i]
-                                );
-                                array_push($participants, $participant);
-                                echo '<label for="participant'.$i.'">Participant '.$i.'</label>';
-                                echo '<input type="text" placeholder="Nom" name="nomParticipant'.$i.'" id="nomParticipant'.$i.'" class="form-control"/>';
-                                echo '<input type="text" placeholder="Prénom" name="prenomParticipant'.$i.'" id="prenomParticipant'.$i.'" class="form-control"/>';
-                                echo '<input type="email" placeholder="Email" name="emailParticipant'.$i.'" id="emailParticipant'.$i.'" class="form-control"/>';
-                            }
-                            ?>
-                        </div>
-
-                        <br>
-
-                        <?php echo '<input type="hidden" name="participants" value="<?php echo json_encode($participants)"';
-                         echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
-                         echo '<input type="hidden" name="idReserve" value="'.$idReserve.'" >';
-                        ?>
-
-                        <?php include 'includes/message.php'; ?>
-                        <button type="submit" class="btn btn-primary btn-block mb-4">Réserver</button>
-                    </form>
                 </div>
             </div>
         </div>
