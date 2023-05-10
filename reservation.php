@@ -92,7 +92,21 @@ if(isset($_GET['Reserve'])){
                 
                 <p class="fs-0">Heure : <?php echo $content['idHoraire']; ?></p>
 
-                <p class="fs-0">Salle <?php echo $content['idSalle']; ?> € </p>
+
+                <?php /*
+                $salleReq = $db->query("SELECT salle.numSalle FROM reservation JOIN salle ON reservation.idSalle = salle.idSalle WHERE idReserve='" . $content['idReserve'] . "'");
+                echo '<td>';
+                while ($salle = $salleReq->fetch()) {
+                    echo $salle['numSalle'] . '<br>';
+                }
+
+                $salleReq = $db->query("SELECT numSalle FROM reservation INNER JOIN salle ON salleReserve.idSalle = salle.idSalle WHERE idReserve='" . $content['idReserve'] . "'");
+                echo '<td>';
+                while ($salle = $salleReq->fetch()) {
+                    echo $salle['numSalle'] . '<br>';
+                }*/ ?>
+
+                <p class="fs-0">Salle <?php echo $content['idSalle']; ?> </p>
 
                 <p class="fs-0">Activités :</p>
 
@@ -111,19 +125,23 @@ if(isset($_GET['Reserve'])){
                 $participantsReq = $db->query("SELECT * FROM participants WHERE idReserve='" . $content['idReserve'] . "'");
                 if ($participantsReq->rowCount() > 0) {
                     while ($participant = $participantsReq->fetch()) {
-                        echo $participant['nom'] . ' ' . $participant['prenom'] . ' (' . $participant['email'] . ')<br>';
+                        echo $participant['prenom'] . ' ' . $participant['nom'] . ' (' . $participant['email'] . ')<br>';
                     }
-                } ?>
+                } 
+
+                echo '<form action="annulerReserve.php" method="post" style="display: inline-block;">';
+                echo '<input type="hidden" name="idReserve" value="'.$idReserve.'" >';
+                echo '<button type="submit" class="btn btn-danger" name="idReserve" value="'.$content['idReserve'].'">Annuler</button>';
+                echo '</form>';
+                ?>
           </div>
         </div>
       </div>
     </section>
-
-
     </main>
     <footer> 
         <?php include('includes/footer.php') ?>
-      </footer>
+    </footer>
   </body>
 
 </html>

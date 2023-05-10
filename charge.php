@@ -17,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $email = $_POST['email'];
   $date = date('Y-m-d'); 
 
-  $price = 1000;
-  //$price = $_SESSION['prix'] * 100;
+  //$price = 1000;
+  $price = $_SESSION['prix'] * 100;
 
   $customer = \Stripe\Customer::create(array(
     'email' => $email,

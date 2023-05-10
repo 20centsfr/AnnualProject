@@ -48,6 +48,10 @@ function theadFill($order, $value, $disp) {
         echo '<th><a href="?order=' . $value . '">' . $disp . '</a></th>';
 }
 
+
+$_SESSION['prix'] = $price;
+
+
 ?>
 
   <body>
@@ -112,12 +116,11 @@ function theadFill($order, $value, $disp) {
                                     echo '</tr>';
                                 }
                                 ?>
-                    
                         </tbody>
                     </form>
                     </table>
                 </div>
-            </section>
+        </section>
 
 
         <section class="container">
@@ -133,10 +136,10 @@ function theadFill($order, $value, $disp) {
                                 theadFill($order, 'date', 'Date');
                                 theadFill($order, 'prix', 'Prix');
                                 theadFill($order, 'Nombre de participants', 'Nombre de participants');
-                                theadFill($order, 'Participants', 'Participants');
-                                theadFill($order, 'activite', 'Activités');
+                                //theadFill($order, 'Participants', 'Participants');
+                                //theadFill($order, 'activite', 'Activités');
                                 theadFill($order, 'Annuler', 'Annuler');
-                                theadFill($order, 'Payer', 'Payer');
+                                //theadFill($order, 'Payer', 'Payer');
                                 ?>
                             </tr>
                             </thead>
@@ -150,7 +153,7 @@ function theadFill($order, $value, $disp) {
                                     echo '<td>' . $reserve['prix'] . '</td>';
                                     echo '<td>' . $reserve['nbParticipants'] . '</td>';
 
-                                    //echo '<td>' . $reserve['nbParticipants'] . '</td>';
+                                    /*echo '<td>' . $reserve['nbParticipants'] . '</td>';
                                     
                                     $participantsReq = $db->query("SELECT * FROM participants WHERE idReserve='" . $reserve['idReserve'] . "'");
                                     if ($participantsReq->rowCount() > 0) {
@@ -158,13 +161,14 @@ function theadFill($order, $value, $disp) {
                                             echo $participant['nom'] . ' ' . $participant['prenom'] . ' (' . $participant['email'] . ')<br>';
                                         }
                                     }
-                             
+                                    
                                     $activiteReq = $db->query("SELECT nomActivite FROM activiteReserve INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite WHERE idReserve='" . $reserve['idReserve'] . "'");
                                     echo '<td>';
                                     while ($activite = $activiteReq->fetch()) {
                                         echo $activite['nomActivite'] . '<br>';
                                         $idActivite = $activite['idActivite'];
                                     }
+                                    */
 
 
                                     echo '<td>';

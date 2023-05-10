@@ -1,0 +1,3 @@
+C:/Users/sansa/Downloads/2ème/2nd semestre/pa/projet/AnnualProject/bot/cmake-build-debug/CMakeFiles/bot.dir
+C:/Users/sansa/Downloads/2ème/2nd semestre/pa/projet/AnnualProject/bot/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/sansa/Downloads/2ème/2nd semestre/pa/projet/AnnualProject/bot/cmake-build-debug/CMakeFiles/rebuild_cache.dir

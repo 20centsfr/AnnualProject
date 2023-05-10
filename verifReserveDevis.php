@@ -39,7 +39,18 @@ if (!empty($idHoraire)) {
 
     $idReserve = $db->lastInsertId();
 
+    //todo
+    $idSalleParActivite = array();
+    $idHoraireParActivite = array();
+    $dateChoisiParActivite = array();
     foreach ($idActivites as $idActivite) {
+        $idSalleParActivite[$idActivite] = $_POST['salles'][$idActivite][0];
+        $idHoraireParActivite[$idActivite] = $_POST['horaires'][$idActivite][0];
+        $dateChoisiParActivite[$idActivite] = $_POST['dateChoisi'][$idActivite];
+    }
+
+
+    /*foreach ($idActivites as $idActivite) {
         $q = "INSERT INTO activiteReserve (idReserve, idActivite) VALUES (:idReserve, :idActivite)";
         $req = $db->prepare($q);
         $result = $req->execute([
@@ -47,7 +58,7 @@ if (!empty($idHoraire)) {
             'idActivite' => $idActivite
         ]);
     }
-    
+    */
 
     if ($result) {
 
