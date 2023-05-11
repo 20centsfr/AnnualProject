@@ -47,6 +47,7 @@ function theadFill($order, $value, $disp) {
     <main class="main" id="top">
     <?php include('includes/nav.php') ?>
     <br><br>
+    <?php include('includes/message.php') ?>
 
     <section id="customers">
         <div class="container">

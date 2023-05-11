@@ -44,6 +44,8 @@ error_reporting(E_ALL);
                                     theadFill($order, 'Activités', 'Activités');
                                     theadFill($order, 'prix', 'Prix');
                                     theadFill($order, 'Date', 'Date');
+                                    theadFill($order, 'modifier', 'Modifier');
+
                                     ?>
                                     <th></th>
                                     <th></th>
@@ -56,14 +58,15 @@ error_reporting(E_ALL);
                                     while ($content = $select->fetch()) {
                                         echo '<tr>';
                                         echo '<td>'.$content['idReserve'] .'</td>';
-                                        echo '<td>'.$content['entreprise'] .'</td>';
+                                        //echo '<td>'.$content['entreprise'] .'</td>';
                                         echo '<td>'.$content['nbParticipants'].'</td>';
-                                        echo '<td>'.$content['nom'].'</td>';
+                                        //echo '<td>'.$content['nom'].'</td>';
                                         echo '<td>'.$content['prix'] .'</td>';
                                         
                                         echo '<td>'.$content['dateChoisi'].'</td>';
 
-                                        echo '<td> <button type="submit" value="'.$content['idReserve'].'" name="Supprimer" class="btn btn-danger">Supprimer</button></td>';
+                                        echo '<td> <button type="submit" value="'.$content['idReserve'].'" name="Annuler" class="btn btn-danger">Annuler</button></td>';
+                                        echo '<td> <button type="submit" value="'.$content['idReserve'].'" name="Modifier" class="btn btn-danger">Modifier</button></td>';
                                         echo '</tr>';
                                     }
                                     ?>

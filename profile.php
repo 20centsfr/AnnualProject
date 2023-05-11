@@ -161,6 +161,10 @@ if (isset($_GET['order']))
             </div>
       </section>
 
+      <div class="d-flex justify-content-center">
+          <a class="btn btn-primary" href="note.php" role="button">Laisser un avis</a>
+      </div>
+
     </main>
     <?php include('includes/footer.php') ?>
   </body>

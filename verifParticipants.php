@@ -44,7 +44,7 @@ foreach ($participants as $participant) {
     }
 }
 
-header('location: paiement.php?message=Proceder au paiement');
+header('location: recap.php?message=Succès');
 exit;
 
 

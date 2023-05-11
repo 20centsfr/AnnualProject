@@ -85,57 +85,31 @@ if(isset($_GET['Reserve'])){
 
     <section class="section-a">
       <div class="bg-holder bg-size" style="background-image:url(assets/img/illustration/2.png);background-position:right top;background-size:800px;"></div>
-        <div class="container">
-          <div class="grid-container">
-            <h1 class="mt-3 lh-base"><?php echo $content['dateChoisi']; ?></h1>
-                <p class="fs-0">Prix : <?php echo $content['prix']; ?></p>
-                
-                <p class="fs-0">Heure : <?php echo $content['idHoraire']; ?></p>
 
+      <div class="container">
+        <div class="row">
+            <div class="col-md-4 mx-auto">
+            <div class="w-100 h-100 p-5 services-card-shadow rounded-4">
+            <h4 class="text-center display-5 fw-semi-bold"><?php echo '<td>' . $content['dateChoisi'] . '</td>'; ?></h4><br><br>
+            <p class="text-center fs-0 fs-md-1">Prix : <?php echo '<td>' . $content['prix'] . '</td>'; ?>€</p>
 
-                <?php /*
-                $salleReq = $db->query("SELECT salle.numSalle FROM reservation JOIN salle ON reservation.idSalle = salle.idSalle WHERE idReserve='" . $content['idReserve'] . "'");
-                echo '<td>';
-                while ($salle = $salleReq->fetch()) {
-                    echo $salle['numSalle'] . '<br>';
-                }
+            <p class="text-center fs-0 fs-md-1"> Nombre de participants : <?php echo '<td>' . $content['nbParticipants'] . '</td>'; ?></p>
 
-                $salleReq = $db->query("SELECT numSalle FROM reservation INNER JOIN salle ON salleReserve.idSalle = salle.idSalle WHERE idReserve='" . $content['idReserve'] . "'");
-                echo '<td>';
-                while ($salle = $salleReq->fetch()) {
-                    echo $salle['numSalle'] . '<br>';
-                }*/ ?>
+            <p class="text-center fs-0 fs-md-1"> Activités :</p>
 
-                <p class="fs-0">Salle <?php echo $content['idSalle']; ?> </p>
+            <?php 
+            $activiteReq = $db->query("SELECT nomActivite FROM activiteReserve INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite WHERE idReserve='" . $content['idReserve'] . "'");
+            echo '<td>';
+            while ($activite = $activiteReq->fetch()) { ?>
 
-                <p class="fs-0">Activités :</p>
+                <div class=" text-center"><span><?php echo $activite['nomActivite'] . '</td>'; ?></span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
 
-                <?php 
-                $activiteReq = $db->query("SELECT nomActivite FROM activiteReserve INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite WHERE idReserve='" . $content['idReserve'] . "'");
-                echo '<td>';
-                while ($activite = $activiteReq->fetch()) {
-                    echo $activite['nomActivite'] . '<br>';
-                } ?>
-
-                <p class="fs-0">Nombre de participants : <?php echo $content['nbParticipants']; ?></p>
-
-                <h6 class="fs-0">Participants :</h6>
-
-                <?php
-                $participantsReq = $db->query("SELECT * FROM participants WHERE idReserve='" . $content['idReserve'] . "'");
-                if ($participantsReq->rowCount() > 0) {
-                    while ($participant = $participantsReq->fetch()) {
-                        echo $participant['prenom'] . ' ' . $participant['nom'] . ' (' . $participant['email'] . ')<br>';
-                    }
-                } 
-
-                echo '<form action="annulerReserve.php" method="post" style="display: inline-block;">';
-                echo '<input type="hidden" name="idReserve" value="'.$idReserve.'" >';
-                echo '<button type="submit" class="btn btn-danger" name="idReserve" value="'.$content['idReserve'].'">Annuler</button>';
-                echo '</form>';
-                ?>
-          </div>
+            <?php } ?><br>            
+            </div>
+            </div>
         </div>
+    </div> <br><br>
+
       </div>
     </section>
     </main>

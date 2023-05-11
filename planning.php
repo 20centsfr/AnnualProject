@@ -61,8 +61,8 @@ function getIp(){
                             INNER JOIN horaires ON reservation.idHoraires = horaires.idHoraires
                             
                           
-                            INNER JOIN activitereserve ON reservation.idReserve = activiteactivite.idReserve
-                            INNER JOIN activite ON activitereserve.idActivite = activite.idActivite";
+                            INNER JOIN activiteReserve ON reservation.idReserve = activiteactivite.idReserve
+                            INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite";
     
                             //INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite
                             //INNER JOIN salle ON reservation.idSalle = salle.idSalle
@@ -88,5 +88,6 @@ function getIp(){
       </div>
   </section>
 </main>
+<?php include('includes/footer.php'); ?>
 </body>
   </html>

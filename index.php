@@ -181,6 +181,11 @@ function getIp(){
           </div>
         </div>
       </section>
+
+      <section>
+      <?php include('carte.php') ?>
+      </section>
+      
       <?php include('includes/footer.php') ?>
     </main>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" defer></script>
@@ -192,5 +197,6 @@ function getIp(){
         });
       });
     </script>
+    
   </body>
 </html>

@@ -110,11 +110,21 @@ if (isset($_GET['order']))
                 <input type="hidden" name="Fidelite" value="<?php echo $content['idFidelite']; ?>" >
                 <?php
                 if ($userInfo['nbPoints'] >= $content['points']) {
-                    echo '<button type="submit" class="btn btn-success">Plus dinfo</button>';
+                  echo '<button id="codeBtn-'.$content['idFidelite'].'" type="button" class="btn btn-success">Plus d\'info</button>';
+                
+                  echo '<script>';
+                  echo 'var button = document.getElementById("codeBtn-'.$content['idFidelite'].'");';
+                  echo 'button.addEventListener("click", function() {';
+                  echo 'var codeContainer = document.createElement("p");';
+                  echo 'codeContainer.innerHTML = "Code de réduction est : '.$content['code'].'";';
+                  echo 'document.body.appendChild(codeContainer);';
+                  echo '});';
+                  echo '</script>';
                 } else {
                   echo '<a class="btn btn-primary" href="#" role="button">Pas assez de points.</a>';
                 }
-                ?>           
+                
+                ?>    
 
               </form>
             </div>

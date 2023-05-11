@@ -100,51 +100,40 @@ function getIp(){
                 <div class="card-body px-4 py-5 px-md-5">
 
                 <?php
+
+                echo '<form action="verifReserveDevis.php" method="POST">';
+                                                    
+                echo '<div class="form-outline mb-4">';
+                echo '<label class="form-label">Date</label>';
+                echo '<input type="date" name="dateChoisi" id="dateChoisi" class="form-control" required min="'.date('Y-m-d').'"/>';
+                echo '</div>';
+
                 $idActivites = array();
                 $activiteReq = $db->prepare("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis = ?");
                 $activiteReq->execute([$idDevis]);
                 while ($activite = $activiteReq->fetch()) {
                     echo $activite['nomActivite'] . '<br>';
-                    $idActivite = $activite['idActivite'];
-                    
-                    echo '<form action="verifReserveDevis.php" method="POST">';
-                    
-                    echo '<div class="form-outline mb-4">';
-                    echo '<label class="form-label">Date</label>';
-                    echo '<input type="date" name="dateChoisi_'.$idActivite.'" id="dateChoisi_'.$idActivite.'" class="form-control" required min="'.date('Y-m-d').'"/>';
-                    echo '</div>';
-                    
+                    $idActivites[] = $activite['idActivite'];
+                                    
                     echo '<div class="form-outline mb-4">';
                     echo '<label for="horaires_'.$idActivite.'">Choisissez un horaire :</label><br>';
                     $select = $db->query("SELECT * FROM horaires");
                     if ($select->rowCount() > 0) {
                         while ($row = $select->fetch()) {
-                            echo '<input type="radio" name="horaires_'.$idActivite.'[]" value="'.$row["idHoraires"].'"> '.$row["heureDebut"].' - '.$row["heureFin"].'<br>';
+                            echo '<input type="radio" name="horaires[]" value="'.$row["idHoraires"].'"> '.$row["heureDebut"].' - '.$row["heureFin"].'<br>';
                         }
                     } else {
                         echo "Aucun horaire n'est disponible.";
                     }
                     echo '</div>';
-
-                    echo '<div class="form-outline mb-4">';
-                    echo '<label class="form-label">Salle</label><br>';
-                    $select = $db->query("SELECT * FROM salle WHERE dispoSalle = 1");
-                    if ($select->rowCount() > 0) {
-                        while ($row = $select->fetch()) {
-                            echo '<input type="radio" name="salles_'.$idActivite.'[]" value="'.$row["idSalle"].'"> '.$row["numSalle"].' ('.$row["nbPlaceSalle"].' places)<br>';
-                        }
-                    } else {
-                        echo "Aucune salle n'est disponible.";
-                    }
-                    echo '</div>';
-                    
+                                    
                     echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
                     echo '<input type="hidden" name="idDevis" value="'.$idDevis.'" >';
-                    echo '<input type="hidden" name="idActivite" value="'.$idActivite.'" >';
-
-                    echo '<button type="submit" class="btn btn-primary btn-block mb-4">Réserver</button>';
-                    echo '</form>';
+                    echo '<input type="hidden" name="idActivite[]" value="'.$idActivite.'" >';
                 }
+
+                echo '<button type="submit" class="btn btn-primary btn-block mb-4">Réserver</button>';
+                echo '</form>';
                 ?>
 
                 </div>
