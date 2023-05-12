@@ -3,50 +3,42 @@ include('includes/db.php');
 session_start();
 include ('includes/connected.php');
 
-$idActivites = $_POST['idActivite'];
+$idActivites = json_decode($_POST['idActivite'], true);
 $horairesSelectionnes = array();
 foreach($idActivites as $idActivite){
-    $horairesSelectionnes[$idActivite] = $_POST['horaires_'.$idActivite];
+    $horairesSelectionnes[$idActivite['idActivite']] = $_POST['horaires_'.$idActivite['idActivite']];
 }
 
-var_dump($_POST['horaires_'.$idActivite]);
+var_dump($horairesSelectionnes);
 
-var_dump($idHoraire = $horairesSelectionnes[$idActivites[0]]);
-var_dump($dateChoisi = $_POST['dateChoisi']);
-var_dump($dateReservation = date('Y-m-d')); 
-var_dump($idUser = htmlspecialchars($_POST['idUser']));
-var_dump($idDevis = htmlspecialchars($_POST['idDevis']));
+$dateChoisi = $_POST['dateChoisi'];
+$dateReservation = date('Y-m-d'); 
+$idUser = htmlspecialchars($_POST['idUser']);
+$idDevis = htmlspecialchars($_POST['idDevis']);
 
 $devisReq = $db->prepare("SELECT * FROM devis WHERE idDevis = ?");
 $devisReq->execute([$idDevis]);
 $devis = $devisReq->fetch();
 
-$idActivites = array();
-$activiteReq = $db->prepare("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis = ?");
-$activiteReq->execute([$idDevis]);
-while ($activite = $activiteReq->fetch()) {
-    $idActivites[] = $activite['idActivite'];
-}
-
-if (!empty($idHoraire)) {
-    $q = "INSERT INTO reservation (idHoraires, nbParticipants, prix, dateReservation, dateChoisi, idUser) VALUES (:idHoraires, :nbParticipants, :prix, :dateReservation, :dateChoisi, :idUser)";
+if (!empty($horairesSelectionnes)) {
+    $q = "INSERT INTO reservation (nbParticipants, prix, dateReservation, dateChoisi, idUser) VALUES (:nbParticipants, :prix, :dateReservation, :dateChoisi, :idUser)";
     $req = $db->prepare($q);
 
     $result = $req->execute([
-        'idHoraires' => $idHoraire,
         'nbParticipants' => $devis['nbParticipants'],
         'prix' => $devis['prix'],
         'dateReservation' => $dateReservation, 
         'dateChoisi' => $dateChoisi, 
-        'idUser' => htmlspecialchars($idUser)
+        'idUser' => $idUser
     ]);
 
     $idReserve = $db->lastInsertId();
 
     if ($result) {
-        if (count($idActivites) > 1) {
+        if (count($idActivites)) {
             foreach ($idActivites as $idActivite) {
-                $idHoraireActivite = $horairesSelectionnes[$idActivite];
+                $idHoraireActivite = $horairesSelectionnes[$idActivite['idActivite']];
+                var_dump($idHoraireActivite);
                 $q = "INSERT INTO horaireReserve (idReserve, idHoraires, dateChoisi) VALUES (:idReserve, :idHoraires, :dateChoisi)";
                 $req = $db->prepare($q);
                 $result = $req->execute([
@@ -55,14 +47,17 @@ if (!empty($idHoraire)) {
                     'idHoraires' => $idHoraireActivite
                 ]);
             }
-        } else {
-            $idHoraireActivite = $horairesSelectionnes[$idActivites[0]];
-            $q = "INSERT INTO horaireReserve (idReserve, idHoraires, dateChoisi) VALUES (:idReserve, :idHoraires, :dateChoisi)";
+        }
+
+        if($result){
+            $idHorRes = $db->lastInsertId();
+
+            $q = "UPDATE reservation SET idHorRes = :idHorRes WHERE idReserve = :idReserve";
             $req = $db->prepare($q);
+
             $result = $req->execute([
-                'idReserve' => $idReserve,
-                'dateChoisi' => $dateChoisi,
-                'idHoraires' => $idHoraireActivite
+                'idHorRes' => $idHorRes,
+                'idReserve' => $idReserve
             ]);
         }
 
@@ -71,7 +66,7 @@ if (!empty($idHoraire)) {
             $req = $db->prepare($q);
             $result = $req->execute([
                 'idReserve' => $idReserve,
-                'idActivite' => $idActivite
+                'idActivite' => $idActivite['idActivite']
             ]);
         }
 
@@ -82,16 +77,16 @@ if (!empty($idHoraire)) {
             echo "<script>document.getElementById('hidden-form').submit();</script>";
             exit;
         } else {
-            //header('location: reserverDevis.php?message=Erreur.&type=error');
-            //exit;
+            header('location: reserverDevis.php?message=Erreur.&type=error');
+            exit;
         }
     } else {
-        //header('location: reserverDevis.php?message=Erreur.&type=error');
+        header('location: reserverDevis.php?message=Erreur.&type=error');
         exit;
     }
 } else {
-    //header('location: reserverDevis.php?message=Veuillez cocher toutes les cases.&type=error');
-    //exit;
+    header('location: reserverDevis.php?message=Veuillez cocher toutes les cases.&type=error');
+    exit;
 }
 
 

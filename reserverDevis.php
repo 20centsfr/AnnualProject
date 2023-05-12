@@ -7,7 +7,6 @@ include('includes/userInfo.php');
 include ('includes/connected.php');
 
 $idDevis = $_POST['idDevis'];
-var_dump($idDevis);
 
 function getIp(){
     if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -107,8 +106,9 @@ function getIp(){
 
                 $activiteReq = $db->prepare("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis = ?");
                 $activiteReq->execute([$idDevis]);
+                $activites = $activiteReq->fetchAll(PDO::FETCH_ASSOC);
 
-                while ($activite = $activiteReq->fetch()) {
+                foreach ($activites as $activite) {
                     echo $activite['nomActivite'] . '<br>';
 
                     echo '<div class="form-outline mb-4">';
@@ -130,11 +130,12 @@ function getIp(){
                     } else {
                         echo "Aucun horaire n'est disponible.";
                     }
+                    $idActivites[] = $activite['idActivite'];
 
                     echo '<input type="hidden" name="dateChoisi" value="' . $dateChoisi . '" >';
                     echo '<input type="hidden" name="idUser" value="' . $idUser . '" >';
                     echo '<input type="hidden" name="idDevis" value="' . $idDevis . '" >';
-                    echo '<input type="hidden" name="idActivite" value="' . $activite['idActivite'] . '" >';
+                    echo '<input type="hidden" name="idActivite" value="' . htmlentities(json_encode($activites)) . '">';
                     echo '</div>';
                 }
 
