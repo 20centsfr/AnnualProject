@@ -1,14 +1,17 @@
 <?php
 
-//submit_rating.php
-
-
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-include('../includes/db.php');
+//include('../includes/db.php');
 session_start();
+
+try {
+	$db = new PDO('mysql:host=64.226.72.114;port=3306;dbname=ts', 'together', 'projetannuel', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+} catch(Exception $e) {
+	die('Erreur : ' . $e->getMessage()); 
+}
 
 if(isset($_POST["rating_data"])) {
 

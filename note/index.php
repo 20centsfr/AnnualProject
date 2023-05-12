@@ -97,10 +97,10 @@
                     <i class="fas fa-star star-light submit_star mr-1" id="submit_star_5" data-rating="5"></i>
 	        	</h4>
 	        	<div class="form-group">
-	        		<input type="text" name="user_name" id="user_name" class="form-control" placeholder="Enter Your Name" />
+	        		<input type="text" name="user_name" id="user_name" class="form-control" placeholder="Votre nom" />
 	        	</div>
 	        	<div class="form-group">
-	        		<textarea name="user_review" id="user_review" class="form-control" placeholder="Type Review Here"></textarea>
+	        		<textarea name="user_review" id="user_review" class="form-control" placeholder="Écrire avis"></textarea>
 	        	</div>
 	        	<div class="form-group text-center mt-4">
 	        		<button type="button" class="btn btn-primary" id="save_review">Envoyer</button>

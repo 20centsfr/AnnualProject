@@ -99,45 +99,20 @@ function getIp(){
                 <div class="card bg-glass">
                 <div class="card-body px-4 py-5 px-md-5">
 
-                <?php include('includes/message.php') ?>
-
                 <?php
 
-                echo '<form action="verifReserveDevis.php" method="POST">';
-
-                $activiteReq = $db->prepare("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis = ?");
-                $activiteReq->execute([$idDevis]);
-
-                while ($activite = $activiteReq->fetch()) { 
-                    echo $activite['nomActivite'] . '<br>';
+                echo '<form action="reserverDevis.php" method="POST">';
                                                     
-                    echo '<div class="form-outline mb-4">';
-                    echo '<label for="horaires_'.$activite['idActivite'].'">Choisissez un horaire :</label><br>';
-                    
-                    $dateChoisi = $_POST['dateChoisi'];
-                    $select = $db->query("SELECT * FROM horaires");
-                    
-                    if ($select->rowCount() > 0) {
-                        while ($row = $select->fetch()) {
-                            $horaireDejaReserve = $db->query("SELECT idHoraires FROM horaireReserve WHERE dateChoisi = '$dateChoisi' AND idHoraires = '".$row["idHoraires"]."'");
-                            
-                            if ($horaireDejaReserve->rowCount() == 0) {
-                                echo '<input type="radio" name="horaires_'.$activite['idActivite'].'_'.$row["idHoraires"].'" value="'.$row["idHoraires"].'"> '.$row["heureDebut"].' - '.$row["heureFin"].'<br>';
-                            } else {
-                                echo '<input type="radio" name="horaires_'.$activite['idActivite'].'_'.$row["idHoraires"].'" value="'.$row["idHoraires"].'" disabled> '.$row["heureDebut"].' - '.$row["heureFin"].' (déjà réservé)<br>';
-                            }
-                            
-                        }
-                    } else {
-                        echo "Aucun horaire n'est disponible.";
-                    }
-                    
-                    echo '<input type="hidden" name="dateChoisi" value="'.$dateChoisi.'" >';
-                    echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
-                    echo '<input type="hidden" name="idDevis" value="'.$idDevis.'" >';
-                    echo '<input type="hidden" name="idActivite" value="'.$activite['idActivite'].'" >';
-                    echo '</div>';
-                }
+                echo '<div class="form-outline mb-4">';
+                echo '<label class="form-label">Date</label>';
+                echo '<input type="date" name="dateChoisi" id="dateChoisi" class="form-control" required min="'.date('Y-m-d').'"/>';
+                echo '</div>';
+
+                //echo '<input type="hidden" name="dateChoisi" value="'.$dateChoisi.'" >';                    
+                echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
+                echo '<input type="hidden" name="idDevis" value="'.$idDevis.'" >';
+                echo '<input type="hidden" name="idActivite[]" value="'.$idActivite.'" >';
+
 
                 echo '<button type="submit" class="btn btn-primary btn-block mb-4">Continuer</button>';
                 echo '</form>';

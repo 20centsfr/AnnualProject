@@ -47,9 +47,8 @@ function theadFill($order, $value, $disp) {
     <main class="main" id="top">
     <?php include('includes/nav.php') ?>
     <br><br>
-    <?php include('includes/message.php') ?>
-
     <section id="customers">
+          <?php include('includes/message.php') ?>
         <div class="container">
           <h1 class="text-center display-5 fw-semi-bold">Events spéciaux</h1>
           <p class="text-center fs-0 fs-md-1"> Ces événements permettent aux participants de se connaître mieux, d'apprendre à travailler ensemble de manière efficace et de développer des compétences clés telles que la communication, la confiance, la prise de décision, la résolution de problèmes, la gestion du temps, etc. <br>Cherchez parmi des dizaines d’activités et faites votre demande de devis en ligne. Together&Stronger propose des activités insolites, originales ainsi que les grands classiques de l’événement d’entreprise.</p>

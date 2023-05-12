@@ -6,7 +6,13 @@ include('includes/db.php');
 session_start();
 include ('includes/connected.php');
 
-$idHoraire = $_POST['horaires'][0];
+$idActivites = $_POST['idActivite'];
+$horairesSelectionnes = array();
+foreach($idActivites as $idActivite){
+    $horairesSelectionnes[$idActivite] = $_POST['horaires_'.$idActivite];
+}
+
+$idHoraire = $horairesSelectionnes[$idActivites[0]];
 $dateChoisi = $_POST['dateChoisi'];
 $dateReservation = date('Y-m-d'); 
 $idUser = htmlspecialchars($_POST['idUser']);
@@ -23,8 +29,6 @@ while ($activite = $activiteReq->fetch()) {
     $idActivites[] = $activite['idActivite'];
 }
 
-var_dump($idActivites);
-
 if (!empty($idHoraire)) {
     $q = "INSERT INTO reservation (idHoraires, nbParticipants, prix, dateReservation, dateChoisi, idUser) VALUES (:idHoraires, :nbParticipants, :prix, :dateReservation, :dateChoisi, :idUser)";
     $req = $db->prepare($q);
@@ -35,29 +39,41 @@ if (!empty($idHoraire)) {
         'prix' => $devis['prix'],
         'dateReservation' => $dateReservation, 
         'dateChoisi' => $dateChoisi, 
-        'idUser' => $idUser
+        'idUser' => htmlspecialchars($idUser)
     ]);
 
     $idReserve = $db->lastInsertId();
 
     if ($result) {
-        foreach ($idActivites as $idActivite) {
-            $idHoraireActivite = $_POST['horaires'][0];
-            $q = "INSERT INTO horaireReserve (idReserve, idHoraires) VALUES (:idReserve, :idHoraires)";
+        if (count($idActivites) > 1) {
+            foreach ($idActivites as $idActivite) {
+                $idHoraireActivite = $horairesSelectionnes[$idActivite];
+                $q = "INSERT INTO horaireReserve (idReserve, idHoraires, dateChoisi) VALUES (:idReserve, :idHoraires, :dateChoisi)";
+                $req = $db->prepare($q);
+                $result = $req->execute([
+                    'idReserve' => $idReserve,
+                    'dateChoisi' => $dateChoisi,
+                    'idHoraires' => $idHoraireActivite
+                ]);
+            }
+        } else {
+            $idHoraireActivite = $horairesSelectionnes[$idActivites[0]];
+            $q = "INSERT INTO horaireReserve (idReserve, idHoraires, dateChoisi) VALUES (:idReserve, :idHoraires, :dateChoisi)";
             $req = $db->prepare($q);
             $result = $req->execute([
                 'idReserve' => $idReserve,
+                'dateChoisi' => $dateChoisi,
                 'idHoraires' => $idHoraireActivite
             ]);
         }
 
         foreach ($idActivites as $idActivite) {
-        $q = "INSERT INTO activiteReserve (idReserve, idActivite) VALUES (:idReserve, :idActivite)";
-        $req = $db->prepare($q);
-        $result = $req->execute([
-            'idReserve' => $idReserve,
-            'idActivite' => $idActivite
-        ]);
+            $q = "INSERT INTO activiteReserve (idReserve, idActivite) VALUES (:idReserve, :idActivite)";
+            $req = $db->prepare($q);
+            $result = $req->execute([
+                'idReserve' => $idReserve,
+                'idActivite' => $idActivite
+            ]);
         }
 
         if ($result) {
