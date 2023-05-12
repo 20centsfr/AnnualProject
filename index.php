@@ -185,6 +185,10 @@ function getIp(){
       <section>
       <?php include('carte.php') ?>
       </section>
+
+      <section>
+      <?php include('note/index.php') ?>
+      </section>
       
       <?php include('includes/footer.php') ?>
     </main>

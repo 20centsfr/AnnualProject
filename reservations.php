@@ -49,9 +49,6 @@ function theadFill($order, $value, $disp) {
 }
 
 
-$_SESSION['prix'] = $price;
-
-
 ?>
 
   <body>
@@ -139,44 +136,45 @@ $_SESSION['prix'] = $price;
 
         </style>
 
-
-<div class="grid-container">
-    <div class="container">
-        <h1>Mes reservations</h1><br><br>
-        <?php $req = $db->query("SELECT * FROM reservation WHERE idUser='" . $idUser . "'");
-        while ($reserve = $req->fetch()) {
-            $reserve_date = strtotime($reserve['dateChoisi']);
-            $current_date = time();
-            $idReserve = $reserve['idReserve'];
-            if ($reserve_date >= $current_date) {
-        ?>
+    <section class="container">
+        <div class="grid-container">
         <div class="row">
-            <div class="col-md-4 mx-auto">
-            <div class="w-100 h-100 p-5 services-card-shadow rounded-4">
-            <h4 class="text-center display-5 fw-semi-bold"><?php echo '<td>' . $reserve['dateChoisi'] . '</td>'; ?></h4><br><br>
-            <p class="text-center fs-0 fs-md-1">Prix : <?php echo '<td>' . $reserve['prix'] . '</td>'; ?>€</p>
+            <h1 class="text-center display-5 fw-semi-bold">Mes reservations</h1><br><br>
+            <?php $req = $db->query("SELECT * FROM reservation WHERE idUser='" . $idUser . "'");
+            while ($reserve = $req->fetch()) {
+                $reserve_date = strtotime($reserve['dateChoisi']);
+                $current_date = time();
+                $idReserve = $reserve['idReserve'];
+                if ($reserve_date >= $current_date) {
+            ?>
+            <div class="col-md-4">
+            <div class="card mb-4 services-card-shadow rounded-4">
+                <div class="card-body">
+                <h4 class="text-center display-5 fw-semi-bold"><?php echo '<td>' . $reserve['dateChoisi'] . '</td>'; ?></h4><br><br>
+                <p class="text-center fs-0 fs-md-1">Prix : <?php echo '<td>' . $reserve['prix'] . '</td>'; ?>€</p>
 
-            <p class="text-center fs-0 fs-md-1"> Nombre de participants : <?php echo '<td>' . $reserve['nbParticipants'] . '</td>'; ?></p>
+                <p class="text-center fs-0 fs-md-1"> Nombre de participants : <?php echo '<td>' . $reserve['nbParticipants'] . '</td>'; ?></p>
 
-            <p class="text-center fs-0 fs-md-1"> Activités :</p>
+                <p class="text-center fs-0 fs-md-1"> Activités :</p>
 
-            <?php 
-            $activiteReq = $db->query("SELECT nomActivite FROM activiteReserve INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite WHERE idReserve='" . $reserve['idReserve'] . "'");
-            echo '<td>';
-            while ($activite = $activiteReq->fetch()) { ?>
+                <?php 
+                $activiteReq = $db->query("SELECT nomActivite FROM activiteReserve INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite WHERE idReserve='" . $reserve['idReserve'] . "'");
+                echo '<td>';
+                while ($activite = $activiteReq->fetch()) { ?>
 
-                <div class=" text-center"><span><?php echo $activite['nomActivite'] . '</td>'; ?></span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+                    <div class=" text-center"><span><?php echo $activite['nomActivite'] . '</td>'; ?></span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
 
-            <?php } ?> 
-            <br>
-            <form method="GET" action="reservation.php">
-                <input type="hidden" name="Reserve" value="<?php echo $reserve['idReserve']; ?>" >
-                <button type="submit" class="btn btn-primary">Plus d'information</button>
-            </form><br>            
-            </div>
-            </div>
-        </div> <?php } } ?>
-    </div></div> <br><br>
+                <?php } ?> 
+                <br>
+                <form method="GET" action="reservation.php">
+                    <input type="hidden" name="Reserve" value="<?php echo $reserve['idReserve']; ?>" >
+                    <button type="submit" class="btn btn-primary">Plus d'information</button>
+                </form><br>            
+                </div>
+                </div>
+            </div> <?php } } ?>
+        </div></div> 
+    </section><br><br>
 
     <?php include('includes/footer.php') ?>
     </main>

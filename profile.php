@@ -93,29 +93,33 @@ if (isset($_GET['order']))
         <div class="d-flex justify-content-center">
             <a class="btn btn-primary" href="modifProfile.php" role="button">Modifier</a>
         </div>
+        <br><br>
+        <div class="d-flex justify-content-center">
+          <a class="btn btn-primary" href="note/index.php" role="button">Laisser un avis</a>
+      </div>
       </section>
 
 
-          <div class="container">
-            <div class="row">
-              <div class="col-md-4 mx-auto">
-                <div class="w-100 h-100 p-5 services-card-shadow rounded-4">
-                <h3 class="text-center display-5 fw-semi-bold">Mes points T&S</h3><br><br>
-                <p class="text-center fs-0 fs-md-1"> Nombre de points TS :</p>
-                <h3 class="text-center display-5 fw-semi-bold"><?php 
-                echo '<p class="mb-0">' . $userInfo['nbPoints'] . '</p>';
-                ?> </h3><br><br>
-                <?php
-                if ($userInfo['nbPoints'] >= 50) {
-                    echo '<a class="btn btn-primary" href="fidelites.php" role="button">Découvrez nos offres spéciales</a>';
-                } else {
-                  echo '<a class="btn btn-primary" href="#" role="button">Gagnez plus de points pour débloquer nos offres spéciales !</a>';
-                }          
-                ?><br><br>            
-                </div>
-              </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mx-auto">
+            <div class="w-100 h-100 p-5 services-card-shadow rounded-4">
+            <h3 class="text-center display-5 fw-semi-bold">Mes points T&S</h3><br><br>
+            <p class="text-center fs-0 fs-md-1"> Nombre de points TS :</p>
+            <h3 class="text-center display-5 fw-semi-bold"><?php 
+            echo '<p class="mb-0">' . $userInfo['nbPoints'] . '</p>';
+            ?> </h3><br><br>
+            <?php
+            if ($userInfo['nbPoints'] >= 50) {
+                echo '<a class="btn btn-primary" href="fidelites.php" role="button">Découvrez nos offres spéciales</a>';
+            } else {
+              echo '<a class="btn btn-primary" href="#" role="button">Gagnez plus de points pour débloquer nos offres spéciales !</a>';
+            }          
+            ?><br><br>            
             </div>
           </div>
+        </div>
+      </div>
 
     
       <section class="container">
@@ -161,10 +165,42 @@ if (isset($_GET['order']))
             </div>
       </section>
 
-      <div class="d-flex justify-content-center">
-          <a class="btn btn-primary" href="note.php" role="button">Laisser un avis</a>
-      </div>
+      <section class="container">
+        <div class="grid-container">
+        <div class="row">
+          <h1 class="text-center display-5 fw-semi-bold">Mon historique de reservations</h1><br><br><br>
+          <?php $req = $db->query("SELECT * FROM reservation WHERE idUser='" . $idUser . "'");
+          while ($reserve = $req->fetch()) {
+              $reserve_date = strtotime($reserve['dateChoisi']);
+              $current_date = time();
+              $idReserve = $reserve['idReserve'];
+              if ($reserve_date >= $current_date) {
+          ?>
+        <div class="col-md-4">
+          <div class="card mb-4 services-card-shadow rounded-4">
+            <div class="card-body">
+              <h4 class="text-center display-5 fw-semi-bold"><?php echo '<td>' . $reserve['dateChoisi'] . '</td>'; ?></h4><br><br>
+              <p class="text-center fs-0 fs-md-1">Prix : <?php echo '<td>' . $reserve['prix'] . '</td>'; ?>€</p>
 
+              <p class="text-center fs-0 fs-md-1"> Nombre de participants : <?php echo '<td>' . $reserve['nbParticipants'] . '</td>'; ?></p>
+
+              <p class="text-center fs-0 fs-md-1"> Activités :</p>
+
+              <?php 
+              $activiteReq = $db->query("SELECT nomActivite FROM activiteReserve INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite WHERE idReserve='" . $reserve['idReserve'] . "'");
+              echo '<td>';
+              while ($activite = $activiteReq->fetch()) { ?>
+
+                  <div class=" text-center"><span><?php echo $activite['nomActivite'] . '</td>'; ?></span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+
+              <?php } ?> 
+              <br>           
+              </div>
+              </div>
+          </div> <?php } } ?>
+      </div>
+    </div>
+    </section>
     </main>
     <?php include('includes/footer.php') ?>
   </body>
