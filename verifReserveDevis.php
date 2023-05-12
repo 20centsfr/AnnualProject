@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
 include('includes/db.php');
 session_start();
 include ('includes/connected.php');
@@ -12,11 +9,13 @@ foreach($idActivites as $idActivite){
     $horairesSelectionnes[$idActivite] = $_POST['horaires_'.$idActivite];
 }
 
-$idHoraire = $horairesSelectionnes[$idActivites[0]];
-$dateChoisi = $_POST['dateChoisi'];
-$dateReservation = date('Y-m-d'); 
-$idUser = htmlspecialchars($_POST['idUser']);
-$idDevis = htmlspecialchars($_POST['idDevis']);
+var_dump($_POST['horaires_'.$idActivite]);
+
+var_dump($idHoraire = $horairesSelectionnes[$idActivites[0]]);
+var_dump($dateChoisi = $_POST['dateChoisi']);
+var_dump($dateReservation = date('Y-m-d')); 
+var_dump($idUser = htmlspecialchars($_POST['idUser']));
+var_dump($idDevis = htmlspecialchars($_POST['idDevis']));
 
 $devisReq = $db->prepare("SELECT * FROM devis WHERE idDevis = ?");
 $devisReq->execute([$idDevis]);
@@ -83,16 +82,16 @@ if (!empty($idHoraire)) {
             echo "<script>document.getElementById('hidden-form').submit();</script>";
             exit;
         } else {
-            header('location: reserverDevis.php?message=Erreur.&type=error');
-            exit;
+            //header('location: reserverDevis.php?message=Erreur.&type=error');
+            //exit;
         }
     } else {
-        header('location: reserverDevis.php?message=Erreur.&type=error');
+        //header('location: reserverDevis.php?message=Erreur.&type=error');
         exit;
     }
 } else {
-    header('location: reserverDevis.php?message=Veuillez cocher toutes les cases.&type=error');
-    exit;
+    //header('location: reserverDevis.php?message=Veuillez cocher toutes les cases.&type=error');
+    //exit;
 }
 
 

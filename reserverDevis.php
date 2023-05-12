@@ -7,6 +7,7 @@ include('includes/userInfo.php');
 include ('includes/connected.php');
 
 $idDevis = $_POST['idDevis'];
+var_dump($idDevis);
 
 function getIp(){
     if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -102,46 +103,45 @@ function getIp(){
                 <?php include('includes/message.php') ?>
 
                 <?php
-
                 echo '<form action="verifReserveDevis.php" method="POST">';
 
                 $activiteReq = $db->prepare("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis = ?");
                 $activiteReq->execute([$idDevis]);
 
-                while ($activite = $activiteReq->fetch()) { 
+                while ($activite = $activiteReq->fetch()) {
                     echo $activite['nomActivite'] . '<br>';
-                                                    
+
                     echo '<div class="form-outline mb-4">';
-                    echo '<label for="horaires_'.$activite['idActivite'].'">Choisissez un horaire :</label><br>';
-                    
+                    echo '<label for="horaires_' . $activite['idActivite'] . '">Choisissez un horaire :</label><br>';
+
                     $dateChoisi = $_POST['dateChoisi'];
                     $select = $db->query("SELECT * FROM horaires");
-                    
+
                     if ($select->rowCount() > 0) {
                         while ($row = $select->fetch()) {
-                            $horaireDejaReserve = $db->query("SELECT idHoraires FROM horaireReserve WHERE dateChoisi = '$dateChoisi' AND idHoraires = '".$row["idHoraires"]."'");
-                            
+                            $horaireDejaReserve = $db->query("SELECT idHoraires FROM horaireReserve WHERE dateChoisi = '$dateChoisi' AND idHoraires = '" . $row["idHoraires"] . "'");
+
                             if ($horaireDejaReserve->rowCount() == 0) {
-                                echo '<input type="radio" name="horaires_'.$activite['idActivite'].'_'.$row["idHoraires"].'" value="'.$row["idHoraires"].'"> '.$row["heureDebut"].' - '.$row["heureFin"].'<br>';
+                                echo '<input type="radio" name="horaires_' . $activite['idActivite'] . '" value="' . $row["idHoraires"] . '"> ' . $row["heureDebut"] . ' - ' . $row["heureFin"] . '<br>';
                             } else {
-                                echo '<input type="radio" name="horaires_'.$activite['idActivite'].'_'.$row["idHoraires"].'" value="'.$row["idHoraires"].'" disabled> '.$row["heureDebut"].' - '.$row["heureFin"].' (déjà réservé)<br>';
+                                echo '<input type="radio" name="horaires_' . $activite['idActivite'] . '" value="' . $row["idHoraires"] . '" disabled> ' . $row["heureDebut"] . ' - ' . $row["heureFin"] . ' (déjà réservé)<br>';
                             }
-                            
                         }
                     } else {
                         echo "Aucun horaire n'est disponible.";
                     }
-                    
-                    echo '<input type="hidden" name="dateChoisi" value="'.$dateChoisi.'" >';
-                    echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
-                    echo '<input type="hidden" name="idDevis" value="'.$idDevis.'" >';
-                    echo '<input type="hidden" name="idActivite" value="'.$activite['idActivite'].'" >';
+
+                    echo '<input type="hidden" name="dateChoisi" value="' . $dateChoisi . '" >';
+                    echo '<input type="hidden" name="idUser" value="' . $idUser . '" >';
+                    echo '<input type="hidden" name="idDevis" value="' . $idDevis . '" >';
+                    echo '<input type="hidden" name="idActivite" value="' . $activite['idActivite'] . '" >';
                     echo '</div>';
                 }
 
                 echo '<button type="submit" class="btn btn-primary btn-block mb-4">Continuer</button>';
                 echo '</form>';
                 ?>
+
 
                 </div>
             </div>
