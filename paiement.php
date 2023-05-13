@@ -49,7 +49,8 @@ function getIp(){
   <?php include('includes/nav.php'); ?>
 
   <section class="container">
-    <h2 class="my-4 text-center">Insérez vos informations bancaires</h2><br><br>
+    <h1 class="my-4 text-center">Insérez vos informations bancaires</h1><br>
+    <h3>Montant à payer : </h3><br>
     <form action="charge.php" method="post" id="payment-form">
       <div class="form-row">
         <input type="text" name="first_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Prenom">

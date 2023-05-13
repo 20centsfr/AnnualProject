@@ -186,8 +186,33 @@ function getIp(){
       <?php include('carte.php') ?>
       </section>
 
-      <section>
-      <?php include('note/index.php') ?>
+      <section class="container">
+      <div class="grid-container">
+        <div class="row">
+            <h1 class="text-center display-5 fw-semi-bold">Avis de nos clients</h1><br>
+            <?php 
+            if(isset($_SESSION['email'])){
+              echo '<div class="d-flex justify-content-center">
+              <a class="btn btn-primary" href="avis.php" role="button">Donner un avis</a>
+              </div>';
+            } ?>
+            <br>
+            <?php $req = $db->query("SELECT * FROM avis");
+            while ($avis = $req->fetch()) {
+                $idAvis = $avis['idAvis'];
+            ?>
+            <div class="col-md-4">
+            <div class="card mb-4 services-card-shadow rounded-4">
+                <div class="card-body">
+                <h4 class="text-center display-5 fw-semi-bold"><?php echo '<td>' . $avis['entreprise'] . '</td>'; ?></h4><br>
+
+                <span><?php echo $avis['avis'] . '</td>'; ?></span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
+
+                <br>           
+                </div>
+                </div>
+            </div> <?php } ?>
+        </div></div> 
       </section>
       
       <?php include('includes/footer.php') ?>

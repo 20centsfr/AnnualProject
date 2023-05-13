@@ -67,64 +67,64 @@ function theadFill($order, $value, $disp) {
                 <div class="overflow-auto">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <form action="annulerDevis.php" method="POST">
-    <thead>
-        <tr>
-            <?php
-            theadFill($order, 'date', 'Date de devis');
-            theadFill($order, 'prix', 'Prix');
-            theadFill($order, 'nbParticipants', 'Nombre de participants');
-            theadFill($order, 'activite', 'Activités');
-            theadFill($order, 'Supprimer', 'Supprimer');
-            theadFill($order, 'Réserver', 'Réserver');
-            theadFill($order, 'PDF', 'PDF');
-            ?>
-        </tr>
-    </thead>
+                    <thead>
+                        <tr>
+                            <?php
+                            theadFill($order, 'date', 'Date de devis');
+                            theadFill($order, 'prix', 'Prix');
+                            theadFill($order, 'nbParticipants', 'Nombre de participants');
+                            theadFill($order, 'activite', 'Activités');
+                            theadFill($order, 'Supprimer', 'Supprimer');
+                            theadFill($order, 'Réserver', 'Réserver');
+                            theadFill($order, 'PDF', 'PDF');
+                            ?>
+                        </tr>
+                    </thead>
 
-    <tbody>
-        <?php
-        $req = $db->query("SELECT * FROM devis WHERE idUser='" . $idUser . "' AND DATEDIFF(NOW(), date) < 14");
-        while ($devis = $req->fetch()) {
-            echo '<tr>';
-            echo '<td>' . $devis['date'] . '</td>';
-            echo '<td>' . $devis['prix'] . ' €</td>';
-            echo '<td>' . $devis['nbParticipants'] . '</td>';
+                    <tbody>
+                        <?php
+                        $req = $db->query("SELECT * FROM devis WHERE idUser='" . $idUser . "' AND DATEDIFF(NOW(), date) < 14");
+                        while ($devis = $req->fetch()) {
+                            echo '<tr>';
+                            echo '<td>' . $devis['date'] . '</td>';
+                            echo '<td>' . $devis['prix'] . ' €</td>';
+                            echo '<td>' . $devis['nbParticipants'] . '</td>';
 
-            $activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $devis['idDevis'] . "'");
-            echo '<td>';
-            while ($activite = $activiteReq->fetch()) {
-                echo $activite['nomActivite'] . '<br>';
-                $idActivite = $activite['idActivite'];
-                echo '<input type="hidden" name="idActivite[]" value="'.$activite['idActivite'].'" >';
-            }
-            echo '</td>';
+                            $activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $devis['idDevis'] . "'");
+                            echo '<td>';
+                            while ($activite = $activiteReq->fetch()) {
+                                echo $activite['nomActivite'] . '<br>';
+                                $idActivite = $activite['idActivite'];
+                                echo '<input type="hidden" name="idActivite[]" value="'.$activite['idActivite'].'" >';
+                            }
+                            echo '</td>';
 
-            echo '<td>';
-            echo '<form action="annulerDevis.php" method="post" style="display: inline-block;">';
-            echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
-            echo '<button type="submit" class="btn btn-danger" name="idDevis" value="'.$devis['idDevis'].'">Supprimer</button>';
-            echo '</form>';
-            echo '</td>';
+                            echo '<td>';
+                            echo '<form action="annulerDevis.php" method="post" style="display: inline-block;">';
+                            echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
+                            echo '<button type="submit" class="btn btn-danger" name="idDevis" value="'.$devis['idDevis'].'">Supprimer</button>';
+                            echo '</form>';
+                            echo '</td>';
 
-            echo '<td>';
-            echo '<form action="reserveDate.php" method="POST" style="display: inline-block;">';
-            echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
-            echo '<button type="submit" class="btn btn-success" name="idDevis" value="'.$devis['idDevis'].'">Réserver</button>';
-            echo '</form>';
-            echo '</td>';
+                            echo '<td>';
+                            echo '<form action="reserveDate.php" method="POST" style="display: inline-block;">';
+                            echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
+                            echo '<button type="submit" class="btn btn-success" name="idDevis" value="'.$devis['idDevis'].'">Réserver</button>';
+                            echo '</form>';
+                            echo '</td>';
 
-            echo '<td>';
-            echo '<form action="factureDevis.php" method="post">';
-            echo '<input type="hidden" name="idDevis" value="'.$devis['idDevis'].'" >';
-            echo '<button type="submit" name="telecharger" class="btn btn-success">Télécharger</button>';
-            echo '</form>';
-            echo '</td>';
+                            echo '<td>';
+                            echo '<form action="factureDevis.php" method="post">';
+                            echo '<input type="hidden" name="idDevis" value="'.$devis['idDevis'].'" >';
+                            echo '<button type="submit" name="telecharger" class="btn btn-success">Télécharger</button>';
+                            echo '</form>';
+                            echo '</td>';
 
-            echo '</tr>';
-        }
-        ?>
-    </tbody>
-</form>
+                            echo '</tr>';
+                        }
+                        ?>
+                    </tbody>
+                </form>
 
                 </table>
             </div>

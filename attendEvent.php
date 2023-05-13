@@ -10,15 +10,17 @@ if (isset($_POST["attend"])) {
     $idEvent = $_POST["idEvent"];
     $idUser = $_SESSION["idUser"];
 
-    $q = "INSERT INTO participantsEvent (idEvent, idUser, participe) VALUES ($idEvent, $idUser, 1) ON DUPLICATE KEY UPDATE participe=1";
+    var_dump($idEvent);
+
+    $q = "INSERT INTO participEvent (idEvent, idUser, participe) VALUES (:idEvent, :idUser, :participe) ON DUPLICATE KEY UPDATE participe=1";
     $req = $db->prepare($q);
     $req->execute([
         'idEvent' => $idEvent,
         'idUser' => $idUser,
-        'participe' => $participe
+        'participe' => 1
     ]);
 
-    $q = "SELECT nbPoints FROM event WHERE idEvent = :idEvent";
+    $q = "SELECT nbPointsEvent FROM event WHERE idEvent = :idEvent";
     $req = $db->prepare($q);
     $req->execute(['idEvent' => $idEvent]);
     $pts = $req->fetch();
@@ -27,7 +29,7 @@ if (isset($_POST["attend"])) {
         $q = "UPDATE user SET nbPoints = nbPoints + :nbPoints WHERE idUser = :idUser";
         $req = $db->prepare($q);
         $req->execute([
-            'nbPoints' => $pts['nbPoints'],
+            'nbPoints' => $pts['nbPointsEvent'],
             'idUser' => $_SESSION['idUser']
         ]);
     }
@@ -40,5 +42,6 @@ if (isset($_POST["attend"])) {
     }
 
 }
+
 
 ?>

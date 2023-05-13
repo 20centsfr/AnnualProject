@@ -5,6 +5,10 @@
 include('includes/header.php');
 include('includes/userInfo.php');
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 function getIp(){
   if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
       $ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -20,7 +24,7 @@ function getIp(){
   $ip=getIp();
   $date=Date('Y-m-d');
   $heure=Date("H:i:s");
-  $page="Contact";
+  $page="Avis";
 
   $q = "INSERT INTO logs (page, date, heure, ip) VALUES (:page, :date, :heure, :ip)";
   $req = $db->prepare($q);
@@ -88,8 +92,8 @@ function getIp(){
             <div class="row gx-lg-5 align-items-center mb-5">
             <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
                 <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-                CONTACTEZ <br />
-                <span style="color: hsl(218, 81%, 75%)">&NOUS</span>
+                DONNER <br />
+                <span style="color: hsl(218, 81%, 75%)">&UN AVIS</span>
                 </h1>
             </div>
 
@@ -98,17 +102,17 @@ function getIp(){
                 <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
                 <div class="card bg-glass">
                 <div class="card-body px-4 py-5 px-md-5">
-                    <form action="verifContact.php" method="POST">
+                    <form action="verifAvis.php" method="POST">
                     <div class="form-outline mb-4">
-                        <input type="email" name="email" id="email" class="form-control" />
-                        <label class="form-label">Adresse mail</label>
+                        <input type="text" name="entreprise" id="entreprise" class="form-control" />
+                        <label class="form-label">Entreprise</label>
                     </div>
                     <div class="form-outline mb-4">
-                        <input type="text" name="message" id="message" class="form-control" />
-                        <label class="form-label">Message</label>
+                        <textarea name="avis" id="avis" class="form-control" rows="5"></textarea>                        
+                        <label class="form-label">Avis</label>
                     </div>
                     <? include 'includes/message.php' ?>
-                    <button type="submit" class="btn btn-primary btn-block mb-4">Envoyer message</button>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Envoyer</button>
                     </form>
                 </div>
                 </div>
@@ -118,5 +122,4 @@ function getIp(){
         </section>
     </main>
   </body>
-
 </html>

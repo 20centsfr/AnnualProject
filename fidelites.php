@@ -92,7 +92,7 @@ if (isset($_GET['order']))
           </style>
 
           <div class="grid-container">
-          <?php 
+          <?php
           $select = $db->query("SELECT * FROM fidelite");
           while ($content = $select->fetch()) {
             $images = glob('assets/img/icons/*.png');
@@ -102,33 +102,15 @@ if (isset($_GET['order']))
               <img src="<?php echo $random_image; ?>" alt="Dashboard" style="width:95px;" />
               <h2 class="mt-3 lh-base"><?php echo $content['nomFidelite']; ?></h2>
               <h3 class="fs-0"><?php echo $content['description']; ?></h3>
-              <p class="fs-0">Points necessaires : <?php echo $content['points']; ?></p>
+              <p class="fs-0">Points nécessaires : <?php echo $content['points']; ?></p>
               <p class="fs-0">Offre valable jusqu'à <?php echo $content['dateFin']; ?></p>
-              <input type="hidden" name="idUser" value="<?php echo $idUser; ?>" >
-              <input type="hidden" name="idFidelite" value="<?php echo $idFidelite; ?>" >
-              <form method="GET" action="fidelite.php">
-                <input type="hidden" name="Fidelite" value="<?php echo $content['idFidelite']; ?>" >
-                <?php
-                if ($userInfo['nbPoints'] >= $content['points']) {
-                  echo '<button id="codeBtn-'.$content['idFidelite'].'" type="button" class="btn btn-success">Plus d\'info</button>';
-                
-                  echo '<script>';
-                  echo 'var button = document.getElementById("codeBtn-'.$content['idFidelite'].'");';
-                  echo 'button.addEventListener("click", function() {';
-                  echo 'var codeContainer = document.createElement("p");';
-                  echo 'codeContainer.innerHTML = "Code de réduction est : '.$content['code'].'";';
-                  echo 'document.body.appendChild(codeContainer);';
-                  echo '});';
-                  echo '</script>';
-                } else {
-                  echo '<a class="btn btn-primary" href="#" role="button">Pas assez de points.</a>';
-                }
-                
-                ?>    
-
-              </form>
+              <?php if ($userInfo['nbPoints'] >= $content['points']) { ?>
+                <h3><?php echo $content['code']; ?></h3>
+              <?php } else { ?>
+                <a class="btn btn-primary" href="#" role="button">Pas assez de points</a>
+              <?php } ?>
             </div>
-            <?php } ?>
+          <?php } ?>
           </div>
 
           </div>

@@ -91,12 +91,19 @@ if (isset($_GET['order']))
           </div>
         </div> <br><br>
         <div class="d-flex justify-content-center">
-            <a class="btn btn-primary" href="modifProfile.php" role="button">Modifier</a>
+            <a class="btn btn-primary" href="modifProfile.php" role="button">Modifier mes informations</a>
         </div>
         <br><br>
         <div class="d-flex justify-content-center">
-          <a class="btn btn-primary" href="note/index.php" role="button">Laisser un avis</a>
-      </div>
+            <!--<a class="btn btn-primary" href="note/index.php" role="button">Supprimer mon compte</a>-->
+            <?php 
+            echo '<form action="suppCompte.php" method="POST">';
+            //echo '<input type="hidden" name="idUser" value="' . $idUser . '" >';
+            echo '<td> <button type="submit" value="'.$userInfo['idUser'].'" name="Supprimer" class="btn btn-danger">Supprimer mon compte</button></td>'; 
+            //echo '<button type="submit" class="btn btn-primary btn-block mb-4">Continuer</button>';
+            echo '</form>';
+            ?>
+        </div>
       </section>
 
 
