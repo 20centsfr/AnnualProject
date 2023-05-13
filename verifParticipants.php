@@ -38,13 +38,13 @@ foreach ($participants as $participant) {
     ]);
 
     if (!$result) {
-        header('location: participants.php?message=Erreur.');
+        header('location:participants.php?message=Erreur.');
         exit;
         
     }
 }
 
-header('location: recap.php?message=Succès');
+header('location:recap.php?message=Succès');
 exit;
 
 
