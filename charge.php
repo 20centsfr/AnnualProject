@@ -17,8 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $email = $_POST['email'];
   $date = date('Y-m-d'); 
 
-  $price = 1000;
-  // $price = $_SESSION['prix'] * 100;
+  $prix = $_SESSION['prix']* 100;
 
   $customer = \Stripe\Customer::create(array(
     'email' => $email,
@@ -27,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   ));
 
   $charge = \Stripe\Charge::create(array(
-      'amount' => $price,
+      'amount' => $prix,
       'currency' => 'eur',
       'description' => 'Example charge',
       'customer' => $customer->id
@@ -43,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   
   $stmt = $mysqli->prepare("INSERT INTO paiement (nom, prenom, email, montant, date) VALUES (?, ?, ?, ?, ?)");
 
-  $stmt->bind_param("sssis", $first_name, $last_name, $email, $price, $date);
+  $stmt->bind_param("sssis", $first_name, $last_name, $email, $prix, $date);
   $stmt->execute();
 
   if ($stmt->affected_rows > 0) {

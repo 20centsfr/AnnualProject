@@ -188,18 +188,13 @@ if (isset($_GET['order']))
             <div class="card-body">
               <h4 class="text-center display-5 fw-semi-bold"><?php echo '<td>' . $reserve['dateChoisi'] . '</td>'; ?></h4><br><br>
               <p class="text-center fs-0 fs-md-1">Prix : <?php echo '<td>' . $reserve['prix'] . '</td>'; ?>€</p>
-
               <p class="text-center fs-0 fs-md-1"> Nombre de participants : <?php echo '<td>' . $reserve['nbParticipants'] . '</td>'; ?></p>
-
               <p class="text-center fs-0 fs-md-1"> Activités :</p>
-
               <?php 
               $activiteReq = $db->query("SELECT nomActivite FROM activiteReserve INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite WHERE idReserve='" . $reserve['idReserve'] . "'");
               echo '<td>';
               while ($activite = $activiteReq->fetch()) { ?>
-
-                  <div class=" text-center"><span><?php echo $activite['nomActivite'] . '</td>'; ?></span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
-
+                <div class=" text-center"><span><?php echo $activite['nomActivite'] . '</td>'; ?></span><i class="fa fa-check text-primary-gradient pt-1"></i></div>
               <?php } ?> 
               <br>           
               </div>

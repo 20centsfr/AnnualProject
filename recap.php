@@ -38,23 +38,12 @@
       ]);
     }
 
-    /*if (isset($_GET['Reserve'])) {
-      $idReserve = intval($_GET['Reserve']);
-      if (!is_int($idReserve)) {
-        header('location:reservations.php');
-        exit;
-      }
-    } else {
-      header('location:reservations.php');
-      exit;
-    }*/
     $idReserve = $_POST['idReserve'];
 
     $select = $db->prepare('SELECT * FROM reservation WHERE idReserve = :idReserve');
     $select->execute(['idReserve' => $idReserve]);
     $content = $select->fetch(PDO::FETCH_ASSOC);
 
-    var_dump([$content]);
     ?>
     <main class="main" id="top">
     <?php include('includes/nav.php') ?>
@@ -102,25 +91,39 @@
                         <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
                         <div class="card bg-glass">
                             <div class="card-body px-4 py-5 px-md-5">
-                                <form action="paiement.php" method="POST">
+                                <!--<form action="paiement.php" method="POST">-->
                                     <div class="form-outline mb-4">
                                         <h2 class="mt-3 lh-base">Reservation</h2>
                                         <h4 class="mt-3 lh-base">Nombre de participants</h4>
                                         <p class="fs-0"><?php echo $content['nbParticipants'] ?></p>
                                     </div>
+
+                                    <?php 
+                                    $activiteReq = $db->query("SELECT nomActivite, tarifActivite FROM activiteReserve INNER JOIN activite ON activiteReserve.idActivite = activite.idActivite WHERE idReserve='" . $content['idReserve'] . "'");
+                                    echo '<td>';
+                                    while ($activite = $activiteReq->fetch()) { ?>
+
                                     <div class="form-outline mb-4">
                                         <h4 class="mt-3 lh-base">Activités</h4>
-                                        <p class="fs-0"><?php echo $content['nomActivite'] . ' (' . $content["tarifActivite"] . '€)'; ?></p>
+                                        
+                                        <p class="fs-0"><?php echo $activite['nomActivite'] . ' (' . $activite["tarifActivite"] . '€)'; ?></p>
+                                    </div>
+                                    <?php } ?>
+                                    <div class="form-outline mb-4">
+                                        <h4 class="mt-3 lh-base">Nombre de participants</h4>
+                                        <p class="fs-0"><?php echo $content['nbParticipants'] ?></p>
                                     </div>
                                     <div class="form-outline mb-4">
                                         <h4 class="mt-3 lh-base">Prix</h4>
                                         <p class="fs-0"><?php echo $content['prix'] ?></p>
                                         <?php $_SESSION['prix'] = $content['prix']; ?>
                                     </div>
-                                    <div class="form-outline mb-4">
-                                        <h4 class="mt-3 lh-base">Nombre de participants</h4>
-                                        <p class="fs-0"><?php echo $content['nbParticipants'] ?></p>
+                                    <!--<div class="form-outline mb-4">
+                                        <input type="text" name="Coupon" id="Coupon" class="form-control" />
+                                        <label class="form-label">Coupon</label>
                                     </div>
+                                    <button type="submit" class="btn btn-primary btn-block mb-4">Payer</button>-->
+                                    <a class="btn btn-primary" href="paiement.php" role="button">Payer</a>
                                 </form>
                             </div>
                         </div>
