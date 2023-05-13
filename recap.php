@@ -50,7 +50,7 @@
       exit;
     }*/
     $idReserve = $_POST['idReserve'];
-
+    var_dump([$idReserve]);
 
     $select = $db->prepare('SELECT * FROM reservation WHERE idReserve = :idReserve');
     $select->execute(['idReserve' => $idReserve]);
