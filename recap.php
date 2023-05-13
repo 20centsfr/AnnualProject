@@ -4,6 +4,8 @@
     <?php 
     include('includes/header.php');
     include('includes/db.php');
+    session_start();
+    include('includes/message.php');
 
     ini_set('display_errors', '1');
     ini_set('display_startup_errors', '1');
@@ -47,12 +49,12 @@
       exit;
     }*/
     $idReserve = $_POST['idReserve'];
-    var_dump([$idReserve]);
 
     $select = $db->prepare('SELECT * FROM reservation WHERE idReserve = :idReserve');
     $select->execute(['idReserve' => $idReserve]);
     $content = $select->fetch(PDO::FETCH_ASSOC);
 
+    var_dump([$content]);
     ?>
     <main class="main" id="top">
     <?php include('includes/nav.php') ?>
@@ -95,12 +97,6 @@
                             <span style="color: #400861">DE COMMANDE</span>
                         </h1>
                     </div>
-
-                    <?php 
-                        $q = $db->query("SELECT * FROM reservation WHERE idUser=(SELECT idUser FROM user WHERE email='" . $_SESSION['email'] . "')");
-
-                        while ($devis = $q->fetch()) {
-                    ?>
                     <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
                         <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
                         <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
@@ -110,26 +106,25 @@
                                     <div class="form-outline mb-4">
                                         <h2 class="mt-3 lh-base">Reservation</h2>
                                         <h4 class="mt-3 lh-base">Nombre de participants</h4>
-                                        <p class="fs-0"><?php echo $devis['nbParticipants'] ?></p>
+                                        <p class="fs-0"><?php echo $content['nbParticipants'] ?></p>
                                     </div>
                                     <div class="form-outline mb-4">
                                         <h4 class="mt-3 lh-base">Activités</h4>
-                                        <p class="fs-0"><?php echo $devis['nomActivite'] . ' (' . $devis["tarifActivite"] . '€)'; ?></p>
+                                        <p class="fs-0"><?php echo $content['nomActivite'] . ' (' . $content["tarifActivite"] . '€)'; ?></p>
                                     </div>
                                     <div class="form-outline mb-4">
                                         <h4 class="mt-3 lh-base">Prix</h4>
-                                        <p class="fs-0"><?php echo $devis['prix'] ?></p>
-                                        <?php $_SESSION['prix'] = $devis['prix']; ?>
+                                        <p class="fs-0"><?php echo $content['prix'] ?></p>
+                                        <?php $_SESSION['prix'] = $content['prix']; ?>
                                     </div>
                                     <div class="form-outline mb-4">
                                         <h4 class="mt-3 lh-base">Nombre de participants</h4>
-                                        <p class="fs-0"><?php echo $devis['nbParticipants'] ?></p>
+                                        <p class="fs-0"><?php echo $content['nbParticipants'] ?></p>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    <?php } ?>
                 </div>
             </div>
         </section>

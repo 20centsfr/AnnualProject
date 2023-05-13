@@ -44,7 +44,11 @@ foreach ($participants as $participant) {
     }
 }
 
-header('location:recap.php?message=Succès');
+
+echo "<form id='hidden-form' method='POST' action='recap.php' style='display:none;'>";
+echo "<input type='hidden' name='idReserve' value='" . $idReservation . "'>";
+echo "</form>";
+echo "<script>document.getElementById('hidden-form').submit();</script>";
 exit;
 
 
