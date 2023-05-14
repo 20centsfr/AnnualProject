@@ -111,7 +111,6 @@ function getIp(){
                 //echo '<input type="hidden" name="dateChoisi" value="'.$dateChoisi.'" >';                    
                 echo '<input type="hidden" name="idUser" value="'.$idUser.'" >';
                 echo '<input type="hidden" name="idDevis" value="'.$idDevis.'" >';
-                echo '<input type="hidden" name="idActivite[]" value="'.$idActivite.'" >';
 
 
                 echo '<button type="submit" class="btn btn-primary btn-block mb-4">Continuer</button>';

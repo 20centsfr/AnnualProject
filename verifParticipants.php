@@ -28,20 +28,27 @@ foreach ($participants as $participant) {
     $prenom = $participant['prenom'];
     $email = $participant['email'];
 
-    $q = "INSERT INTO participants (prenom, nom, email, idReserve) VALUES (:nom, :prenom, :email, :idReserve)";
-    $req = $db->prepare($q);
-    $result = $req->execute([
+    $select = $db->prepare('SELECT idParticipants FROM participants WHERE email = :email');
+    $select->execute(['email' => $email]);
+    $content = $select->fetch(PDO::FETCH_ASSOC);
+
+    if(!$content){
+        $q = "INSERT INTO participants (prenom, nom, email, idReserve) VALUES (:nom, :prenom, :email, :idReserve)";
+        $req = $db->prepare($q);
+        $result = $req->execute([
         'nom' => $nom,
         'prenom' => $prenom,
         'email' => $email,
         'idReserve' => $idReservation
-    ]);
+        ]);
 
-    if (!$result) {
-        header('location:participants.php?message=Erreur.');
-        exit;
-        
+        if (!$result) {
+            header('location:participants.php?message=Erreur.');
+            exit;
+            
+        }
     }
+
 }
 
 

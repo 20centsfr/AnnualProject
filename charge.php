@@ -2,9 +2,6 @@
 
 session_start();
 require_once('includes/db.php');
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 require_once('vendor/autoload.php');
 
 \Stripe\Stripe::setApiKey('sk_test_51MlCKyFQeJjIkXikovqggUTmb0CsWW3vJzUgOfUPykHYDWF2PKqsOMzsTHhc5s2J63LV7UHzOBBWKoNPQsQItDIB00B3Y9pzuc');
@@ -54,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $stmt->close();
   $mysqli->close();
 
-  header('Location: confirmReserve.php'  . '?message=Paiement réussi !');
+  header('Location: mail.php?message=Paiement réussi !&type=success');
   exit;
 }
 ?> 

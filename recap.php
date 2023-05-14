@@ -7,10 +7,6 @@
     session_start();
     include('includes/message.php');
 
-    ini_set('display_errors', '1');
-    ini_set('display_startup_errors', '1');
-    error_reporting(E_ALL);
-
     function getIp() {
       if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         $ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -26,7 +22,7 @@
       $ip = getIp();
       $date = Date('Y-m-d');
       $heure = Date("H:i:s");
-      $page = "Devis2";
+      $page = "recap";
 
       $q = "INSERT INTO logs (page, date, heure, ip) VALUES (:page, :date, :heure, :ip)";
       $req = $db->prepare($q);
@@ -116,7 +112,8 @@
                                     <div class="form-outline mb-4">
                                         <h4 class="mt-3 lh-base">Prix</h4>
                                         <p class="fs-0"><?php echo $content['prix'] ?>€</p>
-                                        <?php $_SESSION['prix'] = $content['prix']; ?>
+                                        <?php $_SESSION['prix'] = $content['prix'];
+                                              $_SESSION['idReserve'] = $idReserve;?>
                                     </div>
                                     <div class="form-outline mb-4">
                                         <label class="form-label">Coupon</label>
