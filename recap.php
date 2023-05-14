@@ -115,14 +115,15 @@
                                     </div>
                                     <div class="form-outline mb-4">
                                         <h4 class="mt-3 lh-base">Prix</h4>
-                                        <p class="fs-0"><?php echo $content['prix'] ?></p>
+                                        <p class="fs-0"><?php echo $content['prix'] ?>€</p>
                                         <?php $_SESSION['prix'] = $content['prix']; ?>
                                     </div>
-                                    <!--<div class="form-outline mb-4">
-                                        <input type="text" name="Coupon" id="Coupon" class="form-control" />
+                                    <div class="form-outline mb-4">
                                         <label class="form-label">Coupon</label>
+                                        <input type="text" name="coupon" id="coupon" class="form-control" />
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-block mb-4">Payer</button>-->
+                                    <a class="btn btn-success" href="paiement.php" role="button">Activer code</a>
+                                    <br><br>
                                     <a class="btn btn-primary" href="paiement.php" role="button">Payer</a>
                                 </form>
                             </div>

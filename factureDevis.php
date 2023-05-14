@@ -27,31 +27,53 @@ class Invoice extends FPDF {
         $this->Cell(0, 10, 'Page ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
     }
 
-    function create_invoice($data) {
+    function create_devis($devis) {
+        // Récupération des informations de l'utilisateur
+        $idUser = $_SESSION['idUser'];
+        $userReq = $db->query("SELECT * FROM users WHERE idUser='" . $idUser . "'");
+        $user = $userReq->fetch();
+
+        // Informations de l'entreprise
+        $this->SetFont('Arial','B',12);
+        $this->Cell(40,10,'Entreprise :',0,0);
+        $this->SetFont('Arial','',12);
+        $this->Cell(0,10,$user['entreprise'],0,1);
+
+        // Informations de l'utilisateur
+        $this->SetFont('Arial','B',12);
+        $this->Cell(40,10,'Devis pour :',0,0);
+        $this->SetFont('Arial','',12);
+        $this->Cell(0,10,$user['nom'].' '.$user['prenom'],0,1);
+
+        // Informations du devis
+        $this->Ln(10);
+        $this->SetFont('Arial','B',12);
+        $this->Cell(40,10,'Date :',0,0);
+        $this->SetFont('Arial','',12);
+        $this->Cell(0,10,$devis['date'],0,1);
+
+        $this->SetFont('Arial','B',12);
+        $this->Cell(40,10,'Nombre de participants :',0,0);
+        $this->SetFont('Arial','',12);
+        $this->Cell(0,10,$devis['nbParticipants'],0,1);
+
+        $this->SetFont('Arial','B',12);
+        $this->Cell(40,10,'Prix :',0,0);
+        $this->SetFont('Arial','',12);
+        $this->Cell(0,10,$devis['prix'].' €',0,1);
+
+        $this->Ln(10);
         $this->SetFont('Arial', 'B', 12);
-        $this->Cell(40, 10, 'Nom :', 1);
-        $this->Cell(0, 10, $data['nom'], 1, 1);
+        $this->Cell(40, 10, 'Activités :', 0, 1);
 
-        $this->Cell(40, 10, 'Prénom :', 1);
-        $this->Cell(0, 10, $data['prenom'], 1, 1);
+        $activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $devis['idDevis'] . "'");
 
-        $this->Cell(40, 10, 'Email :', 1);
-        $this->Cell(0, 10, $data['email'], 1, 1);
-
-        $this->Cell(40, 10, 'Entreprise :', 1);
-        $this->Cell(0, 10, $data['entreprise'], 1, 1);
-
-        $this->Cell(40, 10, 'Date :', 1);
-        $this->Cell(0, 10, $data['date'], 1, 1);
-
-        $this->Cell(40, 10, 'Nombre de participants :', 1);
-        $this->Cell(0, 10, $data['nbParticipants'], 1, 1);
-
-        $this->Cell(40, 10, 'Prix :', 1);
-        $this->Cell(0, 10, $data['prix'], 1, 1);
-
-        $this->Cell(40, 10, 'Activités :', 1);
-        $this->Cell(0, 10, $activite['nomActivite'], 1, 1);
+        if ($activiteReq->rowCount() > 0) {
+        while ($activite = $activiteReq->fetch(PDO::FETCH_ASSOC)) {
+        $this->SetFont('Arial', '', 12);
+        $this->Cell(40, 10, '- ' . $activite['nomActivite'], 0, 1);
+        }
+        }
 
         $this->Output();
     }
@@ -62,13 +84,15 @@ $stmt = $db->prepare($q);
 
 $idDevis = $_POST['idDevis'];
 
-/*$activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $devis['idDevis'] . "'");
+/*
+$activiteReq = $db->query("SELECT activite.idActivite, nomActivite FROM devisactivites INNER JOIN activite ON devisactivites.idActivite = activite.idActivite WHERE idDevis='" . $devis['idDevis'] . "'");
 $activites = array();
 while ($activite = $activiteReq->fetch()) {
     $activites[] = $activite;
 }
-
+var_dump($activites);
 */
+
 $stmt->bindValue(1, $idDevis, PDO::PARAM_INT);
 
 $q = "SELECT * FROM devis WHERE idDevis = ?";
@@ -80,8 +104,13 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 $invoice = new Invoice();
 $invoice->AliasNbPages();
 $invoice->AddPage();
-$invoice->create_invoice($row);
+$invoice_data = array(
+    'entreprise' => 'Nom de l\'entreprise',
+    'date' => $row['date'],
+    'nbParticipants' => $row['nbParticipants'],
+    'prix' => $row['prix'],
+    'activites' => $activites
+);
 
-$this->Output('D', 'factureDevis.pdf');
-
+$invoice->Output('D', 'factureDevis.pdf');
 ?>

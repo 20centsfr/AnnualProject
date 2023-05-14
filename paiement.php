@@ -50,7 +50,7 @@ function getIp(){
 
   <section class="container">
     <h1 class="my-4 text-center">Insérez vos informations bancaires</h1><br>
-    <h3>Montant à payer : <?php echo $prix = $_SESSION['prix']* 100;?></h3><br>
+    <h3>Montant à payer : <?php echo $prix = $_SESSION['prix'];?>€</h3><br>
     <form action="charge.php" method="post" id="payment-form">
       <div class="form-row">
         <input type="text" name="first_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Prenom">

@@ -5,19 +5,21 @@ session_start();
 $code = $_POST['coupon'];
 $prix = $_POST['prix'];
 
-$q = mysqli_query($conn, "SELECT * FROM fidelite WHERE code = '$code' && status = 1") or die(mysqli_error());
+$q = $db->query("SELECT * FROM fidelite WHERE code = '$code' && status = 1");
 $count = mysqli_num_rows($q);
-$fetch = mysqli_fetch_array($q);
-$array = array();
+$res = mysqli_fetch_array($q);
+$tab = array();
 if($count > 0){
-    $discount = $fetch['discount'] / 100;
-    $total = $discount * $prix;
-    $array['discount'] = $fetch['discount'];
-    $array['prix'] = $prix - $total;
+    $reduc = $res['reduc'] / 100;
+    $total = $reduc * $prix;
+    $tab['reduc'] = $res['reduc'];
+    $tab['prix'] = $prix - $total;
 
-    echo json_encode($array);
+    header('location: index.php?message=Succes');
+    exit;
+    echo json_encode($tab);
 
 } else {
-    echo "error";
+    header('location:profile.php?message=NON.');
 }
 ?>
