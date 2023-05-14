@@ -56,7 +56,19 @@ while ($content = $select->fetch(PDO::FETCH_ASSOC)) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 }
+$idDevis = htmlspecialchars($_SESSION['idDevis']);  
 
-$_SESSION['idReserve'] = 0;
+$select = $db->prepare('DELETE FROM devismateriel WHERE idDevis = :idDevis;');
+$select->execute(['idDevis' => $idDevis]);
+
+$select = $db->prepare('DELETE FROM devisactivites WHERE idDevis = :idDevis;');
+$select->execute(['idDevis' => $idDevis]);
+
+$select = $db->prepare('DELETE FROM devis WHERE idDevis = :idDevis;');
+$select->execute(['idDevis' => $idDevis]);
+
+unset($_SESSION['idDevis']);
+unset($_SESSION['idReserve']);
+
 header('location:confirmReserve.php');
 exit;

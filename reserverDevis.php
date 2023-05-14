@@ -7,6 +7,7 @@ include('includes/userInfo.php');
 include ('includes/connected.php');
 
 $idDevis = $_POST['idDevis'];
+$_SESSION['idDevis'] = $idDevis;
 
 function getIp(){
     if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
