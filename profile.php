@@ -99,7 +99,7 @@ if (isset($_GET['order']))
             <?php 
             echo '<form action="suppCompte.php" method="POST">';
             //echo '<input type="hidden" name="idUser" value="' . $idUser . '" >';
-            echo '<td> <button type="submit" value="'.$userInfo['idUser'].'" name="Supprimer" class="btn btn-danger">Supprimer mon compte</button></td>'; 
+            echo '<td> <button type="submit" value="'.$idUser.'" name="Supprimer" class="btn btn-danger">Supprimer mon compte</button></td>'; 
             //echo '<button type="submit" class="btn btn-primary btn-block mb-4">Continuer</button>';
             echo '</form>';
             ?>

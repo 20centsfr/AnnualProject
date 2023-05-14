@@ -11,15 +11,14 @@ include 'includes/db.php';
 include 'includes/generatePwd.php';
 session_start();
 
-//Create an instance; passing `true` enables exceptions
-$mail = new PHPMailer(true);
-
 $idReserve = htmlspecialchars($_SESSION['idReserve']);
 
 $select = $db->prepare('SELECT idParticipants, nom, prenom, email FROM participants WHERE idReserve = :idReserve');
 $select->execute(['idReserve' => $idReserve]);
 
 while ($content = $select->fetch(PDO::FETCH_ASSOC)) {
+    //Create an instance; passing `true` enables exceptions
+    $mail = new PHPMailer(true);
     try {
         //Server settings
         $mail->SMTPDebug = 2;       //SMTP::DEBUG_SERVER;            //Enable verbose debug output
@@ -72,3 +71,5 @@ unset($_SESSION['idReserve']);
 
 header('location:confirmReserve.php');
 exit;
+
+?>

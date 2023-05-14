@@ -47,6 +47,13 @@ foreach ($participants as $participant) {
             exit;
             
         }
+    }else{
+        $q = "UPDATE participants SET idReserve = :idReserve WHERE email = :email";
+        $req = $db->prepare($q);
+        $exec = $req->execute([
+            'idReserve' => $idReservation,
+            'email' => $email
+        ]);
     }
 
 }
