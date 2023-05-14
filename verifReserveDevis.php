@@ -47,18 +47,6 @@ if (!empty($horairesSelectionnes)) {
             }
         }
 
-        if($result){
-            $idHorRes = $db->lastInsertId();
-
-            $q = "UPDATE reservation SET idHorRes = :idHorRes WHERE idReserve = :idReserve";
-            $req = $db->prepare($q);
-
-            $result = $req->execute([
-                'idHorRes' => $idHorRes,
-                'idReserve' => $idReserve
-            ]);
-        }
-
         foreach ($idActivites as $idActivite) {
             $q = "INSERT INTO activiteReserve (idReserve, idActivite) VALUES (:idReserve, :idActivite)";
             $req = $db->prepare($q);

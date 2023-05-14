@@ -16,7 +16,7 @@ include('includes/db.php');
 	}
 
 
-	$q = 'SELECT idUser FROM user WHERE email = :email AND mdp = :mdp';
+	$q = 'SELECT idUser, banni FROM user WHERE email = :email AND mdp = :mdp';
 	$req = $db->prepare($q);
 	$req->execute([
 			'email' => $_POST['email'],
@@ -32,6 +32,10 @@ include('includes/db.php');
 	session_start();
 	$_SESSION['email'] = $_POST['email'];
 	$_SESSION['idUser'] = $results[0]['idUser'];
+
+	if($results[0]['banni']){
+		$_SESSION['banni'] = 1;
+	}
 
 	header('location: index.php');
 	exit;
