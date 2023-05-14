@@ -1,6 +1,6 @@
 <?php 
 include 'includes/db.php';
-include 'includes/gestionDroits.php';
+include ('includes/gestionDroits.php');
 include 'includes/header_admin.php';
 
 
@@ -34,10 +34,8 @@ include 'includes/header_admin.php';
                                     <?php
                                     theadFill($order, 'idUser', 'ID');
                                     theadFill($order, 'prenom', 'prenom');
-                                    theadFill($order, 'nom', 'nom');
+                                    theadFill($order, 'nom', 'Nom');
                                     theadFill($order, 'email', 'Email');
-                                    theadFill($order, 'entreprise', 'entreprise');
-                                    theadFill($order, 'admin', 'admin');
                                     ?>
                                     <th></th>
                                     <th></th>
@@ -45,7 +43,7 @@ include 'includes/header_admin.php';
                                 </thead>
 
                                     <?php
-                                    $select = $db->query("SELECT * FROM user");
+                                    $select = $db->query("SELECT * FROM user WHERE banni = 1");
 
                                     while ($content = $select->fetch()) {
                                         echo '<tr>';
@@ -54,9 +52,8 @@ include 'includes/header_admin.php';
                                         echo '<td>'.$content['nom'].'</td>';
                                         echo '<td>'.$content['email'] .'</td>';
                                         echo '<td>'.$content['entreprise'] .'</td>';
-                                        echo '<td>'.$content['admin'].'</td>';
 
-                                        echo '<td> <button type="submit" value="'.$content['idUser'].'" name="Supprimer" class="btn btn-danger">Supprimer</button></td>';
+                                        echo '<td> <button type="submit" value="'.$content['idUser'].'" name="Unban" class="btn btn-danger">Unban</button></td>';
                                     }
                                     ?>
                                 </form>

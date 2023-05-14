@@ -1,12 +1,8 @@
 <?php //todo
 include 'includes/db.php';
-include 'includes/header_admin.php';
 include ('includes/gestionDroits.php');
-session_start();
+include 'includes/header_admin.php';
 
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
 
         if (isset($_GET['order'])){
             $order = $_GET['order'];
