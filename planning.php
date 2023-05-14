@@ -1,38 +1,73 @@
-<section class="container">
-    <div class="app-content">
-        <div class="plans-section">
-            <div class="plans-section-header">
-                <p>Planning</p>
-                <p class="time"><?php echo $date=Date('Y-m-d');?></p>
-            </div>
+<link href="assets/css/style.css" rel="stylesheet" />
+<?php
 
-            <div class="plan-boxes jsGridView">
+session_start();
+include 'includes/db.php';
+include 'includes/userInfo.php';
+include 'includes/header.php';
+
+function getIp(){
+  if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
+      $ip = $_SERVER['HTTP_CLIENT_IP'];
+  } elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+      $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+  } else {
+      $ip = $_SERVER['REMOTE_ADDR'];
+  }
+  return $ip;
+}
+  if(isset($_SESSION['email'])){
+
+  $ip=getIp();
+  $date=Date('Y-m-d');
+  $heure=Date("H:i:s");
+  $page="Planning";
+
+  $q = "INSERT INTO logs (page, date, heure, ip) VALUES (:page, :date, :heure, :ip)";
+  $req = $db->prepare($q);
+  $reponse = $req->execute([
+      'page'=>$page,
+      'date' => $date,
+      'heure'=>$heure,
+      'ip' => $ip
+  ]);
+  }
+?>
+
+<html>
+    <div class="app-container">
+        <body>
+        <?php include('includes/nav.php') ?>
+        <main>
+        <section class="container">
+        <div class="app-content">
+            <div class="plans-section">
+                <div class="plans-section-header">
+                    <p>Planning</p>
+                    <p class="time"><?php echo $date=Date('Y-m-d');?></p>
+                </div>
+
+                <div class="plan-boxes jsGridView">
                 <?php  
-                $q = "SELECT activite.nomActivite, reservation.dateChoisi, horaires.heureDebut, horaires.heureFin, reservation.nbParticipants, user.entreprise 
-                FROM reservation 
-                INNER JOIN horaires ON reservation.idHorRes = horaires.idHoraires
-
-                INNER JOIN horaireReserve ON horaireReserve.idReserve = reservation.idReserve
-                INNER JOIN activiteReserve ON activiteReserve.idReserve = reservation.idReserve
-                INNER JOIN activite ON activite.idActivite = activiteReserve.idActivite
-                INNER JOIN user ON user.idUser = reservation.idUser
-                ORDER BY reservation.dateChoisi ASC, horaires.heureDebut ASC";
+                $q = "SELECT reservation.idReserve, reservation.nbParticipants, user.entreprise, activite.nomActivite, horaires.heureDebut, horaires.heureFin, reservation.dateChoisi FROM reservation 
+                    INNER JOIN user ON reservation.idUser = user.idUser
+                    INNER JOIN activiteReserve ON activiteReserve.idReserve = reservation.idReserve
+                    INNER JOIN activite ON activite.idActivite = activiteReserve.idActivite
+                    INNER JOIN horaireReserve ON horaireReserve.idReserve = reservation.idReserve
+                    INNER JOIN horaires ON horaires.idHoraires = horaireReserve.idHoraires";
                 $res = $db->query($q);
 
-                var_dump($q);
-
-                //INNER JOIN salle ON horaires.idSalle = salle.idSalle
-                //salle.numSalle,
-
-                $currentDate = null;
+                $currentDateTime = null;
                 while ($row = $res->fetch()) {
-                    if ($currentDate !== $row['dateChoisi']) {
-                        $currentDate = $row['dateChoisi'];
+                    $startDateTime = $row['dateChoisi'] . ' ' . $row['heureDebut'];
+                    $endDateTime = $row['dateChoisi'] . ' ' . $row['heureFin'];
+                    if ($currentDateTime !== $startDateTime) {
+                        $currentDateTime = $startDateTime;
                         echo '<div class="plans-section-date">';
-                        echo '<p class="plans-section-date-header">' . $currentDate . '</p>';
+                        echo '<p class="plans-section-date-header">' . date('l d F Y H:i', strtotime($currentDateTime)) . '</p>';
                         echo '</div>';
                     }
-                    ?>
+                ?>
                     <div class="plan-box-wrapper">
                         <div class="plan-box" style="background-color: #e9e7fd;">
                             <div class="plan-box-header">
@@ -41,15 +76,20 @@
                             </div>
                             <div class="plan-box-content-header">
                                 <h4 class="box-content-header"><?php echo $row['nomActivite']; ?></h4>
-                                <p class="box-content-subheader"><?php echo $row['heureDebut'] . " - " . $row['heureFin']; ?></p>
-                                <!--<p  class="box-content-subheader"><?php// echo "Salle " . $row['numSalle']; ?></p>-->
+                                <p class="box-content-subheader"><?php echo date('H:i', strtotime($row['heureDebut'])) . " - " . date('H:i', strtotime($row['heureFin'])); ?></p>
                                 <p class="box-content-subheader"><?php echo $row['nbParticipants'] . " participants"; ?></p>
                                 <p class="box-content-subheader"><?php echo "Réservé par " . $row['entreprise']; ?></p>
                             </div>
                         </div>
                     </div>
                 <?php } ?>
+                </div>
             </div>
+        </div>
         </div>
     </div>
 </section>
+</main>
+<?php //include('includes/footer.php'); ?>
+</body>
+</html>
